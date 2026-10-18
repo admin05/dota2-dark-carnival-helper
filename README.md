@@ -27,10 +27,18 @@
 
 ## 🚀 快速启动
 
-### 方式 1：双击即开（单文件离线版）
+### 方式 1：GitHub Pages 在线访问（推荐）
+在 GitHub 仓库中开启 Pages 后，即可随时通过公网链接免安装直接使用：
+1. 进入本仓库的 **Settings** -> **Pages**。
+2. 在 **Build and deployment** > **Source** 下选择：
+   - 方式 A（最简）：选择 `Deploy from a branch` -> 分支选择 `main`，目录选择 `/ (root)`，点击 **Save**。
+   - 方式 B（自动工作流）：选择 `GitHub Actions`，仓库已内置自动化工作流，每次推送将自动构建发布。
+3. 稍等片刻，即可在 `https://<您的GitHub用户名>.github.io/<仓库名>/` 在线畅玩！
+
+### 方式 2：本地双击即开（单文件离线版）
 直接双击打开 [`dark_carnival_helper.html`](./dark_carnival_helper.html) 即可在任何现代浏览器中运行（零依赖、无需安装任何环境）。
 
-### 方式 2：启动本地服务器
+### 方式 3：启动本地服务器
 ```bash
 # 赋予权限并启动
 chmod +x start.sh
