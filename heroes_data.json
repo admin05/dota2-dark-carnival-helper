@@ -1,0 +1,3970 @@
+[
+  {
+    "id": 1,
+    "key": "antimage",
+    "name": "敌法师",
+    "en_name": "Anti-Mage",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "女祭司",
+      "皇帝"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/antimage.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Nuker"
+    ],
+    "aliases": [
+      "敌法",
+      "敌法师",
+      "am",
+      "df",
+      "dfs",
+      "Anti-Mage"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The High Priestess",
+      "The Emperor"
+    ]
+  },
+  {
+    "id": 2,
+    "key": "axe",
+    "name": "斧王",
+    "en_name": "Axe",
+    "attr": "str",
+    "tickets": [
+      "力量",
+      "力量",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/axe.png",
+    "roles": [
+      "Initiator",
+      "Durable",
+      "Disabler",
+      "Carry"
+    ],
+    "aliases": [
+      "斧王",
+      "fw",
+      "axe",
+      "Axe"
+    ],
+    "tickets_en": [
+      "Strength",
+      "Strength",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 3,
+    "key": "bane",
+    "name": "祸乱之源",
+    "en_name": "Bane",
+    "attr": "all",
+    "tickets": [
+      "女祭司",
+      "女祭司",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bane.png",
+    "roles": [
+      "Support",
+      "Disabler",
+      "Nuker",
+      "Durable"
+    ],
+    "aliases": [
+      "祸乱之源",
+      "祸乱",
+      "bane",
+      "Bane"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The High Priestess",
+      "Death"
+    ]
+  },
+  {
+    "id": 4,
+    "key": "bloodseeker",
+    "name": "血魔",
+    "en_name": "Bloodseeker",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "女祭司",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bloodseeker.png",
+    "roles": [
+      "Carry",
+      "Disabler",
+      "Nuker",
+      "Initiator"
+    ],
+    "aliases": [
+      "血魔",
+      "嗜血狂魔",
+      "bs",
+      "xm",
+      "Bloodseeker"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The High Priestess",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 5,
+    "key": "crystal_maiden",
+    "name": "水晶室女",
+    "en_name": "Crystal Maiden",
+    "attr": "int",
+    "tickets": [
+      "愚者",
+      "愚者",
+      "魔术师"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crystal_maiden.png",
+    "roles": [
+      "Support",
+      "Disabler",
+      "Nuker"
+    ],
+    "aliases": [
+      "水晶室女",
+      "冰女",
+      "cm",
+      "bn",
+      "Crystal Maiden"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Fool",
+      "The Magician"
+    ]
+  },
+  {
+    "id": 6,
+    "key": "drow_ranger",
+    "name": "卓尔游侠",
+    "en_name": "Drow Ranger",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "魔术师",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/drow_ranger.png",
+    "roles": [
+      "Carry",
+      "Disabler",
+      "Pusher"
+    ],
+    "aliases": [
+      "卓尔游侠",
+      "小黑",
+      "dr",
+      "xh",
+      "Drow Ranger"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Magician",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 7,
+    "key": "earthshaker",
+    "name": "撼地者",
+    "en_name": "Earthshaker",
+    "attr": "str",
+    "tickets": [
+      "力量",
+      "力量",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/earthshaker.png",
+    "roles": [
+      "Support",
+      "Initiator",
+      "Disabler",
+      "Nuker"
+    ],
+    "aliases": [
+      "撼地者",
+      "小牛",
+      "牛头",
+      "es",
+      "xn",
+      "Earthshaker"
+    ],
+    "tickets_en": [
+      "Strength",
+      "Strength",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 8,
+    "key": "juggernaut",
+    "name": "主宰",
+    "en_name": "Juggernaut",
+    "attr": "agi",
+    "tickets": [
+      "皇帝",
+      "力量",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/juggernaut.png",
+    "roles": [
+      "Carry",
+      "Pusher",
+      "Escape"
+    ],
+    "aliases": [
+      "主宰",
+      "剑圣",
+      "jugg",
+      "js",
+      "zz",
+      "Juggernaut"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "Strength",
+      "Strength"
+    ]
+  },
+  {
+    "id": 9,
+    "key": "mirana",
+    "name": "米拉娜",
+    "en_name": "Mirana",
+    "attr": "agi",
+    "tickets": [
+      "皇帝",
+      "恋人",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/mirana.png",
+    "roles": [
+      "Carry",
+      "Support",
+      "Escape",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "米拉娜",
+      "白虎",
+      "pom",
+      "bh",
+      "Mirana"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Lovers",
+      "The Star"
+    ]
+  },
+  {
+    "id": 10,
+    "key": "morphling",
+    "name": "变体精灵",
+    "en_name": "Morphling",
+    "attr": "agi",
+    "tickets": [
+      "隐士",
+      "命运之轮",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/morphling.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Durable",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "变体精灵",
+      "水人",
+      "morph",
+      "sr",
+      "Morphling"
+    ],
+    "tickets_en": [
+      "The Hermit",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 11,
+    "key": "nevermore",
+    "name": "影魔",
+    "en_name": "Shadow Fiend",
+    "attr": "agi",
+    "tickets": [
+      "恶魔",
+      "恶魔",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/nevermore.png",
+    "roles": [
+      "Carry",
+      "Nuker"
+    ],
+    "aliases": [
+      "影魔",
+      "sf",
+      "ym",
+      "Shadow Fiend"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Devil",
+      "Death"
+    ]
+  },
+  {
+    "id": 12,
+    "key": "phantom_lancer",
+    "name": "幻影长矛手",
+    "en_name": "Phantom Lancer",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "恋人",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/phantom_lancer.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Pusher",
+      "Nuker"
+    ],
+    "aliases": [
+      "幻影长矛手",
+      "猴子",
+      "pl",
+      "hz",
+      "Phantom Lancer"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Lovers",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 13,
+    "key": "puck",
+    "name": "帕克",
+    "en_name": "Puck",
+    "attr": "int",
+    "tickets": [
+      "愚者",
+      "愚者",
+      "魔术师"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/puck.png",
+    "roles": [
+      "Initiator",
+      "Disabler",
+      "Escape",
+      "Nuker"
+    ],
+    "aliases": [
+      "帕克",
+      "仙女龙",
+      "puck",
+      "pk",
+      "Puck"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Fool",
+      "The Magician"
+    ]
+  },
+  {
+    "id": 14,
+    "key": "pudge",
+    "name": "帕吉",
+    "en_name": "Pudge",
+    "attr": "str",
+    "tickets": [
+      "愚者",
+      "恶魔",
+      "恶魔"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/pudge.png",
+    "roles": [
+      "Disabler",
+      "Initiator",
+      "Durable",
+      "Nuker"
+    ],
+    "aliases": [
+      "帕吉",
+      "屠夫",
+      "pudge",
+      "tf",
+      "pj",
+      "Pudge"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Devil",
+      "The Devil"
+    ]
+  },
+  {
+    "id": 15,
+    "key": "razor",
+    "name": "剃刀",
+    "en_name": "Razor",
+    "attr": "agi",
+    "tickets": [
+      "恶魔",
+      "皇帝",
+      "皇帝"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/razor.png",
+    "roles": [
+      "Carry",
+      "Durable",
+      "Nuker",
+      "Pusher"
+    ],
+    "aliases": [
+      "剃刀",
+      "电魂",
+      "闪电幽魂",
+      "razor",
+      "dh",
+      "Razor"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Emperor",
+      "The Emperor"
+    ]
+  },
+  {
+    "id": 16,
+    "key": "sand_king",
+    "name": "沙王",
+    "en_name": "Sand King",
+    "attr": "all",
+    "tickets": [
+      "隐士",
+      "隐士",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sand_king.png",
+    "roles": [
+      "Initiator",
+      "Disabler",
+      "Support",
+      "Nuker",
+      "Escape"
+    ],
+    "aliases": [
+      "沙王",
+      "sk",
+      "sw",
+      "Sand King"
+    ],
+    "tickets_en": [
+      "The Hermit",
+      "The Hermit",
+      "The Star"
+    ]
+  },
+  {
+    "id": 17,
+    "key": "storm_spirit",
+    "name": "风暴之灵",
+    "en_name": "Storm Spirit",
+    "attr": "int",
+    "tickets": [
+      "愚者",
+      "恶魔",
+      "皇帝"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/storm_spirit.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Nuker",
+      "Initiator",
+      "Disabler"
+    ],
+    "aliases": [
+      "风暴之灵",
+      "蓝猫",
+      "ss",
+      "lm",
+      "Storm Spirit"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Devil",
+      "The Emperor"
+    ]
+  },
+  {
+    "id": 18,
+    "key": "sven",
+    "name": "斯温",
+    "en_name": "Sven",
+    "attr": "str",
+    "tickets": [
+      "力量",
+      "力量",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sven.png",
+    "roles": [
+      "Carry",
+      "Disabler",
+      "Initiator",
+      "Durable",
+      "Nuker"
+    ],
+    "aliases": [
+      "斯温",
+      "流浪剑客",
+      "流浪",
+      "sven",
+      "sw",
+      "ll",
+      "Sven"
+    ],
+    "tickets_en": [
+      "Strength",
+      "Strength",
+      "Strength"
+    ]
+  },
+  {
+    "id": 19,
+    "key": "tiny",
+    "name": "小小",
+    "en_name": "Tiny",
+    "attr": "str",
+    "tickets": [
+      "愚者",
+      "星星",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tiny.png",
+    "roles": [
+      "Carry",
+      "Nuker",
+      "Pusher",
+      "Initiator",
+      "Durable",
+      "Disabler"
+    ],
+    "aliases": [
+      "小小",
+      "山岭巨人",
+      "tiny",
+      "xx",
+      "Tiny"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Star",
+      "The Star"
+    ]
+  },
+  {
+    "id": 20,
+    "key": "vengefulspirit",
+    "name": "复仇之魂",
+    "en_name": "Vengeful Spirit",
+    "attr": "agi",
+    "tickets": [
+      "皇帝",
+      "恋人",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/vengefulspirit.png",
+    "roles": [
+      "Support",
+      "Initiator",
+      "Disabler",
+      "Nuker",
+      "Escape"
+    ],
+    "aliases": [
+      "复仇之魂",
+      "复仇",
+      "vs",
+      "fc",
+      "Vengeful Spirit"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Lovers",
+      "Death"
+    ]
+  },
+  {
+    "id": 21,
+    "key": "windrunner",
+    "name": "风行者",
+    "en_name": "Windranger",
+    "attr": "all",
+    "tickets": [
+      "力量",
+      "隐士",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/windrunner.png",
+    "roles": [
+      "Carry",
+      "Support",
+      "Disabler",
+      "Escape",
+      "Nuker"
+    ],
+    "aliases": [
+      "风行者",
+      "风行",
+      "wr",
+      "fx",
+      "Windranger"
+    ],
+    "tickets_en": [
+      "Strength",
+      "The Hermit",
+      "The Star"
+    ]
+  },
+  {
+    "id": 22,
+    "key": "zuus",
+    "name": "宙斯",
+    "en_name": "Zeus",
+    "attr": "int",
+    "tickets": [
+      "愚者",
+      "愚者",
+      "恶魔"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/zuus.png",
+    "roles": [
+      "Nuker",
+      "Carry"
+    ],
+    "aliases": [
+      "宙斯",
+      "众神之王",
+      "zeus",
+      "zs",
+      "Zeus"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Fool",
+      "The Devil"
+    ]
+  },
+  {
+    "id": 23,
+    "key": "kunkka",
+    "name": "昆卡",
+    "en_name": "Kunkka",
+    "attr": "str",
+    "tickets": [
+      "皇帝",
+      "皇帝",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/kunkka.png",
+    "roles": [
+      "Carry",
+      "Support",
+      "Disabler",
+      "Initiator",
+      "Durable",
+      "Nuker"
+    ],
+    "aliases": [
+      "昆卡",
+      "船长",
+      "kunkka",
+      "cz",
+      "kk",
+      "Kunkka"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Emperor",
+      "Strength"
+    ]
+  },
+  {
+    "id": 25,
+    "key": "lina",
+    "name": "莉娜",
+    "en_name": "Lina",
+    "attr": "int",
+    "tickets": [
+      "魔术师",
+      "魔术师",
+      "恶魔"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lina.png",
+    "roles": [
+      "Support",
+      "Carry",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "莉娜",
+      "火女",
+      "秀逗魔导士",
+      "lina",
+      "hn",
+      "Lina"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Magician",
+      "The Devil"
+    ]
+  },
+  {
+    "id": 26,
+    "key": "lion",
+    "name": "莱恩",
+    "en_name": "Lion",
+    "attr": "int",
+    "tickets": [
+      "魔术师",
+      "恶魔",
+      "恶魔"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lion.png",
+    "roles": [
+      "Support",
+      "Disabler",
+      "Nuker",
+      "Initiator"
+    ],
+    "aliases": [
+      "莱恩",
+      "恶魔巫师",
+      "lion",
+      "emws",
+      "Lion"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Devil",
+      "The Devil"
+    ]
+  },
+  {
+    "id": 27,
+    "key": "shadow_shaman",
+    "name": "暗影萨满",
+    "en_name": "Shadow Shaman",
+    "attr": "int",
+    "tickets": [
+      "女祭司",
+      "女祭司",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/shadow_shaman.png",
+    "roles": [
+      "Support",
+      "Pusher",
+      "Disabler",
+      "Nuker",
+      "Initiator"
+    ],
+    "aliases": [
+      "暗影萨满",
+      "小y",
+      "萨满",
+      "ss",
+      "xy",
+      "Shadow Shaman"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The High Priestess",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 28,
+    "key": "slardar",
+    "name": "斯拉达",
+    "en_name": "Slardar",
+    "attr": "str",
+    "tickets": [
+      "女祭司",
+      "力量",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/slardar.png",
+    "roles": [
+      "Carry",
+      "Durable",
+      "Initiator",
+      "Disabler",
+      "Escape"
+    ],
+    "aliases": [
+      "斯拉达",
+      "大鱼人",
+      "大鱼",
+      "slardar",
+      "dyr",
+      "dy",
+      "Slardar"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "Strength",
+      "Strength"
+    ]
+  },
+  {
+    "id": 29,
+    "key": "tidehunter",
+    "name": "潮汐猎人",
+    "en_name": "Tidehunter",
+    "attr": "str",
+    "tickets": [
+      "皇帝",
+      "隐士",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tidehunter.png",
+    "roles": [
+      "Initiator",
+      "Durable",
+      "Disabler",
+      "Nuker",
+      "Carry"
+    ],
+    "aliases": [
+      "潮汐猎人",
+      "潮汐",
+      "th",
+      "cx",
+      "Tidehunter"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Hermit",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 30,
+    "key": "witch_doctor",
+    "name": "巫医",
+    "en_name": "Witch Doctor",
+    "attr": "int",
+    "tickets": [
+      "隐士",
+      "星星",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/witch_doctor.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "巫医",
+      "wd",
+      "wy",
+      "Witch Doctor"
+    ],
+    "tickets_en": [
+      "The Hermit",
+      "The Star",
+      "Death"
+    ]
+  },
+  {
+    "id": 31,
+    "key": "lich",
+    "name": "巫妖",
+    "en_name": "Lich",
+    "attr": "int",
+    "tickets": [
+      "魔术师",
+      "死神",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lich.png",
+    "roles": [
+      "Support",
+      "Nuker"
+    ],
+    "aliases": [
+      "巫妖",
+      "lich",
+      "wy",
+      "Lich"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "Death",
+      "Death"
+    ]
+  },
+  {
+    "id": 32,
+    "key": "riki",
+    "name": "力丸",
+    "en_name": "Riki",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "魔术师",
+      "恶魔"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/riki.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Disabler"
+    ],
+    "aliases": [
+      "力丸",
+      "隐刺",
+      "sa",
+      "riki",
+      "yc",
+      "Riki"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Magician",
+      "The Devil"
+    ]
+  },
+  {
+    "id": 33,
+    "key": "enigma",
+    "name": "谜团",
+    "en_name": "Enigma",
+    "attr": "all",
+    "tickets": [
+      "女祭司",
+      "星星",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/enigma.png",
+    "roles": [
+      "Disabler",
+      "Initiator",
+      "Pusher"
+    ],
+    "aliases": [
+      "谜团",
+      "enigma",
+      "mt",
+      "Enigma"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The Star",
+      "The Star"
+    ]
+  },
+  {
+    "id": 34,
+    "key": "tinker",
+    "name": "修补匠",
+    "en_name": "Tinker",
+    "attr": "int",
+    "tickets": [
+      "隐士",
+      "隐士",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tinker.png",
+    "roles": [
+      "Carry",
+      "Nuker",
+      "Pusher"
+    ],
+    "aliases": [
+      "修补匠",
+      "tk",
+      "xbj",
+      "Tinker"
+    ],
+    "tickets_en": [
+      "The Hermit",
+      "The Hermit",
+      "The Star"
+    ]
+  },
+  {
+    "id": 35,
+    "key": "sniper",
+    "name": "狙击手",
+    "en_name": "Sniper",
+    "attr": "agi",
+    "tickets": [
+      "力量",
+      "隐士",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sniper.png",
+    "roles": [
+      "Carry",
+      "Nuker"
+    ],
+    "aliases": [
+      "狙击手",
+      "火枪",
+      "火枪手",
+      "sniper",
+      "hq",
+      "Sniper"
+    ],
+    "tickets_en": [
+      "Strength",
+      "The Hermit",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 36,
+    "key": "necrolyte",
+    "name": "瘟疫法师",
+    "en_name": "Necrophos",
+    "attr": "int",
+    "tickets": [
+      "皇帝",
+      "死神",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/necrolyte.png",
+    "roles": [
+      "Carry",
+      "Nuker",
+      "Durable",
+      "Disabler"
+    ],
+    "aliases": [
+      "瘟疫法师",
+      "nec",
+      "死灵法",
+      "wyfs",
+      "Necrophos"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "Death",
+      "Death"
+    ]
+  },
+  {
+    "id": 37,
+    "key": "warlock",
+    "name": "术士",
+    "en_name": "Warlock",
+    "attr": "int",
+    "tickets": [
+      "恶魔",
+      "恋人",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/warlock.png",
+    "roles": [
+      "Support",
+      "Initiator",
+      "Disabler"
+    ],
+    "aliases": [
+      "术士",
+      "wl",
+      "ss",
+      "Warlock"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Lovers",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 38,
+    "key": "beastmaster",
+    "name": "兽王",
+    "en_name": "Beastmaster",
+    "attr": "all",
+    "tickets": [
+      "恶魔",
+      "恋人",
+      "恋人"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/beastmaster.png",
+    "roles": [
+      "Initiator",
+      "Disabler",
+      "Durable",
+      "Nuker"
+    ],
+    "aliases": [
+      "兽王",
+      "bm",
+      "sw",
+      "Beastmaster"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Lovers",
+      "The Lovers"
+    ]
+  },
+  {
+    "id": 39,
+    "key": "queenofpain",
+    "name": "痛苦女王",
+    "en_name": "Queen of Pain",
+    "attr": "int",
+    "tickets": [
+      "女祭司",
+      "恶魔",
+      "恶魔"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/queenofpain.png",
+    "roles": [
+      "Carry",
+      "Nuker",
+      "Escape"
+    ],
+    "aliases": [
+      "痛苦女王",
+      "女王",
+      "qop",
+      "nw",
+      "Queen of Pain"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The Devil",
+      "The Devil"
+    ]
+  },
+  {
+    "id": 40,
+    "key": "venomancer",
+    "name": "剧毒术士",
+    "en_name": "Venomancer",
+    "attr": "all",
+    "tickets": [
+      "命运之轮",
+      "死神",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/venomancer.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Initiator",
+      "Pusher",
+      "Disabler"
+    ],
+    "aliases": [
+      "剧毒术士",
+      "剧毒",
+      "veno",
+      "jd",
+      "Venomancer"
+    ],
+    "tickets_en": [
+      "Wheel of Fortune",
+      "Death",
+      "Death"
+    ]
+  },
+  {
+    "id": 41,
+    "key": "faceless_void",
+    "name": "虚空假面",
+    "en_name": "Faceless Void",
+    "attr": "agi",
+    "tickets": [
+      "愚者",
+      "力量",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/faceless_void.png",
+    "roles": [
+      "Carry",
+      "Initiator",
+      "Disabler",
+      "Escape",
+      "Durable"
+    ],
+    "aliases": [
+      "虚空假面",
+      "虚空",
+      "fv",
+      "void",
+      "xk",
+      "Faceless Void"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "Strength",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 42,
+    "key": "skeleton_king",
+    "name": "冥魂大帝",
+    "en_name": "Wraith King",
+    "attr": "str",
+    "tickets": [
+      "皇帝",
+      "皇帝",
+      "皇帝"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/skeleton_king.png",
+    "roles": [
+      "Carry",
+      "Support",
+      "Durable",
+      "Disabler",
+      "Initiator"
+    ],
+    "aliases": [
+      "冥魂大帝",
+      "骷髅王",
+      "snk",
+      "wk",
+      "klw",
+      "Wraith King"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Emperor",
+      "The Emperor"
+    ]
+  },
+  {
+    "id": 43,
+    "key": "death_prophet",
+    "name": "死亡先知",
+    "en_name": "Death Prophet",
+    "attr": "all",
+    "tickets": [
+      "星星",
+      "命运之轮",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/death_prophet.png",
+    "roles": [
+      "Carry",
+      "Pusher",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "死亡先知",
+      "dp",
+      "swxz",
+      "Death Prophet"
+    ],
+    "tickets_en": [
+      "The Star",
+      "Wheel of Fortune",
+      "Death"
+    ]
+  },
+  {
+    "id": 44,
+    "key": "phantom_assassin",
+    "name": "幻影刺客",
+    "en_name": "Phantom Assassin",
+    "attr": "agi",
+    "tickets": [
+      "力量",
+      "命运之轮",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/phantom_assassin.png",
+    "roles": [
+      "Carry",
+      "Escape"
+    ],
+    "aliases": [
+      "幻影刺客",
+      "pa",
+      "hyck",
+      "Phantom Assassin"
+    ],
+    "tickets_en": [
+      "Strength",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 45,
+    "key": "pugna",
+    "name": "帕格纳",
+    "en_name": "Pugna",
+    "attr": "int",
+    "tickets": [
+      "魔术师",
+      "星星",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/pugna.png",
+    "roles": [
+      "Nuker",
+      "Pusher"
+    ],
+    "aliases": [
+      "帕格纳",
+      "骨法",
+      "pugna",
+      "gf",
+      "Pugna"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Star",
+      "Death"
+    ]
+  },
+  {
+    "id": 46,
+    "key": "templar_assassin",
+    "name": "圣堂刺客",
+    "en_name": "Templar Assassin",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "女祭司",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/templar_assassin.png",
+    "roles": [
+      "Carry",
+      "Escape"
+    ],
+    "aliases": [
+      "圣堂刺客",
+      "圣堂",
+      "ta",
+      "st",
+      "Templar Assassin"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The High Priestess",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 47,
+    "key": "viper",
+    "name": "冥界亚龙",
+    "en_name": "Viper",
+    "attr": "agi",
+    "tickets": [
+      "隐士",
+      "隐士",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/viper.png",
+    "roles": [
+      "Carry",
+      "Durable",
+      "Initiator",
+      "Disabler"
+    ],
+    "aliases": [
+      "冥界亚龙",
+      "毒龙",
+      "vip",
+      "viper",
+      "dl",
+      "Viper"
+    ],
+    "tickets_en": [
+      "The Hermit",
+      "The Hermit",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 48,
+    "key": "luna",
+    "name": "露娜",
+    "en_name": "Luna",
+    "attr": "agi",
+    "tickets": [
+      "皇帝",
+      "恋人",
+      "恋人"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/luna.png",
+    "roles": [
+      "Carry",
+      "Nuker",
+      "Pusher"
+    ],
+    "aliases": [
+      "露娜",
+      "月骑",
+      "月之骑士",
+      "luna",
+      "yq",
+      "Luna"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Lovers",
+      "The Lovers"
+    ]
+  },
+  {
+    "id": 49,
+    "key": "dragon_knight",
+    "name": "龙骑士",
+    "en_name": "Dragon Knight",
+    "attr": "str",
+    "tickets": [
+      "皇帝",
+      "力量",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dragon_knight.png",
+    "roles": [
+      "Carry",
+      "Pusher",
+      "Durable",
+      "Disabler",
+      "Initiator",
+      "Nuker"
+    ],
+    "aliases": [
+      "龙骑士",
+      "龙骑",
+      "dk",
+      "lq",
+      "Dragon Knight"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "Strength",
+      "Death"
+    ]
+  },
+  {
+    "id": 50,
+    "key": "dazzle",
+    "name": "戴泽",
+    "en_name": "Dazzle",
+    "attr": "all",
+    "tickets": [
+      "恋人",
+      "恋人",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dazzle.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "戴泽",
+      "暗牧",
+      "dazzle",
+      "am",
+      "Dazzle"
+    ],
+    "tickets_en": [
+      "The Lovers",
+      "The Lovers",
+      "The Star"
+    ]
+  },
+  {
+    "id": 51,
+    "key": "rattletrap",
+    "name": "发条技师",
+    "en_name": "Clockwerk",
+    "attr": "str",
+    "tickets": [
+      "隐士",
+      "星星",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/rattletrap.png",
+    "roles": [
+      "Initiator",
+      "Disabler",
+      "Durable",
+      "Nuker"
+    ],
+    "aliases": [
+      "发条技师",
+      "发条",
+      "cg",
+      "clock",
+      "ft",
+      "Clockwerk"
+    ],
+    "tickets_en": [
+      "The Hermit",
+      "The Star",
+      "The Star"
+    ]
+  },
+  {
+    "id": 52,
+    "key": "leshrac",
+    "name": "拉席克",
+    "en_name": "Leshrac",
+    "attr": "int",
+    "tickets": [
+      "魔术师",
+      "恶魔",
+      "恶魔"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/leshrac.png",
+    "roles": [
+      "Carry",
+      "Support",
+      "Nuker",
+      "Pusher",
+      "Disabler"
+    ],
+    "aliases": [
+      "拉席克",
+      "老鹿",
+      "ts",
+      "lesh",
+      "ll",
+      "Leshrac"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Devil",
+      "The Devil"
+    ]
+  },
+  {
+    "id": 53,
+    "key": "furion",
+    "name": "先知",
+    "en_name": "Nature's Prophet",
+    "attr": "all",
+    "tickets": [
+      "魔术师",
+      "女祭司",
+      "女祭司"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/furion.png",
+    "roles": [
+      "Carry",
+      "Pusher",
+      "Escape",
+      "Nuker"
+    ],
+    "aliases": [
+      "先知",
+      "np",
+      "fura",
+      "xz",
+      "Nature's Prophet"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The High Priestess",
+      "The High Priestess"
+    ]
+  },
+  {
+    "id": 54,
+    "key": "life_stealer",
+    "name": "噬魂鬼",
+    "en_name": "Lifestealer",
+    "attr": "str",
+    "tickets": [
+      "恶魔",
+      "恶魔",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/life_stealer.png",
+    "roles": [
+      "Carry",
+      "Durable",
+      "Escape",
+      "Disabler"
+    ],
+    "aliases": [
+      "噬魂鬼",
+      "小狗",
+      "naix",
+      "ls",
+      "xg",
+      "Lifestealer"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Devil",
+      "Death"
+    ]
+  },
+  {
+    "id": 55,
+    "key": "dark_seer",
+    "name": "黑暗贤者",
+    "en_name": "Dark Seer",
+    "attr": "int",
+    "tickets": [
+      "女祭司",
+      "女祭司",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dark_seer.png",
+    "roles": [
+      "Initiator",
+      "Escape",
+      "Disabler"
+    ],
+    "aliases": [
+      "黑暗贤者",
+      "兔子",
+      "ds",
+      "tz",
+      "Dark Seer"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The High Priestess",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 56,
+    "key": "clinkz",
+    "name": "克林克兹",
+    "en_name": "Clinkz",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "力量",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/clinkz.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Pusher"
+    ],
+    "aliases": [
+      "克林克兹",
+      "骨弓",
+      "小骷髅",
+      "clinkz",
+      "gg",
+      "Clinkz"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "Strength",
+      "Death"
+    ]
+  },
+  {
+    "id": 57,
+    "key": "omniknight",
+    "name": "全能骑士",
+    "en_name": "Omniknight",
+    "attr": "str",
+    "tickets": [
+      "女祭司",
+      "女祭司",
+      "皇帝"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/omniknight.png",
+    "roles": [
+      "Support",
+      "Durable",
+      "Nuker"
+    ],
+    "aliases": [
+      "全能骑士",
+      "全能",
+      "ok",
+      "omni",
+      "qn",
+      "Omniknight"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The High Priestess",
+      "The Emperor"
+    ]
+  },
+  {
+    "id": 58,
+    "key": "enchantress",
+    "name": "魅惑魔女",
+    "en_name": "Enchantress",
+    "attr": "int",
+    "tickets": [
+      "愚者",
+      "愚者",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/enchantress.png",
+    "roles": [
+      "Support",
+      "Pusher",
+      "Durable",
+      "Disabler"
+    ],
+    "aliases": [
+      "魅惑魔女",
+      "小鹿",
+      "ench",
+      "xl",
+      "Enchantress"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Fool",
+      "The Star"
+    ]
+  },
+  {
+    "id": 59,
+    "key": "huskar",
+    "name": "哈斯卡",
+    "en_name": "Huskar",
+    "attr": "str",
+    "tickets": [
+      "女祭司",
+      "恶魔",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/huskar.png",
+    "roles": [
+      "Carry",
+      "Durable",
+      "Initiator"
+    ],
+    "aliases": [
+      "哈斯卡",
+      "神灵武士",
+      "神灵",
+      "huskar",
+      "sl",
+      "Huskar"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The Devil",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 60,
+    "key": "night_stalker",
+    "name": "暗夜魔王",
+    "en_name": "Night Stalker",
+    "attr": "str",
+    "tickets": [
+      "皇帝",
+      "皇帝",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/night_stalker.png",
+    "roles": [
+      "Carry",
+      "Initiator",
+      "Durable",
+      "Disabler",
+      "Nuker"
+    ],
+    "aliases": [
+      "暗夜魔王",
+      "夜魔",
+      "ns",
+      "ym",
+      "Night Stalker"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Emperor",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 61,
+    "key": "broodmother",
+    "name": "育母蜘蛛",
+    "en_name": "Broodmother",
+    "attr": "agi",
+    "tickets": [
+      "恋人",
+      "隐士",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/broodmother.png",
+    "roles": [
+      "Carry",
+      "Pusher",
+      "Escape",
+      "Nuker"
+    ],
+    "aliases": [
+      "育母蜘蛛",
+      "蜘蛛",
+      "bm",
+      "zz",
+      "Broodmother"
+    ],
+    "tickets_en": [
+      "The Lovers",
+      "The Hermit",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 62,
+    "key": "bounty_hunter",
+    "name": "赏金猎人",
+    "en_name": "Bounty Hunter",
+    "attr": "agi",
+    "tickets": [
+      "恶魔",
+      "恶魔",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bounty_hunter.png",
+    "roles": [
+      "Escape",
+      "Nuker"
+    ],
+    "aliases": [
+      "赏金猎人",
+      "赏金",
+      "bh",
+      "sj",
+      "Bounty Hunter"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Devil",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 63,
+    "key": "weaver",
+    "name": "编织者",
+    "en_name": "Weaver",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "星星",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/weaver.png",
+    "roles": [
+      "Carry",
+      "Escape"
+    ],
+    "aliases": [
+      "编织者",
+      "地穴编织者",
+      "蚂蚁",
+      "weaver",
+      "my",
+      "Weaver"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Star",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 64,
+    "key": "jakiro",
+    "name": "杰奇洛",
+    "en_name": "Jakiro",
+    "attr": "int",
+    "tickets": [
+      "恋人",
+      "恋人",
+      "恋人"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/jakiro.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Pusher",
+      "Disabler"
+    ],
+    "aliases": [
+      "杰奇洛",
+      "双头龙",
+      "thd",
+      "jakiro",
+      "stl",
+      "Jakiro"
+    ],
+    "tickets_en": [
+      "The Lovers",
+      "The Lovers",
+      "The Lovers"
+    ]
+  },
+  {
+    "id": 65,
+    "key": "batrider",
+    "name": "蝙蝠骑士",
+    "en_name": "Batrider",
+    "attr": "all",
+    "tickets": [
+      "恋人",
+      "恋人",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/batrider.png",
+    "roles": [
+      "Initiator",
+      "Disabler",
+      "Escape"
+    ],
+    "aliases": [
+      "蝙蝠骑士",
+      "蝙蝠",
+      "bat",
+      "bm",
+      "Batrider"
+    ],
+    "tickets_en": [
+      "The Lovers",
+      "The Lovers",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 66,
+    "key": "chen",
+    "name": "陈",
+    "en_name": "Chen",
+    "attr": "int",
+    "tickets": [
+      "女祭司",
+      "女祭司",
+      "皇帝"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/chen.png",
+    "roles": [
+      "Support",
+      "Pusher"
+    ],
+    "aliases": [
+      "陈",
+      "chen",
+      "Chen"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The High Priestess",
+      "The Emperor"
+    ]
+  },
+  {
+    "id": 67,
+    "key": "spectre",
+    "name": "幽鬼",
+    "en_name": "Spectre",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "力量",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/spectre.png",
+    "roles": [
+      "Carry",
+      "Durable",
+      "Escape"
+    ],
+    "aliases": [
+      "幽鬼",
+      "spec",
+      "yg",
+      "Spectre"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "Strength",
+      "Strength"
+    ]
+  },
+  {
+    "id": 68,
+    "key": "ancient_apparition",
+    "name": "远古冰魄",
+    "en_name": "Ancient Apparition",
+    "attr": "int",
+    "tickets": [
+      "命运之轮",
+      "死神",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ancient_apparition.png",
+    "roles": [
+      "Support",
+      "Disabler",
+      "Nuker"
+    ],
+    "aliases": [
+      "远古冰魄",
+      "冰魂",
+      "aa",
+      "bh",
+      "Ancient Apparition"
+    ],
+    "tickets_en": [
+      "Wheel of Fortune",
+      "Death",
+      "Death"
+    ]
+  },
+  {
+    "id": 69,
+    "key": "doom_bringer",
+    "name": "末日使者",
+    "en_name": "Doom",
+    "attr": "str",
+    "tickets": [
+      "恶魔",
+      "恶魔",
+      "恶魔"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/doom_bringer.png",
+    "roles": [
+      "Carry",
+      "Disabler",
+      "Initiator",
+      "Durable",
+      "Nuker"
+    ],
+    "aliases": [
+      "末日使者",
+      "末日",
+      "doom",
+      "mr",
+      "Doom"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Devil",
+      "The Devil"
+    ]
+  },
+  {
+    "id": 70,
+    "key": "ursa",
+    "name": "熊战士",
+    "en_name": "Ursa",
+    "attr": "agi",
+    "tickets": [
+      "皇帝",
+      "恋人",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ursa.png",
+    "roles": [
+      "Carry",
+      "Durable",
+      "Disabler"
+    ],
+    "aliases": [
+      "熊战士",
+      "拍拍熊",
+      "拍拍",
+      "ursa",
+      "ppx",
+      "Ursa"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Lovers",
+      "The Star"
+    ]
+  },
+  {
+    "id": 71,
+    "key": "spirit_breaker",
+    "name": "裂魂人",
+    "en_name": "Spirit Breaker",
+    "attr": "str",
+    "tickets": [
+      "力量",
+      "命运之轮",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/spirit_breaker.png",
+    "roles": [
+      "Carry",
+      "Initiator",
+      "Disabler",
+      "Durable",
+      "Escape"
+    ],
+    "aliases": [
+      "裂魂人",
+      "白牛",
+      "sb",
+      "bn",
+      "Spirit Breaker"
+    ],
+    "tickets_en": [
+      "Strength",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 72,
+    "key": "gyrocopter",
+    "name": "矮人直升机",
+    "en_name": "Gyrocopter",
+    "attr": "agi",
+    "tickets": [
+      "愚者",
+      "力量",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/gyrocopter.png",
+    "roles": [
+      "Carry",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "矮人直升机",
+      "飞机",
+      "gyro",
+      "fj",
+      "Gyrocopter"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "Strength",
+      "The Star"
+    ]
+  },
+  {
+    "id": 73,
+    "key": "alchemist",
+    "name": "炼金术士",
+    "en_name": "Alchemist",
+    "attr": "str",
+    "tickets": [
+      "恶魔",
+      "恋人",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/alchemist.png",
+    "roles": [
+      "Carry",
+      "Support",
+      "Durable",
+      "Disabler",
+      "Initiator",
+      "Nuker"
+    ],
+    "aliases": [
+      "炼金术士",
+      "炼金",
+      "ga",
+      "alch",
+      "lj",
+      "Alchemist"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Lovers",
+      "The Star"
+    ]
+  },
+  {
+    "id": 74,
+    "key": "invoker",
+    "name": "祈求者",
+    "en_name": "Invoker",
+    "attr": "int",
+    "tickets": [
+      "魔术师",
+      "魔术师",
+      "恶魔"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/invoker.png",
+    "roles": [
+      "Carry",
+      "Nuker",
+      "Disabler",
+      "Escape",
+      "Pusher"
+    ],
+    "aliases": [
+      "祈求者",
+      "卡尔",
+      "invo",
+      "kaer",
+      "ke",
+      "Invoker"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Magician",
+      "The Devil"
+    ]
+  },
+  {
+    "id": 75,
+    "key": "silencer",
+    "name": "沉默术士",
+    "en_name": "Silencer",
+    "attr": "int",
+    "tickets": [
+      "魔术师",
+      "皇帝",
+      "皇帝"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/silencer.png",
+    "roles": [
+      "Carry",
+      "Support",
+      "Disabler",
+      "Initiator",
+      "Nuker"
+    ],
+    "aliases": [
+      "沉默术士",
+      "沉默",
+      "sil",
+      "cm",
+      "Silencer"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Emperor",
+      "The Emperor"
+    ]
+  },
+  {
+    "id": 76,
+    "key": "obsidian_destroyer",
+    "name": "殁境神蚀者",
+    "en_name": "Outworld Devourer",
+    "attr": "int",
+    "tickets": [
+      "女祭司",
+      "女祭司",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/obsidian_destroyer.png",
+    "roles": [
+      "Carry",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "殁境神蚀者",
+      "黑鸟",
+      "od",
+      "destroyer",
+      "hn",
+      "Outworld Devourer"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The High Priestess",
+      "Death"
+    ]
+  },
+  {
+    "id": 77,
+    "key": "lycan",
+    "name": "狼人",
+    "en_name": "Lycan",
+    "attr": "str",
+    "tickets": [
+      "力量",
+      "力量",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lycan.png",
+    "roles": [
+      "Carry",
+      "Pusher",
+      "Durable",
+      "Escape"
+    ],
+    "aliases": [
+      "狼人",
+      "lycan",
+      "lr",
+      "Lycan"
+    ],
+    "tickets_en": [
+      "Strength",
+      "Strength",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 78,
+    "key": "brewmaster",
+    "name": "酒仙",
+    "en_name": "Brewmaster",
+    "attr": "all",
+    "tickets": [
+      "恋人",
+      "恋人",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/brewmaster.png",
+    "roles": [
+      "Carry",
+      "Initiator",
+      "Durable",
+      "Disabler",
+      "Nuker"
+    ],
+    "aliases": [
+      "酒仙",
+      "熊猫酒仙",
+      "熊猫",
+      "panda",
+      "brew",
+      "jx",
+      "Brewmaster"
+    ],
+    "tickets_en": [
+      "The Lovers",
+      "The Lovers",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 79,
+    "key": "shadow_demon",
+    "name": "暗影恶魔",
+    "en_name": "Shadow Demon",
+    "attr": "int",
+    "tickets": [
+      "恶魔",
+      "恶魔",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/shadow_demon.png",
+    "roles": [
+      "Support",
+      "Disabler",
+      "Initiator",
+      "Nuker"
+    ],
+    "aliases": [
+      "暗影恶魔",
+      "毒狗",
+      "sd",
+      "dg",
+      "Shadow Demon"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Devil",
+      "Death"
+    ]
+  },
+  {
+    "id": 80,
+    "key": "lone_druid",
+    "name": "德鲁伊",
+    "en_name": "Lone Druid",
+    "attr": "agi",
+    "tickets": [
+      "恋人",
+      "隐士",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lone_druid.png",
+    "roles": [
+      "Carry",
+      "Pusher",
+      "Durable"
+    ],
+    "aliases": [
+      "德鲁伊",
+      "熊德",
+      "ld",
+      "xd",
+      "Lone Druid"
+    ],
+    "tickets_en": [
+      "The Lovers",
+      "The Hermit",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 81,
+    "key": "chaos_knight",
+    "name": "混沌骑士",
+    "en_name": "Chaos Knight",
+    "attr": "str",
+    "tickets": [
+      "命运之轮",
+      "命运之轮",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/chaos_knight.png",
+    "roles": [
+      "Carry",
+      "Disabler",
+      "Durable",
+      "Pusher",
+      "Initiator"
+    ],
+    "aliases": [
+      "混沌骑士",
+      "混沌",
+      "ck",
+      "hd",
+      "Chaos Knight"
+    ],
+    "tickets_en": [
+      "Wheel of Fortune",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 82,
+    "key": "meepo",
+    "name": "米波",
+    "en_name": "Meepo",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "恋人",
+      "恋人"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/meepo.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Nuker",
+      "Disabler",
+      "Initiator",
+      "Pusher"
+    ],
+    "aliases": [
+      "米波",
+      "地卜师",
+      "地卜",
+      "meepo",
+      "dbs",
+      "Meepo"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Lovers",
+      "The Lovers"
+    ]
+  },
+  {
+    "id": 83,
+    "key": "treant",
+    "name": "树精卫士",
+    "en_name": "Treant Protector",
+    "attr": "str",
+    "tickets": [
+      "恶魔",
+      "隐士",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/treant.png",
+    "roles": [
+      "Support",
+      "Initiator",
+      "Durable",
+      "Disabler",
+      "Escape"
+    ],
+    "aliases": [
+      "树精卫士",
+      "大树",
+      "tp",
+      "treant",
+      "ds",
+      "Treant Protector"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Hermit",
+      "The Star"
+    ]
+  },
+  {
+    "id": 84,
+    "key": "ogre_magi",
+    "name": "食人魔魔法师",
+    "en_name": "Ogre Magi",
+    "attr": "str",
+    "tickets": [
+      "愚者",
+      "命运之轮",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ogre_magi.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Disabler",
+      "Durable",
+      "Initiator"
+    ],
+    "aliases": [
+      "食人魔魔法师",
+      "蓝胖",
+      "om",
+      "ogre",
+      "lp",
+      "Ogre Magi"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 85,
+    "key": "undying",
+    "name": "不朽尸王",
+    "en_name": "Undying",
+    "attr": "str",
+    "tickets": [
+      "隐士",
+      "死神",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/undying.png",
+    "roles": [
+      "Support",
+      "Durable",
+      "Disabler",
+      "Nuker"
+    ],
+    "aliases": [
+      "不朽尸王",
+      "尸王",
+      "undying",
+      "dirge",
+      "sw",
+      "Undying"
+    ],
+    "tickets_en": [
+      "The Hermit",
+      "Death",
+      "Death"
+    ]
+  },
+  {
+    "id": 86,
+    "key": "rubick",
+    "name": "拉比克",
+    "en_name": "Rubick",
+    "attr": "int",
+    "tickets": [
+      "魔术师",
+      "魔术师",
+      "魔术师"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/rubick.png",
+    "roles": [
+      "Support",
+      "Disabler",
+      "Nuker"
+    ],
+    "aliases": [
+      "拉比克",
+      "大魔导",
+      "rubick",
+      "rbk",
+      "Rubick"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Magician",
+      "The Magician"
+    ]
+  },
+  {
+    "id": 87,
+    "key": "disruptor",
+    "name": "干扰者",
+    "en_name": "Disruptor",
+    "attr": "int",
+    "tickets": [
+      "愚者",
+      "星星",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/disruptor.png",
+    "roles": [
+      "Support",
+      "Disabler",
+      "Nuker",
+      "Initiator"
+    ],
+    "aliases": [
+      "干扰者",
+      "萨尔",
+      "dis",
+      "thrall",
+      "se",
+      "Disruptor"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Star",
+      "The Star"
+    ]
+  },
+  {
+    "id": 88,
+    "key": "nyx_assassin",
+    "name": "司夜刺客",
+    "en_name": "Nyx Assassin",
+    "attr": "all",
+    "tickets": [
+      "隐士",
+      "隐士",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/nyx_assassin.png",
+    "roles": [
+      "Disabler",
+      "Nuker",
+      "Initiator",
+      "Escape"
+    ],
+    "aliases": [
+      "司夜刺客",
+      "小强",
+      "nyx",
+      "na",
+      "xq",
+      "Nyx Assassin"
+    ],
+    "tickets_en": [
+      "The Hermit",
+      "The Hermit",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 89,
+    "key": "naga_siren",
+    "name": "娜迦海妖",
+    "en_name": "Naga Siren",
+    "attr": "agi",
+    "tickets": [
+      "女祭司",
+      "恋人",
+      "恋人"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/naga_siren.png",
+    "roles": [
+      "Carry",
+      "Support",
+      "Pusher",
+      "Disabler",
+      "Initiator",
+      "Escape"
+    ],
+    "aliases": [
+      "娜迦海妖",
+      "小娜迦",
+      "naga",
+      "xnj",
+      "Naga Siren"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The Lovers",
+      "The Lovers"
+    ]
+  },
+  {
+    "id": 90,
+    "key": "keeper_of_the_light",
+    "name": "光之守卫",
+    "en_name": "Keeper of the Light",
+    "attr": "int",
+    "tickets": [
+      "星星",
+      "星星",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/keeper_of_the_light.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "光之守卫",
+      "光法",
+      "kotl",
+      "gf",
+      "Keeper of the Light"
+    ],
+    "tickets_en": [
+      "The Star",
+      "The Star",
+      "The Star"
+    ]
+  },
+  {
+    "id": 91,
+    "key": "wisp",
+    "name": "艾欧",
+    "en_name": "Io",
+    "attr": "all",
+    "tickets": [
+      "愚者",
+      "愚者",
+      "愚者"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/wisp.png",
+    "roles": [
+      "Support",
+      "Escape",
+      "Nuker"
+    ],
+    "aliases": [
+      "艾欧",
+      "小精灵",
+      "io",
+      "wisp",
+      "xjl",
+      "Io"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Fool",
+      "The Fool"
+    ]
+  },
+  {
+    "id": 92,
+    "key": "visage",
+    "name": "维萨吉",
+    "en_name": "Visage",
+    "attr": "all",
+    "tickets": [
+      "恋人",
+      "恋人",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/visage.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Durable",
+      "Disabler",
+      "Pusher"
+    ],
+    "aliases": [
+      "维萨吉",
+      "死灵龙",
+      "visage",
+      "sll",
+      "Visage"
+    ],
+    "tickets_en": [
+      "The Lovers",
+      "The Lovers",
+      "Death"
+    ]
+  },
+  {
+    "id": 93,
+    "key": "slark",
+    "name": "斯拉克",
+    "en_name": "Slark",
+    "attr": "agi",
+    "tickets": [
+      "恶魔",
+      "力量",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/slark.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Disabler",
+      "Nuker"
+    ],
+    "aliases": [
+      "斯拉克",
+      "小鱼人",
+      "小鱼",
+      "slark",
+      "xyr",
+      "xy",
+      "Slark"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "Strength",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 94,
+    "key": "medusa",
+    "name": "美杜莎",
+    "en_name": "Medusa",
+    "attr": "agi",
+    "tickets": [
+      "恶魔",
+      "恶魔",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/medusa.png",
+    "roles": [
+      "Carry",
+      "Disabler",
+      "Durable"
+    ],
+    "aliases": [
+      "美杜莎",
+      "一姐",
+      "medusa",
+      "dusa",
+      "yj",
+      "Medusa"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Devil",
+      "Death"
+    ]
+  },
+  {
+    "id": 95,
+    "key": "troll_warlord",
+    "name": "巨魔战将",
+    "en_name": "Troll Warlord",
+    "attr": "agi",
+    "tickets": [
+      "恶魔",
+      "皇帝",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/troll_warlord.png",
+    "roles": [
+      "Carry",
+      "Pusher",
+      "Disabler",
+      "Durable"
+    ],
+    "aliases": [
+      "巨魔战将",
+      "巨魔",
+      "troll",
+      "jm",
+      "Troll Warlord"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Emperor",
+      "Strength"
+    ]
+  },
+  {
+    "id": 96,
+    "key": "centaur",
+    "name": "半人马战行者",
+    "en_name": "Centaur Warrunner",
+    "attr": "str",
+    "tickets": [
+      "皇帝",
+      "力量",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/centaur.png",
+    "roles": [
+      "Durable",
+      "Initiator",
+      "Disabler",
+      "Nuker",
+      "Escape"
+    ],
+    "aliases": [
+      "半人马战行者",
+      "人马",
+      "半人马",
+      "cw",
+      "centaur",
+      "rm",
+      "Centaur Warrunner"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "Strength",
+      "Strength"
+    ]
+  },
+  {
+    "id": 97,
+    "key": "magnataur",
+    "name": "马格纳斯",
+    "en_name": "Magnus",
+    "attr": "all",
+    "tickets": [
+      "力量",
+      "力量",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/magnataur.png",
+    "roles": [
+      "Initiator",
+      "Disabler",
+      "Nuker",
+      "Escape"
+    ],
+    "aliases": [
+      "马格纳斯",
+      "猛犸",
+      "mag",
+      "mm",
+      "Magnus"
+    ],
+    "tickets_en": [
+      "Strength",
+      "Strength",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 98,
+    "key": "shredder",
+    "name": "伐木机",
+    "en_name": "Timbersaw",
+    "attr": "str",
+    "tickets": [
+      "愚者",
+      "愚者",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/shredder.png",
+    "roles": [
+      "Nuker",
+      "Durable",
+      "Escape"
+    ],
+    "aliases": [
+      "伐木机",
+      "木机",
+      "timbersaw",
+      "timber",
+      "fmj",
+      "Timbersaw"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Fool",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 99,
+    "key": "bristleback",
+    "name": "刚背兽",
+    "en_name": "Bristleback",
+    "attr": "str",
+    "tickets": [
+      "恶魔",
+      "力量",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bristleback.png",
+    "roles": [
+      "Carry",
+      "Durable",
+      "Initiator",
+      "Nuker"
+    ],
+    "aliases": [
+      "刚背兽",
+      "钢背兽",
+      "钢背",
+      "刚背",
+      "bb",
+      "bristle",
+      "gb",
+      "Bristleback"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "Strength",
+      "Strength"
+    ]
+  },
+  {
+    "id": 100,
+    "key": "tusk",
+    "name": "巨牙海民",
+    "en_name": "Tusk",
+    "attr": "str",
+    "tickets": [
+      "力量",
+      "隐士",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tusk.png",
+    "roles": [
+      "Initiator",
+      "Disabler",
+      "Nuker"
+    ],
+    "aliases": [
+      "巨牙海民",
+      "海民",
+      "tusk",
+      "hm",
+      "Tusk"
+    ],
+    "tickets_en": [
+      "Strength",
+      "The Hermit",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 101,
+    "key": "skywrath_mage",
+    "name": "天怒法师",
+    "en_name": "Skywrath Mage",
+    "attr": "int",
+    "tickets": [
+      "魔术师",
+      "魔术师",
+      "恋人"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/skywrath_mage.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "天怒法师",
+      "天怒",
+      "sm",
+      "sky",
+      "tn",
+      "Skywrath Mage"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Magician",
+      "The Lovers"
+    ]
+  },
+  {
+    "id": 102,
+    "key": "abaddon",
+    "name": "亚巴顿",
+    "en_name": "Abaddon",
+    "attr": "all",
+    "tickets": [
+      "隐士",
+      "隐士",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/abaddon.png",
+    "roles": [
+      "Support",
+      "Carry",
+      "Durable"
+    ],
+    "aliases": [
+      "亚巴顿",
+      "死骑",
+      "aba",
+      "abaddon",
+      "sq",
+      "Abaddon"
+    ],
+    "tickets_en": [
+      "The Hermit",
+      "The Hermit",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 103,
+    "key": "elder_titan",
+    "name": "上古巨神",
+    "en_name": "Elder Titan",
+    "attr": "str",
+    "tickets": [
+      "力量",
+      "力量",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/elder_titan.png",
+    "roles": [
+      "Initiator",
+      "Disabler",
+      "Nuker",
+      "Durable"
+    ],
+    "aliases": [
+      "上古巨神",
+      "大牛",
+      "et",
+      "titan",
+      "dn",
+      "Elder Titan"
+    ],
+    "tickets_en": [
+      "Strength",
+      "Strength",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 104,
+    "key": "legion_commander",
+    "name": "军团指挥官",
+    "en_name": "Legion Commander",
+    "attr": "str",
+    "tickets": [
+      "皇帝",
+      "皇帝",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/legion_commander.png",
+    "roles": [
+      "Carry",
+      "Disabler",
+      "Initiator",
+      "Durable",
+      "Nuker"
+    ],
+    "aliases": [
+      "军团指挥官",
+      "军团",
+      "lc",
+      "jt",
+      "Legion Commander"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Emperor",
+      "Death"
+    ]
+  },
+  {
+    "id": 105,
+    "key": "techies",
+    "name": "工程师",
+    "en_name": "Techies",
+    "attr": "all",
+    "tickets": [
+      "愚者",
+      "愚者",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/techies.png",
+    "roles": [
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "工程师",
+      "炸弹人",
+      "炸弹",
+      "techies",
+      "zdr",
+      "Techies"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Fool",
+      "Death"
+    ]
+  },
+  {
+    "id": 106,
+    "key": "ember_spirit",
+    "name": "灰烬之灵",
+    "en_name": "Ember Spirit",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "恋人",
+      "恋人"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ember_spirit.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Nuker",
+      "Disabler",
+      "Initiator"
+    ],
+    "aliases": [
+      "灰烬之灵",
+      "火猫",
+      "xin",
+      "hm",
+      "Ember Spirit"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Lovers",
+      "The Lovers"
+    ]
+  },
+  {
+    "id": 107,
+    "key": "earth_spirit",
+    "name": "大地之灵",
+    "en_name": "Earth Spirit",
+    "attr": "str",
+    "tickets": [
+      "皇帝",
+      "隐士",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/earth_spirit.png",
+    "roles": [
+      "Nuker",
+      "Escape",
+      "Disabler",
+      "Initiator",
+      "Durable"
+    ],
+    "aliases": [
+      "大地之灵",
+      "土猫",
+      "ebola",
+      "es",
+      "tm",
+      "Earth Spirit"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Hermit",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 108,
+    "key": "abyssal_underlord",
+    "name": "孽主",
+    "en_name": "Underlord",
+    "attr": "str",
+    "tickets": [
+      "恶魔",
+      "恶魔",
+      "皇帝"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/abyssal_underlord.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Disabler",
+      "Durable",
+      "Escape"
+    ],
+    "aliases": [
+      "孽主",
+      "大屁股",
+      "深渊领主",
+      "underlord",
+      "dpg",
+      "Underlord"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Devil",
+      "The Emperor"
+    ]
+  },
+  {
+    "id": 109,
+    "key": "terrorblade",
+    "name": "恐怖利刃",
+    "en_name": "Terrorblade",
+    "attr": "agi",
+    "tickets": [
+      "恶魔",
+      "力量",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/terrorblade.png",
+    "roles": [
+      "Carry",
+      "Pusher",
+      "Nuker"
+    ],
+    "aliases": [
+      "恐怖利刃",
+      "tb",
+      "soulkeeper",
+      "kblr",
+      "Terrorblade"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "Strength",
+      "Death"
+    ]
+  },
+  {
+    "id": 110,
+    "key": "phoenix",
+    "name": "凤凰",
+    "en_name": "Phoenix",
+    "attr": "str",
+    "tickets": [
+      "愚者",
+      "命运之轮",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/phoenix.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Initiator",
+      "Escape",
+      "Disabler"
+    ],
+    "aliases": [
+      "凤凰",
+      "phoenix",
+      "fh",
+      "Phoenix"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "Wheel of Fortune",
+      "Death"
+    ]
+  },
+  {
+    "id": 111,
+    "key": "oracle",
+    "name": "神谕者",
+    "en_name": "Oracle",
+    "attr": "int",
+    "tickets": [
+      "女祭司",
+      "女祭司",
+      "女祭司"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/oracle.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Disabler",
+      "Escape"
+    ],
+    "aliases": [
+      "神谕者",
+      "神谕",
+      "oracle",
+      "sy",
+      "Oracle"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The High Priestess",
+      "The High Priestess"
+    ]
+  },
+  {
+    "id": 112,
+    "key": "winter_wyvern",
+    "name": "寒冬飞龙",
+    "en_name": "Winter Wyvern",
+    "attr": "int",
+    "tickets": [
+      "隐士",
+      "星星",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/winter_wyvern.png",
+    "roles": [
+      "Support",
+      "Disabler",
+      "Nuker"
+    ],
+    "aliases": [
+      "寒冬飞龙",
+      "冰龙",
+      "ww",
+      "bl",
+      "Winter Wyvern"
+    ],
+    "tickets_en": [
+      "The Hermit",
+      "The Star",
+      "The Star"
+    ]
+  },
+  {
+    "id": 113,
+    "key": "arc_warden",
+    "name": "天穹守望者",
+    "en_name": "Arc Warden",
+    "attr": "all",
+    "tickets": [
+      "恋人",
+      "恋人",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/arc_warden.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Nuker"
+    ],
+    "aliases": [
+      "天穹守望者",
+      "电狗",
+      "zet",
+      "arc",
+      "dg",
+      "Arc Warden"
+    ],
+    "tickets_en": [
+      "The Lovers",
+      "The Lovers",
+      "The Star"
+    ]
+  },
+  {
+    "id": 114,
+    "key": "monkey_king",
+    "name": "齐天大圣",
+    "en_name": "Monkey King",
+    "attr": "agi",
+    "tickets": [
+      "魔术师",
+      "隐士",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/monkey_king.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Disabler",
+      "Initiator"
+    ],
+    "aliases": [
+      "齐天大圣",
+      "大圣",
+      "猴子",
+      "mk",
+      "qtds",
+      "ds",
+      "Monkey King"
+    ],
+    "tickets_en": [
+      "The Magician",
+      "The Hermit",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 119,
+    "key": "dark_willow",
+    "name": "邪影芳灵",
+    "en_name": "Dark Willow",
+    "attr": "int",
+    "tickets": [
+      "女祭司",
+      "恶魔",
+      "恋人"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dark_willow.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Disabler",
+      "Escape"
+    ],
+    "aliases": [
+      "邪影芳灵",
+      "花仙子",
+      "小仙女",
+      "willow",
+      "hxz",
+      "Dark Willow"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The Devil",
+      "The Lovers"
+    ]
+  },
+  {
+    "id": 120,
+    "key": "pangolier",
+    "name": "石鳞剑士",
+    "en_name": "Pangolier",
+    "attr": "all",
+    "tickets": [
+      "恶魔",
+      "命运之轮",
+      "命运之轮"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/pangolier.png",
+    "roles": [
+      "Carry",
+      "Nuker",
+      "Disabler",
+      "Durable",
+      "Escape",
+      "Initiator"
+    ],
+    "aliases": [
+      "石鳞剑士",
+      "滚滚",
+      "穿山甲",
+      "pango",
+      "gg",
+      "Pangolier"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ]
+  },
+  {
+    "id": 121,
+    "key": "grimstroke",
+    "name": "天涯墨客",
+    "en_name": "Grimstroke",
+    "attr": "int",
+    "tickets": [
+      "恶魔",
+      "恶魔",
+      "恋人"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/grimstroke.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Disabler",
+      "Escape"
+    ],
+    "aliases": [
+      "天涯墨客",
+      "墨客",
+      "grim",
+      "mk",
+      "Grimstroke"
+    ],
+    "tickets_en": [
+      "The Devil",
+      "The Devil",
+      "The Lovers"
+    ]
+  },
+  {
+    "id": 123,
+    "key": "hoodwink",
+    "name": "森海飞霞",
+    "en_name": "Hoodwink",
+    "attr": "agi",
+    "tickets": [
+      "愚者",
+      "魔术师",
+      "恋人"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/hoodwink.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Escape",
+      "Disabler"
+    ],
+    "aliases": [
+      "森海飞霞",
+      "松鼠",
+      "hoodwink",
+      "ss",
+      "Hoodwink"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Magician",
+      "The Lovers"
+    ]
+  },
+  {
+    "id": 126,
+    "key": "void_spirit",
+    "name": "虚空之灵",
+    "en_name": "Void Spirit",
+    "attr": "all",
+    "tickets": [
+      "女祭司",
+      "女祭司",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/void_spirit.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "虚空之灵",
+      "紫猫",
+      "inai",
+      "zm",
+      "Void Spirit"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The High Priestess",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 128,
+    "key": "snapfire",
+    "name": "电炎绝手",
+    "en_name": "Snapfire",
+    "attr": "all",
+    "tickets": [
+      "愚者",
+      "恋人",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/snapfire.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Disabler",
+      "Escape"
+    ],
+    "aliases": [
+      "电炎绝手",
+      "老奶奶",
+      "姑妈",
+      "snapfire",
+      "lnn",
+      "Snapfire"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Lovers",
+      "The Star"
+    ]
+  },
+  {
+    "id": 129,
+    "key": "mars",
+    "name": "玛尔斯",
+    "en_name": "Mars",
+    "attr": "str",
+    "tickets": [
+      "皇帝",
+      "皇帝",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/mars.png",
+    "roles": [
+      "Carry",
+      "Initiator",
+      "Disabler",
+      "Durable"
+    ],
+    "aliases": [
+      "玛尔斯",
+      "战神",
+      "火星",
+      "mars",
+      "zs",
+      "Mars"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "The Emperor",
+      "Strength"
+    ]
+  },
+  {
+    "id": 131,
+    "key": "ringmaster",
+    "name": "百戏大王",
+    "en_name": "Ring Master",
+    "attr": "int",
+    "tickets": [
+      "愚者",
+      "魔术师",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ringmaster.png",
+    "roles": [
+      "Support",
+      "Nuker",
+      "Escape",
+      "Disabler"
+    ],
+    "aliases": [
+      "百戏大王",
+      "魔戏团长",
+      "马戏团长",
+      "ringmaster",
+      "rm",
+      "mxtz",
+      "Ring Master"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "The Magician",
+      "Death"
+    ]
+  },
+  {
+    "id": 135,
+    "key": "dawnbreaker",
+    "name": "破晓辰星",
+    "en_name": "Dawnbreaker",
+    "attr": "str",
+    "tickets": [
+      "愚者",
+      "力量",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dawnbreaker.png",
+    "roles": [
+      "Carry",
+      "Durable"
+    ],
+    "aliases": [
+      "破晓辰星",
+      "大锤",
+      "女武神",
+      "db",
+      "dc",
+      "Dawnbreaker"
+    ],
+    "tickets_en": [
+      "The Fool",
+      "Strength",
+      "The Star"
+    ]
+  },
+  {
+    "id": 136,
+    "key": "marci",
+    "name": "玛西",
+    "en_name": "Marci",
+    "attr": "all",
+    "tickets": [
+      "力量",
+      "力量",
+      "隐士"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/marci.png",
+    "roles": [
+      "Support",
+      "Carry",
+      "Initiator",
+      "Disabler",
+      "Escape"
+    ],
+    "aliases": [
+      "玛西",
+      "小哑巴",
+      "marci",
+      "mx",
+      "Marci"
+    ],
+    "tickets_en": [
+      "Strength",
+      "Strength",
+      "The Hermit"
+    ]
+  },
+  {
+    "id": 137,
+    "key": "primal_beast",
+    "name": "原始野兽",
+    "en_name": "Primal Beast",
+    "attr": "str",
+    "tickets": [
+      "皇帝",
+      "力量",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/primal_beast.png",
+    "roles": [
+      "Initiator",
+      "Durable",
+      "Disabler"
+    ],
+    "aliases": [
+      "原始野兽",
+      "兽",
+      "pb",
+      "beast",
+      "ysys",
+      "Primal Beast"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "Strength",
+      "Strength"
+    ]
+  },
+  {
+    "id": 138,
+    "key": "muerta",
+    "name": "琼英碧灵",
+    "en_name": "Muerta",
+    "attr": "int",
+    "tickets": [
+      "死神",
+      "死神",
+      "死神"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/muerta.png",
+    "roles": [
+      "Carry",
+      "Nuker",
+      "Disabler"
+    ],
+    "aliases": [
+      "琼英碧灵",
+      "鬼妈",
+      "muerta",
+      "gm",
+      "Muerta"
+    ],
+    "tickets_en": [
+      "Death",
+      "Death",
+      "Death"
+    ]
+  },
+  {
+    "id": 145,
+    "key": "kez",
+    "name": "凯",
+    "en_name": "Kez",
+    "attr": "agi",
+    "tickets": [
+      "皇帝",
+      "力量",
+      "力量"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/kez.png",
+    "roles": [
+      "Carry",
+      "Escape",
+      "Disabler"
+    ],
+    "aliases": [
+      "凯",
+      "kez",
+      "鸟剑客",
+      "鸟人",
+      "Kez"
+    ],
+    "tickets_en": [
+      "The Emperor",
+      "Strength",
+      "Strength"
+    ]
+  },
+  {
+    "id": 155,
+    "key": "largo",
+    "name": "拉尔戈",
+    "en_name": "Largo",
+    "attr": "str",
+    "tickets": [
+      "女祭司",
+      "星星",
+      "星星"
+    ],
+    "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/largo.png",
+    "roles": [
+      "Durable",
+      "Disabler",
+      "Support"
+    ],
+    "aliases": [
+      "拉尔戈",
+      "largo",
+      "青蛙",
+      "音乐蛙",
+      "Largo"
+    ],
+    "tickets_en": [
+      "The High Priestess",
+      "The Star",
+      "The Star"
+    ]
+  }
+]

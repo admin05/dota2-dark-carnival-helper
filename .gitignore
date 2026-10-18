@@ -1,0 +1,15 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Python cache & temporary scrape files
+__pycache__/
+*.pyc
+liquipedia_parsed.html
+
+# IDE configuration
+.vscode/
+.idea/

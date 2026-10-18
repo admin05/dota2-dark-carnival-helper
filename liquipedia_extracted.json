@@ -1,0 +1,1526 @@
+{
+  "Abaddon": {
+    "en_tickets": [
+      "The Hermit",
+      "The Hermit",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "隐士",
+      "隐士",
+      "隐士"
+    ]
+  },
+  "Alchemist": {
+    "en_tickets": [
+      "The Devil",
+      "The Lovers",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恋人",
+      "星星"
+    ]
+  },
+  "Ancient Apparition": {
+    "en_tickets": [
+      "Wheel of Fortune",
+      "Death",
+      "Death"
+    ],
+    "cn_tickets": [
+      "命运之轮",
+      "死神",
+      "死神"
+    ]
+  },
+  "Anti-Mage": {
+    "en_tickets": [
+      "The Magician",
+      "The High Priestess",
+      "The Emperor"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "女祭司",
+      "皇帝"
+    ]
+  },
+  "Arc Warden": {
+    "en_tickets": [
+      "The Lovers",
+      "The Lovers",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "恋人",
+      "恋人",
+      "星星"
+    ]
+  },
+  "Axe": {
+    "en_tickets": [
+      "Strength",
+      "Strength",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "力量",
+      "力量",
+      "隐士"
+    ]
+  },
+  "Bane": {
+    "en_tickets": [
+      "The High Priestess",
+      "The High Priestess",
+      "Death"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "女祭司",
+      "死神"
+    ]
+  },
+  "Batrider": {
+    "en_tickets": [
+      "The Lovers",
+      "The Lovers",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "恋人",
+      "恋人",
+      "命运之轮"
+    ]
+  },
+  "Beastmaster": {
+    "en_tickets": [
+      "The Devil",
+      "The Lovers",
+      "The Lovers"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恋人",
+      "恋人"
+    ]
+  },
+  "Bloodseeker": {
+    "en_tickets": [
+      "The Magician",
+      "The High Priestess",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "女祭司",
+      "命运之轮"
+    ]
+  },
+  "Bounty Hunter": {
+    "en_tickets": [
+      "The Devil",
+      "The Devil",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恶魔",
+      "隐士"
+    ]
+  },
+  "Brewmaster": {
+    "en_tickets": [
+      "The Lovers",
+      "The Lovers",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "恋人",
+      "恋人",
+      "命运之轮"
+    ]
+  },
+  "Bristleback": {
+    "en_tickets": [
+      "The Devil",
+      "Strength",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "力量",
+      "力量"
+    ]
+  },
+  "Broodmother": {
+    "en_tickets": [
+      "The Lovers",
+      "The Hermit",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "恋人",
+      "隐士",
+      "命运之轮"
+    ]
+  },
+  "Centaur Warrunner": {
+    "en_tickets": [
+      "The Emperor",
+      "Strength",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "力量",
+      "力量"
+    ]
+  },
+  "Chaos Knight": {
+    "en_tickets": [
+      "Wheel of Fortune",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "命运之轮",
+      "命运之轮",
+      "命运之轮"
+    ]
+  },
+  "Chen": {
+    "en_tickets": [
+      "The High Priestess",
+      "The High Priestess",
+      "The Emperor"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "女祭司",
+      "皇帝"
+    ]
+  },
+  "Clinkz": {
+    "en_tickets": [
+      "The Magician",
+      "Strength",
+      "Death"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "力量",
+      "死神"
+    ]
+  },
+  "Clockwerk": {
+    "en_tickets": [
+      "The Hermit",
+      "The Star",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "隐士",
+      "星星",
+      "星星"
+    ]
+  },
+  "Crystal Maiden": {
+    "en_tickets": [
+      "The Fool",
+      "The Fool",
+      "The Magician"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "愚者",
+      "魔术师"
+    ]
+  },
+  "Dark Seer": {
+    "en_tickets": [
+      "The High Priestess",
+      "The High Priestess",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "女祭司",
+      "隐士"
+    ]
+  },
+  "Dark Willow": {
+    "en_tickets": [
+      "The High Priestess",
+      "The Devil",
+      "The Lovers"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "恶魔",
+      "恋人"
+    ]
+  },
+  "Dawnbreaker": {
+    "en_tickets": [
+      "The Fool",
+      "Strength",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "力量",
+      "星星"
+    ]
+  },
+  "Dazzle": {
+    "en_tickets": [
+      "The Lovers",
+      "The Lovers",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "恋人",
+      "恋人",
+      "星星"
+    ]
+  },
+  "Death Prophet": {
+    "en_tickets": [
+      "The Star",
+      "Wheel of Fortune",
+      "Death"
+    ],
+    "cn_tickets": [
+      "星星",
+      "命运之轮",
+      "死神"
+    ]
+  },
+  "Disruptor": {
+    "en_tickets": [
+      "The Fool",
+      "The Star",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "星星",
+      "星星"
+    ]
+  },
+  "Doom": {
+    "en_tickets": [
+      "The Devil",
+      "The Devil",
+      "The Devil"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恶魔",
+      "恶魔"
+    ]
+  },
+  "Dragon Knight": {
+    "en_tickets": [
+      "The Emperor",
+      "Strength",
+      "Death"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "力量",
+      "死神"
+    ]
+  },
+  "Drow Ranger": {
+    "en_tickets": [
+      "The Magician",
+      "The Magician",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "魔术师",
+      "隐士"
+    ]
+  },
+  "Earth Spirit": {
+    "en_tickets": [
+      "The Emperor",
+      "The Hermit",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "隐士",
+      "隐士"
+    ]
+  },
+  "Earthshaker": {
+    "en_tickets": [
+      "Strength",
+      "Strength",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "力量",
+      "力量",
+      "隐士"
+    ]
+  },
+  "Elder Titan": {
+    "en_tickets": [
+      "Strength",
+      "Strength",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "力量",
+      "力量",
+      "隐士"
+    ]
+  },
+  "Ember Spirit": {
+    "en_tickets": [
+      "The Magician",
+      "The Lovers",
+      "The Lovers"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "恋人",
+      "恋人"
+    ]
+  },
+  "Enchantress": {
+    "en_tickets": [
+      "The Fool",
+      "The Fool",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "愚者",
+      "星星"
+    ]
+  },
+  "Enigma": {
+    "en_tickets": [
+      "The High Priestess",
+      "The Star",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "星星",
+      "星星"
+    ]
+  },
+  "Faceless Void": {
+    "en_tickets": [
+      "The Fool",
+      "Strength",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "力量",
+      "命运之轮"
+    ]
+  },
+  "Grimstroke": {
+    "en_tickets": [
+      "The Devil",
+      "The Devil",
+      "The Lovers"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恶魔",
+      "恋人"
+    ]
+  },
+  "Gyrocopter": {
+    "en_tickets": [
+      "The Fool",
+      "Strength",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "力量",
+      "星星"
+    ]
+  },
+  "Hoodwink": {
+    "en_tickets": [
+      "The Fool",
+      "The Magician",
+      "The Lovers"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "魔术师",
+      "恋人"
+    ]
+  },
+  "Huskar": {
+    "en_tickets": [
+      "The High Priestess",
+      "The Devil",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "恶魔",
+      "隐士"
+    ]
+  },
+  "Invoker": {
+    "en_tickets": [
+      "The Magician",
+      "The Magician",
+      "The Devil"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "魔术师",
+      "恶魔"
+    ]
+  },
+  "Io": {
+    "en_tickets": [
+      "The Fool",
+      "The Fool",
+      "The Fool"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "愚者",
+      "愚者"
+    ]
+  },
+  "Jakiro": {
+    "en_tickets": [
+      "The Lovers",
+      "The Lovers",
+      "The Lovers"
+    ],
+    "cn_tickets": [
+      "恋人",
+      "恋人",
+      "恋人"
+    ]
+  },
+  "Juggernaut": {
+    "en_tickets": [
+      "The Emperor",
+      "Strength",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "力量",
+      "力量"
+    ]
+  },
+  "Keeper of the Light": {
+    "en_tickets": [
+      "The Star",
+      "The Star",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "星星",
+      "星星",
+      "星星"
+    ]
+  },
+  "Kez": {
+    "en_tickets": [
+      "The Emperor",
+      "Strength",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "力量",
+      "力量"
+    ]
+  },
+  "Kunkka": {
+    "en_tickets": [
+      "The Emperor",
+      "The Emperor",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "皇帝",
+      "力量"
+    ]
+  },
+  "Largo": {
+    "en_tickets": [
+      "The High Priestess",
+      "The Star",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "星星",
+      "星星"
+    ]
+  },
+  "Legion Commander": {
+    "en_tickets": [
+      "The Emperor",
+      "The Emperor",
+      "Death"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "皇帝",
+      "死神"
+    ]
+  },
+  "Leshrac": {
+    "en_tickets": [
+      "The Magician",
+      "The Devil",
+      "The Devil"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "恶魔",
+      "恶魔"
+    ]
+  },
+  "Lich": {
+    "en_tickets": [
+      "The Magician",
+      "Death",
+      "Death"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "死神",
+      "死神"
+    ]
+  },
+  "Lifestealer": {
+    "en_tickets": [
+      "The Devil",
+      "The Devil",
+      "Death"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恶魔",
+      "死神"
+    ]
+  },
+  "Lina": {
+    "en_tickets": [
+      "The Magician",
+      "The Magician",
+      "The Devil"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "魔术师",
+      "恶魔"
+    ]
+  },
+  "Lion": {
+    "en_tickets": [
+      "The Magician",
+      "The Devil",
+      "The Devil"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "恶魔",
+      "恶魔"
+    ]
+  },
+  "Lone Druid": {
+    "en_tickets": [
+      "The Lovers",
+      "The Hermit",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "恋人",
+      "隐士",
+      "隐士"
+    ]
+  },
+  "Luna": {
+    "en_tickets": [
+      "The Emperor",
+      "The Lovers",
+      "The Lovers"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "恋人",
+      "恋人"
+    ]
+  },
+  "Lycan": {
+    "en_tickets": [
+      "Strength",
+      "Strength",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "力量",
+      "力量",
+      "命运之轮"
+    ]
+  },
+  "Magnus": {
+    "en_tickets": [
+      "Strength",
+      "Strength",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "力量",
+      "力量",
+      "命运之轮"
+    ]
+  },
+  "Marci": {
+    "en_tickets": [
+      "Strength",
+      "Strength",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "力量",
+      "力量",
+      "隐士"
+    ]
+  },
+  "Mars": {
+    "en_tickets": [
+      "The Emperor",
+      "The Emperor",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "皇帝",
+      "力量"
+    ]
+  },
+  "Medusa": {
+    "en_tickets": [
+      "The Devil",
+      "The Devil",
+      "Death"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恶魔",
+      "死神"
+    ]
+  },
+  "Meepo": {
+    "en_tickets": [
+      "The Magician",
+      "The Lovers",
+      "The Lovers"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "恋人",
+      "恋人"
+    ]
+  },
+  "Mirana": {
+    "en_tickets": [
+      "The Emperor",
+      "The Lovers",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "恋人",
+      "星星"
+    ]
+  },
+  "Monkey King": {
+    "en_tickets": [
+      "The Magician",
+      "The Hermit",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "隐士",
+      "隐士"
+    ]
+  },
+  "Morphling": {
+    "en_tickets": [
+      "The Hermit",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "隐士",
+      "命运之轮",
+      "命运之轮"
+    ]
+  },
+  "Muerta": {
+    "en_tickets": [
+      "Death",
+      "Death",
+      "Death"
+    ],
+    "cn_tickets": [
+      "死神",
+      "死神",
+      "死神"
+    ]
+  },
+  "Naga Siren": {
+    "en_tickets": [
+      "The High Priestess",
+      "The Lovers",
+      "The Lovers"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "恋人",
+      "恋人"
+    ]
+  },
+  "Nature's Prophet": {
+    "en_tickets": [
+      "The Magician",
+      "The High Priestess",
+      "The High Priestess"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "女祭司",
+      "女祭司"
+    ]
+  },
+  "Necrophos": {
+    "en_tickets": [
+      "The Emperor",
+      "Death",
+      "Death"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "死神",
+      "死神"
+    ]
+  },
+  "Night Stalker": {
+    "en_tickets": [
+      "The Emperor",
+      "The Emperor",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "皇帝",
+      "命运之轮"
+    ]
+  },
+  "Nyx Assassin": {
+    "en_tickets": [
+      "The Hermit",
+      "The Hermit",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "隐士",
+      "隐士",
+      "命运之轮"
+    ]
+  },
+  "Ogre Magi": {
+    "en_tickets": [
+      "The Fool",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "命运之轮",
+      "命运之轮"
+    ]
+  },
+  "Omniknight": {
+    "en_tickets": [
+      "The High Priestess",
+      "The High Priestess",
+      "The Emperor"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "女祭司",
+      "皇帝"
+    ]
+  },
+  "Oracle": {
+    "en_tickets": [
+      "The High Priestess",
+      "The High Priestess",
+      "The High Priestess"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "女祭司",
+      "女祭司"
+    ]
+  },
+  "Outworld Destroyer": {
+    "en_tickets": [
+      "The High Priestess",
+      "The High Priestess",
+      "Death"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "女祭司",
+      "死神"
+    ]
+  },
+  "Pangolier": {
+    "en_tickets": [
+      "The Devil",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "命运之轮",
+      "命运之轮"
+    ]
+  },
+  "Phantom Assassin": {
+    "en_tickets": [
+      "Strength",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "力量",
+      "命运之轮",
+      "命运之轮"
+    ]
+  },
+  "Phantom Lancer": {
+    "en_tickets": [
+      "The Magician",
+      "The Lovers",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "恋人",
+      "命运之轮"
+    ]
+  },
+  "Phoenix": {
+    "en_tickets": [
+      "The Fool",
+      "Wheel of Fortune",
+      "Death"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "命运之轮",
+      "死神"
+    ]
+  },
+  "Primal Beast": {
+    "en_tickets": [
+      "The Emperor",
+      "Strength",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "力量",
+      "力量"
+    ]
+  },
+  "Puck": {
+    "en_tickets": [
+      "The Fool",
+      "The Fool",
+      "The Magician"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "愚者",
+      "魔术师"
+    ]
+  },
+  "Pudge": {
+    "en_tickets": [
+      "The Fool",
+      "The Devil",
+      "The Devil"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "恶魔",
+      "恶魔"
+    ]
+  },
+  "Pugna": {
+    "en_tickets": [
+      "The Magician",
+      "The Star",
+      "Death"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "星星",
+      "死神"
+    ]
+  },
+  "Queen of Pain": {
+    "en_tickets": [
+      "The High Priestess",
+      "The Devil",
+      "The Devil"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "恶魔",
+      "恶魔"
+    ]
+  },
+  "Razor": {
+    "en_tickets": [
+      "The Devil",
+      "The Emperor",
+      "The Emperor"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "皇帝",
+      "皇帝"
+    ]
+  },
+  "Riki": {
+    "en_tickets": [
+      "The Magician",
+      "The Magician",
+      "The Devil"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "魔术师",
+      "恶魔"
+    ]
+  },
+  "Ringmaster": {
+    "en_tickets": [
+      "The Fool",
+      "The Magician",
+      "Death"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "魔术师",
+      "死神"
+    ]
+  },
+  "Rubick": {
+    "en_tickets": [
+      "The Magician",
+      "The Magician",
+      "The Magician"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "魔术师",
+      "魔术师"
+    ]
+  },
+  "Sand King": {
+    "en_tickets": [
+      "The Hermit",
+      "The Hermit",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "隐士",
+      "隐士",
+      "星星"
+    ]
+  },
+  "Shadow Demon": {
+    "en_tickets": [
+      "The Devil",
+      "The Devil",
+      "Death"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恶魔",
+      "死神"
+    ]
+  },
+  "Shadow Fiend": {
+    "en_tickets": [
+      "The Devil",
+      "The Devil",
+      "Death"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恶魔",
+      "死神"
+    ]
+  },
+  "Shadow Shaman": {
+    "en_tickets": [
+      "The High Priestess",
+      "The High Priestess",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "女祭司",
+      "隐士"
+    ]
+  },
+  "Silencer": {
+    "en_tickets": [
+      "The Magician",
+      "The Emperor",
+      "The Emperor"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "皇帝",
+      "皇帝"
+    ]
+  },
+  "Skywrath Mage": {
+    "en_tickets": [
+      "The Magician",
+      "The Magician",
+      "The Lovers"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "魔术师",
+      "恋人"
+    ]
+  },
+  "Slardar": {
+    "en_tickets": [
+      "The High Priestess",
+      "Strength",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "力量",
+      "力量"
+    ]
+  },
+  "Slark": {
+    "en_tickets": [
+      "The Devil",
+      "Strength",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "力量",
+      "命运之轮"
+    ]
+  },
+  "Snapfire": {
+    "en_tickets": [
+      "The Fool",
+      "The Lovers",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "恋人",
+      "星星"
+    ]
+  },
+  "Sniper": {
+    "en_tickets": [
+      "Strength",
+      "The Hermit",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "力量",
+      "隐士",
+      "隐士"
+    ]
+  },
+  "Spectre": {
+    "en_tickets": [
+      "The Magician",
+      "Strength",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "力量",
+      "力量"
+    ]
+  },
+  "Spirit Breaker": {
+    "en_tickets": [
+      "Strength",
+      "Wheel of Fortune",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "力量",
+      "命运之轮",
+      "命运之轮"
+    ]
+  },
+  "Storm Spirit": {
+    "en_tickets": [
+      "The Fool",
+      "The Devil",
+      "The Emperor"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "恶魔",
+      "皇帝"
+    ]
+  },
+  "Sven": {
+    "en_tickets": [
+      "Strength",
+      "Strength",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "力量",
+      "力量",
+      "力量"
+    ]
+  },
+  "Techies": {
+    "en_tickets": [
+      "The Fool",
+      "The Fool",
+      "Death"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "愚者",
+      "死神"
+    ]
+  },
+  "Templar Assassin": {
+    "en_tickets": [
+      "The Magician",
+      "The High Priestess",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "女祭司",
+      "隐士"
+    ]
+  },
+  "Terrorblade": {
+    "en_tickets": [
+      "The Devil",
+      "Strength",
+      "Death"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "力量",
+      "死神"
+    ]
+  },
+  "Tidehunter": {
+    "en_tickets": [
+      "The Emperor",
+      "The Hermit",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "隐士",
+      "隐士"
+    ]
+  },
+  "Timbersaw": {
+    "en_tickets": [
+      "The Fool",
+      "The Fool",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "愚者",
+      "命运之轮"
+    ]
+  },
+  "Tinker": {
+    "en_tickets": [
+      "The Hermit",
+      "The Hermit",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "隐士",
+      "隐士",
+      "星星"
+    ]
+  },
+  "Tiny": {
+    "en_tickets": [
+      "The Fool",
+      "The Star",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "星星",
+      "星星"
+    ]
+  },
+  "Treant Protector": {
+    "en_tickets": [
+      "The Devil",
+      "The Hermit",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "隐士",
+      "星星"
+    ]
+  },
+  "Troll Warlord": {
+    "en_tickets": [
+      "The Devil",
+      "The Emperor",
+      "Strength"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "皇帝",
+      "力量"
+    ]
+  },
+  "Tusk": {
+    "en_tickets": [
+      "Strength",
+      "The Hermit",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "力量",
+      "隐士",
+      "隐士"
+    ]
+  },
+  "Underlord": {
+    "en_tickets": [
+      "The Devil",
+      "The Devil",
+      "The Emperor"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恶魔",
+      "皇帝"
+    ]
+  },
+  "Undying": {
+    "en_tickets": [
+      "The Hermit",
+      "Death",
+      "Death"
+    ],
+    "cn_tickets": [
+      "隐士",
+      "死神",
+      "死神"
+    ]
+  },
+  "Ursa": {
+    "en_tickets": [
+      "The Emperor",
+      "The Lovers",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "恋人",
+      "星星"
+    ]
+  },
+  "Vengeful Spirit": {
+    "en_tickets": [
+      "The Emperor",
+      "The Lovers",
+      "Death"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "恋人",
+      "死神"
+    ]
+  },
+  "Venomancer": {
+    "en_tickets": [
+      "Wheel of Fortune",
+      "Death",
+      "Death"
+    ],
+    "cn_tickets": [
+      "命运之轮",
+      "死神",
+      "死神"
+    ]
+  },
+  "Viper": {
+    "en_tickets": [
+      "The Hermit",
+      "The Hermit",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "隐士",
+      "隐士",
+      "命运之轮"
+    ]
+  },
+  "Visage": {
+    "en_tickets": [
+      "The Lovers",
+      "The Lovers",
+      "Death"
+    ],
+    "cn_tickets": [
+      "恋人",
+      "恋人",
+      "死神"
+    ]
+  },
+  "Void Spirit": {
+    "en_tickets": [
+      "The High Priestess",
+      "The High Priestess",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "女祭司",
+      "女祭司",
+      "隐士"
+    ]
+  },
+  "Warlock": {
+    "en_tickets": [
+      "The Devil",
+      "The Lovers",
+      "The Hermit"
+    ],
+    "cn_tickets": [
+      "恶魔",
+      "恋人",
+      "隐士"
+    ]
+  },
+  "Weaver": {
+    "en_tickets": [
+      "The Magician",
+      "The Star",
+      "Wheel of Fortune"
+    ],
+    "cn_tickets": [
+      "魔术师",
+      "星星",
+      "命运之轮"
+    ]
+  },
+  "Windranger": {
+    "en_tickets": [
+      "Strength",
+      "The Hermit",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "力量",
+      "隐士",
+      "星星"
+    ]
+  },
+  "Winter Wyvern": {
+    "en_tickets": [
+      "The Hermit",
+      "The Star",
+      "The Star"
+    ],
+    "cn_tickets": [
+      "隐士",
+      "星星",
+      "星星"
+    ]
+  },
+  "Witch Doctor": {
+    "en_tickets": [
+      "The Hermit",
+      "The Star",
+      "Death"
+    ],
+    "cn_tickets": [
+      "隐士",
+      "星星",
+      "死神"
+    ]
+  },
+  "Wraith King": {
+    "en_tickets": [
+      "The Emperor",
+      "The Emperor",
+      "The Emperor"
+    ],
+    "cn_tickets": [
+      "皇帝",
+      "皇帝",
+      "皇帝"
+    ]
+  },
+  "Zeus": {
+    "en_tickets": [
+      "The Fool",
+      "The Fool",
+      "The Devil"
+    ],
+    "cn_tickets": [
+      "愚者",
+      "愚者",
+      "恶魔"
+    ]
+  }
+}

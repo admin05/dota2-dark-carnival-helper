@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOTA2 暗黑狂欢 · 票券图鉴与智能推荐系统</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.95; transform: scale(1.02); }
+    }
+    @keyframes float-badge {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    .animate-float {
+      animation: float-badge 3s ease-in-out infinite;
+    }
+    .card-glass {
+      background: rgba(22, 27, 34, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .card-glass:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+    .ticket-badge {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ticket-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+<body class="bg-[#0b0f17] text-slate-100 min-h-screen font-sans selection:bg-amber-500/30 selection:text-amber-200 antialiased">
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-40 bg-[#0f1420]/90 backdrop-blur-md border-b border-slate-800/80 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo and Title -->
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 via-rose-600 to-purple-600 p-0.5 flex items-center justify-center shadow-lg shadow-amber-900/30">
+            <div class="w-full h-full bg-[#0d121c] rounded-[10px] flex items-center justify-center text-xl">
+              🎪
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="font-black text-lg tracking-wider bg-gradient-to-r from-amber-400 via-rose-300 to-purple-400 bg-clip-text text-transparent">
+                暗黑狂欢 · 票券助手
+              </span>
+              <span class="px-2 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-full animate-pulse">
+                百戏大王专列
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 hidden sm:block">每胜 1 局从 3 张票券中随机抽 2 张 | 智能图鉴 & 最优通关算法</p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex items-center bg-slate-900/80 p-1 rounded-xl border border-slate-800 shadow-inner">
+          <button id="tabBtnCodex" onclick="switchTab('codex')" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md">
+            <span>📖</span>
+            <span>英雄票券图鉴</span>
+          </button>
+          <button id="tabBtnRecom" onclick="switchTab('recom')" class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-300 hover:text-white hover:bg-slate-800/60">
+            <span>🎯</span>
+            <span>筛选与智能推荐</span>
+            <span id="navDeficitBadge" class="hidden ml-1 px-1.5 py-0.2 text-[11px] font-bold bg-rose-500 text-white rounded-full">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-20 right-6 z-50 transform translate-x-full opacity-0 transition-all duration-300 pointer-events-none">
+      <div id="toastContent" class="bg-slate-900/95 border border-amber-500/50 text-white px-5 py-3.5 rounded-xl shadow-2xl flex items-center space-x-3 text-sm">
+        <span id="toastIcon">✨</span>
+        <span id="toastMsg">通知信息</span>
+      </div>
+    </div>
+
+    <!-- ==================== PAGE 1: 英雄票券图鉴 ==================== -->
+    <section id="pageCodex" class="space-y-6">
+      
+      <!-- Banner / Search Controls -->
+      <div class="card-glass rounded-2xl p-5 border border-slate-800/80 shadow-xl space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-xl font-bold text-white flex items-center gap-2">
+              <span>全英雄暗黑狂欢票券图鉴</span>
+              <span class="text-xs font-normal text-slate-400 bg-slate-800/80 px-2.5 py-1 rounded-full border border-slate-700/60" id="codexHeroCount">
+                共 127 位英雄
+              </span>
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">
+              按四大主属性划分（力量、敏捷、智力、全才），每位英雄绑定专属的 3 张塔罗牌票券。支持英雄名、缩写拼音（如 ck、sf、am）及票券反查筛选。
+            </p>
+          </div>
+
+          <!-- Search Box -->
+          <div class="relative w-full md:w-80">
+            <input 
+              type="text" 
+              id="heroSearchInput" 
+              oninput="filterCodex()"
+              placeholder="搜索英雄名 / 英文 / 缩写拼音 / 票券名..." 
+              class="w-full bg-[#121824] text-sm text-slate-100 placeholder-slate-500 pl-10 pr-9 py-2.5 rounded-xl border border-slate-700/80 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500/50 transition-all shadow-inner"
+            >
+            <span class="absolute left-3 top-2.5 text-slate-500 text-base">🔍</span>
+            <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-2.5 text-slate-400 hover:text-white text-sm">✕</button>
+          </div>
+        </div>
+
+        <!-- Attribute Tabs Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800/60">
+          <div class="flex flex-wrap items-center gap-1.5" id="attrTabs">
+            <button onclick="setAttrFilter('all')" class="attr-tab px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow" data-attr="all">
+              全部 (127)
+            </button>
+            <button onclick="setAttrFilter('str')" class="attr-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/70 hover:bg-slate-700/70 transition-all border border-red-500/30" data-attr="str">
+              <span class="text-red-400 mr-1">🔴</span>力量 (36)
+            </button>
+            <button onclick="setAttrFilter('agi')" class="attr-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/70 hover:bg-slate-700/70 transition-all border border-emerald-500/30" data-attr="agi">
+              <span class="text-emerald-400 mr-1">🟢</span>敏捷 (35)
+            </button>
+            <button onclick="setAttrFilter('int')" class="attr-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/70 hover:bg-slate-700/70 transition-all border border-sky-500/30" data-attr="int">
+              <span class="text-sky-400 mr-1">🔵</span>智力 (34)
+            </button>
+            <button onclick="setAttrFilter('all_attr')" class="attr-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/70 hover:bg-slate-700/70 transition-all border border-purple-500/30" data-attr="all_attr">
+              <span class="text-purple-400 mr-1">🟣</span>全才 (22)
+            </button>
+          </div>
+
+          <!-- Quick Ticket Filter Dropdown -->
+          <div class="flex items-center gap-2 text-xs">
+            <span class="text-slate-400">过滤特定票券:</span>
+            <select id="ticketSelectFilter" onchange="filterCodex()" class="bg-[#121824] text-xs text-slate-200 border border-slate-700 rounded-lg px-2.5 py-1.5 focus:border-amber-500 focus:outline-none">
+              <option value="">全部票券 (不限)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Clickable Ticket Pills -->
+        <div class="pt-2">
+          <div class="text-[11px] text-slate-400 mb-1.5 flex items-center justify-between">
+            <span>快捷票券检索（点击任意票券即可精准筛选出可产出该票券的所有英雄）：</span>
+            <button onclick="resetTicketPills()" class="text-amber-400 hover:underline text-[11px]">重置票券筛选</button>
+          </div>
+          <div class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1" id="ticketPillContainer">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Grid Display grouped by Attributes -->
+      <div id="codexGrid" class="space-y-8">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="codexEmptyState" class="hidden card-glass rounded-2xl p-12 text-center text-slate-400">
+        <div class="text-4xl mb-3">🔍</div>
+        <p class="text-base font-medium text-slate-300">未找到符合条件的英雄</p>
+        <p class="text-xs text-slate-500 mt-1">请尝试更换搜索关键字或清除票券过滤条件</p>
+        <button onclick="resetAllFilters()" class="mt-4 px-4 py-2 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-xl text-xs hover:bg-amber-500/30">
+          清除所有筛选条件
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE 2: 筛选与智能推荐 ==================== -->
+    <section id="pageRecom" class="hidden space-y-6">
+
+      <!-- Mechanism Card -->
+      <div class="card-glass rounded-2xl p-4 border border-amber-500/30 bg-gradient-to-r from-amber-950/20 via-slate-900/60 to-purple-950/20">
+        <div class="flex items-start space-x-3">
+          <span class="text-2xl mt-0.5">💡</span>
+          <div>
+            <h2 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+              <span>核心机制 & 智能推荐算法说明</span>
+              <span class="text-[11px] bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/20 font-normal">
+                单场获胜：3 抽 2 (随机获取2张)
+              </span>
+            </h2>
+            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+              每个英雄固定产出 3 种票券。获胜后系统从 3 张中随机掉落 2 张（3 种二元组合概率各占 1/3）。系统根据您的【拥有量】与【需求量】实时计算净缺口，将全英雄自动划分为：
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2 text-xs">
+              <div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 text-amber-200">
+                <span class="font-bold text-amber-400">🥇 第 1 档（完美契合）</span>：3 张票券全部为急需！无论抽到哪 2 张都 100% 有效，单局期望 2.0 张，零浪费。
+              </div>
+              <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-2 text-blue-200">
+                <span class="font-bold text-blue-400">🥈 第 2 档（高效精选）</span>：2 张票券为急需。保底 100% 获得至少 1 张所需，有 33.3% 概率双收，期望 1.33 张/局。
+              </div>
+              <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-2 text-purple-200">
+                <span class="font-bold text-purple-400">🥉 第 3 档（替补选择）</span>：1 张票券为急需。66.7% 概率获得 1 张所需，期望 0.67 张/局。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Status Bar -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="card-glass rounded-xl p-3.5 border border-slate-800">
+          <div class="text-xs text-slate-400">总需求目标</div>
+          <div class="text-2xl font-black text-amber-400 mt-1" id="statTotalNeeded">0 <span class="text-xs text-slate-400 font-normal">张</span></div>
+        </div>
+        <div class="card-glass rounded-xl p-3.5 border border-slate-800">
+          <div class="text-xs text-slate-400">当前已拥有</div>
+          <div class="text-2xl font-black text-emerald-400 mt-1" id="statTotalOwned">0 <span class="text-xs text-slate-400 font-normal">张</span></div>
+        </div>
+        <div class="card-glass rounded-xl p-3.5 border border-slate-800">
+          <div class="text-xs text-slate-400">净缺口（待获取）</div>
+          <div class="text-2xl font-black text-rose-400 mt-1" id="statTotalDeficit">0 <span class="text-xs text-slate-400 font-normal">张</span></div>
+        </div>
+        <div class="card-glass rounded-xl p-3.5 border border-slate-800">
+          <div class="text-xs text-slate-400">预计最快通关</div>
+          <div class="text-2xl font-black text-sky-400 mt-1" id="statEstimatedGames">0 <span class="text-xs text-slate-400 font-normal">局胜场</span></div>
+        </div>
+      </div>
+
+      <!-- Part A: 票券设置 (Inventory & Target Demands) -->
+      <div class="card-glass rounded-2xl p-5 border border-slate-800/80 shadow-xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-base font-bold text-white flex items-center gap-2">
+              <span>(a) 票券库存与需求设置</span>
+              <span class="text-xs text-slate-400 font-normal">设置您拥有的票券数量与当前关卡所需的票券目标</span>
+            </h2>
+          </div>
+
+          <!-- Quick Presets -->
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs text-slate-400">常用预设:</span>
+            <button onclick="applyPreset('node1')" class="px-2.5 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700">
+              第1车厢关卡
+            </button>
+            <button onclick="applyPreset('boss')" class="px-2.5 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700">
+              首领决战关卡
+            </button>
+            <button onclick="applyPreset('demo')" class="px-2.5 py-1 text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 rounded-lg border border-amber-500/30 font-medium">
+              典型缺口测试
+            </button>
+            <button onclick="resetSetup()" class="px-2.5 py-1 text-xs bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 rounded-lg border border-rose-500/30">
+              清空重置
+            </button>
+          </div>
+        </div>
+
+        <!-- Ticket Configuration Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-[460px] overflow-y-auto pr-2" id="ticketSetupGrid">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Part B: 智能推荐结果展示 (Tier 1, Tier 2, Tier 3) -->
+      <div class="space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-base font-bold text-white flex items-center gap-2">
+              <span>(b) 智能英雄推荐</span>
+              <span class="text-xs font-normal text-slate-400">基于 3 抽 2 随机掉落概率计算收益期望</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">点击英雄卡片上的【模拟获胜】可实时体验随机掉落与自动更新库存</p>
+          </div>
+
+          <!-- Attribute Filter for Recommendations -->
+          <div class="flex items-center gap-1.5 flex-wrap bg-slate-900/80 p-1 rounded-xl border border-slate-800">
+            <button onclick="setRecomAttrFilter('all')" class="recom-attr-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow" data-attr="all">
+              全部属性
+            </button>
+            <button onclick="setRecomAttrFilter('str')" class="recom-attr-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700 transition border border-red-500/30" data-attr="str">
+              <span class="text-red-400 mr-1">🔴</span>力量
+            </button>
+            <button onclick="setRecomAttrFilter('agi')" class="recom-attr-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700 transition border border-emerald-500/30" data-attr="agi">
+              <span class="text-emerald-400 mr-1">🟢</span>敏捷
+            </button>
+            <button onclick="setRecomAttrFilter('int')" class="recom-attr-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700 transition border border-sky-500/30" data-attr="int">
+              <span class="text-sky-400 mr-1">🔵</span>智力
+            </button>
+            <button onclick="setRecomAttrFilter('all_attr')" class="recom-attr-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700 transition border border-purple-500/30" data-attr="all_attr">
+              <span class="text-purple-400 mr-1">🟣</span>全才
+            </button>
+          </div>
+        </div>
+
+        <!-- Tier 1 Section -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-amber-500/30 pb-2">
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-black bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 shadow-sm">
+                🥇 第 1 档 · 极力推荐
+              </span>
+              <span class="text-xs text-amber-300/90 font-medium">
+                3/3 需求完美匹配 | 单局期望 2.0 张 | 0% 浪费率
+              </span>
+            </div>
+            <span class="text-xs text-slate-400" id="tier1Count">0 位英雄</span>
+          </div>
+          <div id="tier1Grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3">
+            <!-- Injected via JS -->
+          </div>
+          <div id="tier1Empty" class="text-xs text-slate-500 italic bg-slate-900/40 p-4 rounded-xl border border-slate-800 text-center">
+            暂无 3 张票券全部命中的完美英雄。请查看第 2 档高效英雄组合！
+          </div>
+        </div>
+
+        <!-- Tier 2 Section -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-blue-500/30 pb-2">
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-black bg-gradient-to-r from-blue-500 to-cyan-400 text-slate-950 shadow-sm">
+                🥈 第 2 档 · 高效精选
+              </span>
+              <span class="text-xs text-blue-300/90 font-medium">
+                2/3 需求匹配 | 保底 100% 获得至少 1 张所需 | 期望 1.33 张/局
+              </span>
+            </div>
+            <span class="text-xs text-slate-400" id="tier2Count">0 位英雄</span>
+          </div>
+          <div id="tier2Grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3">
+            <!-- Injected via JS -->
+          </div>
+          <div id="tier2Empty" class="text-xs text-slate-500 italic bg-slate-900/40 p-4 rounded-xl border border-slate-800 text-center">
+            当前无第 2 档推荐英雄。
+          </div>
+        </div>
+
+        <!-- Tier 3 Section -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-purple-500/30 pb-2">
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-black bg-gradient-to-r from-purple-500 to-fuchsia-400 text-slate-950 shadow-sm">
+                🥉 第 3 档 · 备选补充
+              </span>
+              <span class="text-xs text-purple-300/90 font-medium">
+                1/3 需求匹配 | 66.7% 概率获得 1 张所需 | 期望 0.67 张/局
+              </span>
+            </div>
+            <span class="text-xs text-slate-400" id="tier3Count">0 位英雄</span>
+          </div>
+          <div id="tier3Grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3">
+            <!-- Injected via JS -->
+          </div>
+          <div id="tier3Empty" class="text-xs text-slate-500 italic bg-slate-900/40 p-4 rounded-xl border border-slate-800 text-center">
+            当前无第 3 档推荐英雄。
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Ticket Detail Modal -->
+  <div id="ticketModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+    <div class="card-glass rounded-2xl max-w-lg w-full p-6 border border-amber-500/40 shadow-2xl space-y-4">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center space-x-3">
+          <div id="modalTicketIcon" class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-amber-500/20 border border-amber-500/40">
+            🃏
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h3 id="modalTicketName" class="text-lg font-bold text-white">票券名称</h3>
+              <span id="modalTicketNum" class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800 text-amber-400 border border-slate-700">0</span>
+            </div>
+            <p id="modalTicketEn" class="text-xs text-slate-400">The Name</p>
+          </div>
+        </div>
+        <button onclick="closeTicketModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-xs text-slate-300" id="modalTicketDesc">
+        票券寓意描述
+      </div>
+
+      <div>
+        <div class="text-xs font-bold text-amber-400 mb-2 flex items-center justify-between">
+          <span>可产出此票券的所有英雄：</span>
+          <span id="modalHeroCount" class="text-[11px] text-slate-400 font-normal">0 位</span>
+        </div>
+        <div id="modalHeroList" class="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-1">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-2 border-t border-slate-800">
+        <button onclick="closeTicketModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-xl transition">
+          关闭
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+const HEROES_DATA = [{"id": 1, "key": "antimage", "name": "敌法师", "en_name": "Anti-Mage", "attr": "agi", "tickets": ["魔术师", "女祭司", "皇帝"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/antimage.png", "roles": ["Carry", "Escape", "Nuker"], "aliases": ["敌法", "敌法师", "am", "df", "dfs", "Anti-Mage"], "tickets_en": ["The Magician", "The High Priestess", "The Emperor"]}, {"id": 2, "key": "axe", "name": "斧王", "en_name": "Axe", "attr": "str", "tickets": ["力量", "力量", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/axe.png", "roles": ["Initiator", "Durable", "Disabler", "Carry"], "aliases": ["斧王", "fw", "axe", "Axe"], "tickets_en": ["Strength", "Strength", "The Hermit"]}, {"id": 3, "key": "bane", "name": "祸乱之源", "en_name": "Bane", "attr": "all", "tickets": ["女祭司", "女祭司", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bane.png", "roles": ["Support", "Disabler", "Nuker", "Durable"], "aliases": ["祸乱之源", "祸乱", "bane", "Bane"], "tickets_en": ["The High Priestess", "The High Priestess", "Death"]}, {"id": 4, "key": "bloodseeker", "name": "血魔", "en_name": "Bloodseeker", "attr": "agi", "tickets": ["魔术师", "女祭司", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bloodseeker.png", "roles": ["Carry", "Disabler", "Nuker", "Initiator"], "aliases": ["血魔", "嗜血狂魔", "bs", "xm", "Bloodseeker"], "tickets_en": ["The Magician", "The High Priestess", "Wheel of Fortune"]}, {"id": 5, "key": "crystal_maiden", "name": "水晶室女", "en_name": "Crystal Maiden", "attr": "int", "tickets": ["愚者", "愚者", "魔术师"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crystal_maiden.png", "roles": ["Support", "Disabler", "Nuker"], "aliases": ["水晶室女", "冰女", "cm", "bn", "Crystal Maiden"], "tickets_en": ["The Fool", "The Fool", "The Magician"]}, {"id": 6, "key": "drow_ranger", "name": "卓尔游侠", "en_name": "Drow Ranger", "attr": "agi", "tickets": ["魔术师", "魔术师", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/drow_ranger.png", "roles": ["Carry", "Disabler", "Pusher"], "aliases": ["卓尔游侠", "小黑", "dr", "xh", "Drow Ranger"], "tickets_en": ["The Magician", "The Magician", "The Hermit"]}, {"id": 7, "key": "earthshaker", "name": "撼地者", "en_name": "Earthshaker", "attr": "str", "tickets": ["力量", "力量", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/earthshaker.png", "roles": ["Support", "Initiator", "Disabler", "Nuker"], "aliases": ["撼地者", "小牛", "牛头", "es", "xn", "Earthshaker"], "tickets_en": ["Strength", "Strength", "The Hermit"]}, {"id": 8, "key": "juggernaut", "name": "主宰", "en_name": "Juggernaut", "attr": "agi", "tickets": ["皇帝", "力量", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/juggernaut.png", "roles": ["Carry", "Pusher", "Escape"], "aliases": ["主宰", "剑圣", "jugg", "js", "zz", "Juggernaut"], "tickets_en": ["The Emperor", "Strength", "Strength"]}, {"id": 9, "key": "mirana", "name": "米拉娜", "en_name": "Mirana", "attr": "agi", "tickets": ["皇帝", "恋人", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/mirana.png", "roles": ["Carry", "Support", "Escape", "Nuker", "Disabler"], "aliases": ["米拉娜", "白虎", "pom", "bh", "Mirana"], "tickets_en": ["The Emperor", "The Lovers", "The Star"]}, {"id": 10, "key": "morphling", "name": "变体精灵", "en_name": "Morphling", "attr": "agi", "tickets": ["隐士", "命运之轮", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/morphling.png", "roles": ["Carry", "Escape", "Durable", "Nuker", "Disabler"], "aliases": ["变体精灵", "水人", "morph", "sr", "Morphling"], "tickets_en": ["The Hermit", "Wheel of Fortune", "Wheel of Fortune"]}, {"id": 11, "key": "nevermore", "name": "影魔", "en_name": "Shadow Fiend", "attr": "agi", "tickets": ["恶魔", "恶魔", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/nevermore.png", "roles": ["Carry", "Nuker"], "aliases": ["影魔", "sf", "ym", "Shadow Fiend"], "tickets_en": ["The Devil", "The Devil", "Death"]}, {"id": 12, "key": "phantom_lancer", "name": "幻影长矛手", "en_name": "Phantom Lancer", "attr": "agi", "tickets": ["魔术师", "恋人", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/phantom_lancer.png", "roles": ["Carry", "Escape", "Pusher", "Nuker"], "aliases": ["幻影长矛手", "猴子", "pl", "hz", "Phantom Lancer"], "tickets_en": ["The Magician", "The Lovers", "Wheel of Fortune"]}, {"id": 13, "key": "puck", "name": "帕克", "en_name": "Puck", "attr": "int", "tickets": ["愚者", "愚者", "魔术师"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/puck.png", "roles": ["Initiator", "Disabler", "Escape", "Nuker"], "aliases": ["帕克", "仙女龙", "puck", "pk", "Puck"], "tickets_en": ["The Fool", "The Fool", "The Magician"]}, {"id": 14, "key": "pudge", "name": "帕吉", "en_name": "Pudge", "attr": "str", "tickets": ["愚者", "恶魔", "恶魔"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/pudge.png", "roles": ["Disabler", "Initiator", "Durable", "Nuker"], "aliases": ["帕吉", "屠夫", "pudge", "tf", "pj", "Pudge"], "tickets_en": ["The Fool", "The Devil", "The Devil"]}, {"id": 15, "key": "razor", "name": "剃刀", "en_name": "Razor", "attr": "agi", "tickets": ["恶魔", "皇帝", "皇帝"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/razor.png", "roles": ["Carry", "Durable", "Nuker", "Pusher"], "aliases": ["剃刀", "电魂", "闪电幽魂", "razor", "dh", "Razor"], "tickets_en": ["The Devil", "The Emperor", "The Emperor"]}, {"id": 16, "key": "sand_king", "name": "沙王", "en_name": "Sand King", "attr": "all", "tickets": ["隐士", "隐士", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sand_king.png", "roles": ["Initiator", "Disabler", "Support", "Nuker", "Escape"], "aliases": ["沙王", "sk", "sw", "Sand King"], "tickets_en": ["The Hermit", "The Hermit", "The Star"]}, {"id": 17, "key": "storm_spirit", "name": "风暴之灵", "en_name": "Storm Spirit", "attr": "int", "tickets": ["愚者", "恶魔", "皇帝"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/storm_spirit.png", "roles": ["Carry", "Escape", "Nuker", "Initiator", "Disabler"], "aliases": ["风暴之灵", "蓝猫", "ss", "lm", "Storm Spirit"], "tickets_en": ["The Fool", "The Devil", "The Emperor"]}, {"id": 18, "key": "sven", "name": "斯温", "en_name": "Sven", "attr": "str", "tickets": ["力量", "力量", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sven.png", "roles": ["Carry", "Disabler", "Initiator", "Durable", "Nuker"], "aliases": ["斯温", "流浪剑客", "流浪", "sven", "sw", "ll", "Sven"], "tickets_en": ["Strength", "Strength", "Strength"]}, {"id": 19, "key": "tiny", "name": "小小", "en_name": "Tiny", "attr": "str", "tickets": ["愚者", "星星", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tiny.png", "roles": ["Carry", "Nuker", "Pusher", "Initiator", "Durable", "Disabler"], "aliases": ["小小", "山岭巨人", "tiny", "xx", "Tiny"], "tickets_en": ["The Fool", "The Star", "The Star"]}, {"id": 20, "key": "vengefulspirit", "name": "复仇之魂", "en_name": "Vengeful Spirit", "attr": "agi", "tickets": ["皇帝", "恋人", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/vengefulspirit.png", "roles": ["Support", "Initiator", "Disabler", "Nuker", "Escape"], "aliases": ["复仇之魂", "复仇", "vs", "fc", "Vengeful Spirit"], "tickets_en": ["The Emperor", "The Lovers", "Death"]}, {"id": 21, "key": "windrunner", "name": "风行者", "en_name": "Windranger", "attr": "all", "tickets": ["力量", "隐士", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/windrunner.png", "roles": ["Carry", "Support", "Disabler", "Escape", "Nuker"], "aliases": ["风行者", "风行", "wr", "fx", "Windranger"], "tickets_en": ["Strength", "The Hermit", "The Star"]}, {"id": 22, "key": "zuus", "name": "宙斯", "en_name": "Zeus", "attr": "int", "tickets": ["愚者", "愚者", "恶魔"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/zuus.png", "roles": ["Nuker", "Carry"], "aliases": ["宙斯", "众神之王", "zeus", "zs", "Zeus"], "tickets_en": ["The Fool", "The Fool", "The Devil"]}, {"id": 23, "key": "kunkka", "name": "昆卡", "en_name": "Kunkka", "attr": "str", "tickets": ["皇帝", "皇帝", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/kunkka.png", "roles": ["Carry", "Support", "Disabler", "Initiator", "Durable", "Nuker"], "aliases": ["昆卡", "船长", "kunkka", "cz", "kk", "Kunkka"], "tickets_en": ["The Emperor", "The Emperor", "Strength"]}, {"id": 25, "key": "lina", "name": "莉娜", "en_name": "Lina", "attr": "int", "tickets": ["魔术师", "魔术师", "恶魔"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lina.png", "roles": ["Support", "Carry", "Nuker", "Disabler"], "aliases": ["莉娜", "火女", "秀逗魔导士", "lina", "hn", "Lina"], "tickets_en": ["The Magician", "The Magician", "The Devil"]}, {"id": 26, "key": "lion", "name": "莱恩", "en_name": "Lion", "attr": "int", "tickets": ["魔术师", "恶魔", "恶魔"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lion.png", "roles": ["Support", "Disabler", "Nuker", "Initiator"], "aliases": ["莱恩", "恶魔巫师", "lion", "emws", "Lion"], "tickets_en": ["The Magician", "The Devil", "The Devil"]}, {"id": 27, "key": "shadow_shaman", "name": "暗影萨满", "en_name": "Shadow Shaman", "attr": "int", "tickets": ["女祭司", "女祭司", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/shadow_shaman.png", "roles": ["Support", "Pusher", "Disabler", "Nuker", "Initiator"], "aliases": ["暗影萨满", "小y", "萨满", "ss", "xy", "Shadow Shaman"], "tickets_en": ["The High Priestess", "The High Priestess", "The Hermit"]}, {"id": 28, "key": "slardar", "name": "斯拉达", "en_name": "Slardar", "attr": "str", "tickets": ["女祭司", "力量", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/slardar.png", "roles": ["Carry", "Durable", "Initiator", "Disabler", "Escape"], "aliases": ["斯拉达", "大鱼人", "大鱼", "slardar", "dyr", "dy", "Slardar"], "tickets_en": ["The High Priestess", "Strength", "Strength"]}, {"id": 29, "key": "tidehunter", "name": "潮汐猎人", "en_name": "Tidehunter", "attr": "str", "tickets": ["皇帝", "隐士", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tidehunter.png", "roles": ["Initiator", "Durable", "Disabler", "Nuker", "Carry"], "aliases": ["潮汐猎人", "潮汐", "th", "cx", "Tidehunter"], "tickets_en": ["The Emperor", "The Hermit", "The Hermit"]}, {"id": 30, "key": "witch_doctor", "name": "巫医", "en_name": "Witch Doctor", "attr": "int", "tickets": ["隐士", "星星", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/witch_doctor.png", "roles": ["Support", "Nuker", "Disabler"], "aliases": ["巫医", "wd", "wy", "Witch Doctor"], "tickets_en": ["The Hermit", "The Star", "Death"]}, {"id": 31, "key": "lich", "name": "巫妖", "en_name": "Lich", "attr": "int", "tickets": ["魔术师", "死神", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lich.png", "roles": ["Support", "Nuker"], "aliases": ["巫妖", "lich", "wy", "Lich"], "tickets_en": ["The Magician", "Death", "Death"]}, {"id": 32, "key": "riki", "name": "力丸", "en_name": "Riki", "attr": "agi", "tickets": ["魔术师", "魔术师", "恶魔"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/riki.png", "roles": ["Carry", "Escape", "Disabler"], "aliases": ["力丸", "隐刺", "sa", "riki", "yc", "Riki"], "tickets_en": ["The Magician", "The Magician", "The Devil"]}, {"id": 33, "key": "enigma", "name": "谜团", "en_name": "Enigma", "attr": "all", "tickets": ["女祭司", "星星", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/enigma.png", "roles": ["Disabler", "Initiator", "Pusher"], "aliases": ["谜团", "enigma", "mt", "Enigma"], "tickets_en": ["The High Priestess", "The Star", "The Star"]}, {"id": 34, "key": "tinker", "name": "修补匠", "en_name": "Tinker", "attr": "int", "tickets": ["隐士", "隐士", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tinker.png", "roles": ["Carry", "Nuker", "Pusher"], "aliases": ["修补匠", "tk", "xbj", "Tinker"], "tickets_en": ["The Hermit", "The Hermit", "The Star"]}, {"id": 35, "key": "sniper", "name": "狙击手", "en_name": "Sniper", "attr": "agi", "tickets": ["力量", "隐士", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sniper.png", "roles": ["Carry", "Nuker"], "aliases": ["狙击手", "火枪", "火枪手", "sniper", "hq", "Sniper"], "tickets_en": ["Strength", "The Hermit", "The Hermit"]}, {"id": 36, "key": "necrolyte", "name": "瘟疫法师", "en_name": "Necrophos", "attr": "int", "tickets": ["皇帝", "死神", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/necrolyte.png", "roles": ["Carry", "Nuker", "Durable", "Disabler"], "aliases": ["瘟疫法师", "nec", "死灵法", "wyfs", "Necrophos"], "tickets_en": ["The Emperor", "Death", "Death"]}, {"id": 37, "key": "warlock", "name": "术士", "en_name": "Warlock", "attr": "int", "tickets": ["恶魔", "恋人", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/warlock.png", "roles": ["Support", "Initiator", "Disabler"], "aliases": ["术士", "wl", "ss", "Warlock"], "tickets_en": ["The Devil", "The Lovers", "The Hermit"]}, {"id": 38, "key": "beastmaster", "name": "兽王", "en_name": "Beastmaster", "attr": "all", "tickets": ["恶魔", "恋人", "恋人"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/beastmaster.png", "roles": ["Initiator", "Disabler", "Durable", "Nuker"], "aliases": ["兽王", "bm", "sw", "Beastmaster"], "tickets_en": ["The Devil", "The Lovers", "The Lovers"]}, {"id": 39, "key": "queenofpain", "name": "痛苦女王", "en_name": "Queen of Pain", "attr": "int", "tickets": ["女祭司", "恶魔", "恶魔"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/queenofpain.png", "roles": ["Carry", "Nuker", "Escape"], "aliases": ["痛苦女王", "女王", "qop", "nw", "Queen of Pain"], "tickets_en": ["The High Priestess", "The Devil", "The Devil"]}, {"id": 40, "key": "venomancer", "name": "剧毒术士", "en_name": "Venomancer", "attr": "all", "tickets": ["命运之轮", "死神", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/venomancer.png", "roles": ["Support", "Nuker", "Initiator", "Pusher", "Disabler"], "aliases": ["剧毒术士", "剧毒", "veno", "jd", "Venomancer"], "tickets_en": ["Wheel of Fortune", "Death", "Death"]}, {"id": 41, "key": "faceless_void", "name": "虚空假面", "en_name": "Faceless Void", "attr": "agi", "tickets": ["愚者", "力量", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/faceless_void.png", "roles": ["Carry", "Initiator", "Disabler", "Escape", "Durable"], "aliases": ["虚空假面", "虚空", "fv", "void", "xk", "Faceless Void"], "tickets_en": ["The Fool", "Strength", "Wheel of Fortune"]}, {"id": 42, "key": "skeleton_king", "name": "冥魂大帝", "en_name": "Wraith King", "attr": "str", "tickets": ["皇帝", "皇帝", "皇帝"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/skeleton_king.png", "roles": ["Carry", "Support", "Durable", "Disabler", "Initiator"], "aliases": ["冥魂大帝", "骷髅王", "snk", "wk", "klw", "Wraith King"], "tickets_en": ["The Emperor", "The Emperor", "The Emperor"]}, {"id": 43, "key": "death_prophet", "name": "死亡先知", "en_name": "Death Prophet", "attr": "all", "tickets": ["星星", "命运之轮", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/death_prophet.png", "roles": ["Carry", "Pusher", "Nuker", "Disabler"], "aliases": ["死亡先知", "dp", "swxz", "Death Prophet"], "tickets_en": ["The Star", "Wheel of Fortune", "Death"]}, {"id": 44, "key": "phantom_assassin", "name": "幻影刺客", "en_name": "Phantom Assassin", "attr": "agi", "tickets": ["力量", "命运之轮", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/phantom_assassin.png", "roles": ["Carry", "Escape"], "aliases": ["幻影刺客", "pa", "hyck", "Phantom Assassin"], "tickets_en": ["Strength", "Wheel of Fortune", "Wheel of Fortune"]}, {"id": 45, "key": "pugna", "name": "帕格纳", "en_name": "Pugna", "attr": "int", "tickets": ["魔术师", "星星", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/pugna.png", "roles": ["Nuker", "Pusher"], "aliases": ["帕格纳", "骨法", "pugna", "gf", "Pugna"], "tickets_en": ["The Magician", "The Star", "Death"]}, {"id": 46, "key": "templar_assassin", "name": "圣堂刺客", "en_name": "Templar Assassin", "attr": "agi", "tickets": ["魔术师", "女祭司", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/templar_assassin.png", "roles": ["Carry", "Escape"], "aliases": ["圣堂刺客", "圣堂", "ta", "st", "Templar Assassin"], "tickets_en": ["The Magician", "The High Priestess", "The Hermit"]}, {"id": 47, "key": "viper", "name": "冥界亚龙", "en_name": "Viper", "attr": "agi", "tickets": ["隐士", "隐士", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/viper.png", "roles": ["Carry", "Durable", "Initiator", "Disabler"], "aliases": ["冥界亚龙", "毒龙", "vip", "viper", "dl", "Viper"], "tickets_en": ["The Hermit", "The Hermit", "Wheel of Fortune"]}, {"id": 48, "key": "luna", "name": "露娜", "en_name": "Luna", "attr": "agi", "tickets": ["皇帝", "恋人", "恋人"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/luna.png", "roles": ["Carry", "Nuker", "Pusher"], "aliases": ["露娜", "月骑", "月之骑士", "luna", "yq", "Luna"], "tickets_en": ["The Emperor", "The Lovers", "The Lovers"]}, {"id": 49, "key": "dragon_knight", "name": "龙骑士", "en_name": "Dragon Knight", "attr": "str", "tickets": ["皇帝", "力量", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dragon_knight.png", "roles": ["Carry", "Pusher", "Durable", "Disabler", "Initiator", "Nuker"], "aliases": ["龙骑士", "龙骑", "dk", "lq", "Dragon Knight"], "tickets_en": ["The Emperor", "Strength", "Death"]}, {"id": 50, "key": "dazzle", "name": "戴泽", "en_name": "Dazzle", "attr": "all", "tickets": ["恋人", "恋人", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dazzle.png", "roles": ["Support", "Nuker", "Disabler"], "aliases": ["戴泽", "暗牧", "dazzle", "am", "Dazzle"], "tickets_en": ["The Lovers", "The Lovers", "The Star"]}, {"id": 51, "key": "rattletrap", "name": "发条技师", "en_name": "Clockwerk", "attr": "str", "tickets": ["隐士", "星星", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/rattletrap.png", "roles": ["Initiator", "Disabler", "Durable", "Nuker"], "aliases": ["发条技师", "发条", "cg", "clock", "ft", "Clockwerk"], "tickets_en": ["The Hermit", "The Star", "The Star"]}, {"id": 52, "key": "leshrac", "name": "拉席克", "en_name": "Leshrac", "attr": "int", "tickets": ["魔术师", "恶魔", "恶魔"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/leshrac.png", "roles": ["Carry", "Support", "Nuker", "Pusher", "Disabler"], "aliases": ["拉席克", "老鹿", "ts", "lesh", "ll", "Leshrac"], "tickets_en": ["The Magician", "The Devil", "The Devil"]}, {"id": 53, "key": "furion", "name": "先知", "en_name": "Nature's Prophet", "attr": "all", "tickets": ["魔术师", "女祭司", "女祭司"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/furion.png", "roles": ["Carry", "Pusher", "Escape", "Nuker"], "aliases": ["先知", "np", "fura", "xz", "Nature's Prophet"], "tickets_en": ["The Magician", "The High Priestess", "The High Priestess"]}, {"id": 54, "key": "life_stealer", "name": "噬魂鬼", "en_name": "Lifestealer", "attr": "str", "tickets": ["恶魔", "恶魔", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/life_stealer.png", "roles": ["Carry", "Durable", "Escape", "Disabler"], "aliases": ["噬魂鬼", "小狗", "naix", "ls", "xg", "Lifestealer"], "tickets_en": ["The Devil", "The Devil", "Death"]}, {"id": 55, "key": "dark_seer", "name": "黑暗贤者", "en_name": "Dark Seer", "attr": "int", "tickets": ["女祭司", "女祭司", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dark_seer.png", "roles": ["Initiator", "Escape", "Disabler"], "aliases": ["黑暗贤者", "兔子", "ds", "tz", "Dark Seer"], "tickets_en": ["The High Priestess", "The High Priestess", "The Hermit"]}, {"id": 56, "key": "clinkz", "name": "克林克兹", "en_name": "Clinkz", "attr": "agi", "tickets": ["魔术师", "力量", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/clinkz.png", "roles": ["Carry", "Escape", "Pusher"], "aliases": ["克林克兹", "骨弓", "小骷髅", "clinkz", "gg", "Clinkz"], "tickets_en": ["The Magician", "Strength", "Death"]}, {"id": 57, "key": "omniknight", "name": "全能骑士", "en_name": "Omniknight", "attr": "str", "tickets": ["女祭司", "女祭司", "皇帝"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/omniknight.png", "roles": ["Support", "Durable", "Nuker"], "aliases": ["全能骑士", "全能", "ok", "omni", "qn", "Omniknight"], "tickets_en": ["The High Priestess", "The High Priestess", "The Emperor"]}, {"id": 58, "key": "enchantress", "name": "魅惑魔女", "en_name": "Enchantress", "attr": "int", "tickets": ["愚者", "愚者", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/enchantress.png", "roles": ["Support", "Pusher", "Durable", "Disabler"], "aliases": ["魅惑魔女", "小鹿", "ench", "xl", "Enchantress"], "tickets_en": ["The Fool", "The Fool", "The Star"]}, {"id": 59, "key": "huskar", "name": "哈斯卡", "en_name": "Huskar", "attr": "str", "tickets": ["女祭司", "恶魔", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/huskar.png", "roles": ["Carry", "Durable", "Initiator"], "aliases": ["哈斯卡", "神灵武士", "神灵", "huskar", "sl", "Huskar"], "tickets_en": ["The High Priestess", "The Devil", "The Hermit"]}, {"id": 60, "key": "night_stalker", "name": "暗夜魔王", "en_name": "Night Stalker", "attr": "str", "tickets": ["皇帝", "皇帝", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/night_stalker.png", "roles": ["Carry", "Initiator", "Durable", "Disabler", "Nuker"], "aliases": ["暗夜魔王", "夜魔", "ns", "ym", "Night Stalker"], "tickets_en": ["The Emperor", "The Emperor", "Wheel of Fortune"]}, {"id": 61, "key": "broodmother", "name": "育母蜘蛛", "en_name": "Broodmother", "attr": "agi", "tickets": ["恋人", "隐士", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/broodmother.png", "roles": ["Carry", "Pusher", "Escape", "Nuker"], "aliases": ["育母蜘蛛", "蜘蛛", "bm", "zz", "Broodmother"], "tickets_en": ["The Lovers", "The Hermit", "Wheel of Fortune"]}, {"id": 62, "key": "bounty_hunter", "name": "赏金猎人", "en_name": "Bounty Hunter", "attr": "agi", "tickets": ["恶魔", "恶魔", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bounty_hunter.png", "roles": ["Escape", "Nuker"], "aliases": ["赏金猎人", "赏金", "bh", "sj", "Bounty Hunter"], "tickets_en": ["The Devil", "The Devil", "The Hermit"]}, {"id": 63, "key": "weaver", "name": "编织者", "en_name": "Weaver", "attr": "agi", "tickets": ["魔术师", "星星", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/weaver.png", "roles": ["Carry", "Escape"], "aliases": ["编织者", "地穴编织者", "蚂蚁", "weaver", "my", "Weaver"], "tickets_en": ["The Magician", "The Star", "Wheel of Fortune"]}, {"id": 64, "key": "jakiro", "name": "杰奇洛", "en_name": "Jakiro", "attr": "int", "tickets": ["恋人", "恋人", "恋人"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/jakiro.png", "roles": ["Support", "Nuker", "Pusher", "Disabler"], "aliases": ["杰奇洛", "双头龙", "thd", "jakiro", "stl", "Jakiro"], "tickets_en": ["The Lovers", "The Lovers", "The Lovers"]}, {"id": 65, "key": "batrider", "name": "蝙蝠骑士", "en_name": "Batrider", "attr": "all", "tickets": ["恋人", "恋人", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/batrider.png", "roles": ["Initiator", "Disabler", "Escape"], "aliases": ["蝙蝠骑士", "蝙蝠", "bat", "bm", "Batrider"], "tickets_en": ["The Lovers", "The Lovers", "Wheel of Fortune"]}, {"id": 66, "key": "chen", "name": "陈", "en_name": "Chen", "attr": "int", "tickets": ["女祭司", "女祭司", "皇帝"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/chen.png", "roles": ["Support", "Pusher"], "aliases": ["陈", "chen", "Chen"], "tickets_en": ["The High Priestess", "The High Priestess", "The Emperor"]}, {"id": 67, "key": "spectre", "name": "幽鬼", "en_name": "Spectre", "attr": "agi", "tickets": ["魔术师", "力量", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/spectre.png", "roles": ["Carry", "Durable", "Escape"], "aliases": ["幽鬼", "spec", "yg", "Spectre"], "tickets_en": ["The Magician", "Strength", "Strength"]}, {"id": 68, "key": "ancient_apparition", "name": "远古冰魄", "en_name": "Ancient Apparition", "attr": "int", "tickets": ["命运之轮", "死神", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ancient_apparition.png", "roles": ["Support", "Disabler", "Nuker"], "aliases": ["远古冰魄", "冰魂", "aa", "bh", "Ancient Apparition"], "tickets_en": ["Wheel of Fortune", "Death", "Death"]}, {"id": 69, "key": "doom_bringer", "name": "末日使者", "en_name": "Doom", "attr": "str", "tickets": ["恶魔", "恶魔", "恶魔"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/doom_bringer.png", "roles": ["Carry", "Disabler", "Initiator", "Durable", "Nuker"], "aliases": ["末日使者", "末日", "doom", "mr", "Doom"], "tickets_en": ["The Devil", "The Devil", "The Devil"]}, {"id": 70, "key": "ursa", "name": "熊战士", "en_name": "Ursa", "attr": "agi", "tickets": ["皇帝", "恋人", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ursa.png", "roles": ["Carry", "Durable", "Disabler"], "aliases": ["熊战士", "拍拍熊", "拍拍", "ursa", "ppx", "Ursa"], "tickets_en": ["The Emperor", "The Lovers", "The Star"]}, {"id": 71, "key": "spirit_breaker", "name": "裂魂人", "en_name": "Spirit Breaker", "attr": "str", "tickets": ["力量", "命运之轮", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/spirit_breaker.png", "roles": ["Carry", "Initiator", "Disabler", "Durable", "Escape"], "aliases": ["裂魂人", "白牛", "sb", "bn", "Spirit Breaker"], "tickets_en": ["Strength", "Wheel of Fortune", "Wheel of Fortune"]}, {"id": 72, "key": "gyrocopter", "name": "矮人直升机", "en_name": "Gyrocopter", "attr": "agi", "tickets": ["愚者", "力量", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/gyrocopter.png", "roles": ["Carry", "Nuker", "Disabler"], "aliases": ["矮人直升机", "飞机", "gyro", "fj", "Gyrocopter"], "tickets_en": ["The Fool", "Strength", "The Star"]}, {"id": 73, "key": "alchemist", "name": "炼金术士", "en_name": "Alchemist", "attr": "str", "tickets": ["恶魔", "恋人", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/alchemist.png", "roles": ["Carry", "Support", "Durable", "Disabler", "Initiator", "Nuker"], "aliases": ["炼金术士", "炼金", "ga", "alch", "lj", "Alchemist"], "tickets_en": ["The Devil", "The Lovers", "The Star"]}, {"id": 74, "key": "invoker", "name": "祈求者", "en_name": "Invoker", "attr": "int", "tickets": ["魔术师", "魔术师", "恶魔"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/invoker.png", "roles": ["Carry", "Nuker", "Disabler", "Escape", "Pusher"], "aliases": ["祈求者", "卡尔", "invo", "kaer", "ke", "Invoker"], "tickets_en": ["The Magician", "The Magician", "The Devil"]}, {"id": 75, "key": "silencer", "name": "沉默术士", "en_name": "Silencer", "attr": "int", "tickets": ["魔术师", "皇帝", "皇帝"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/silencer.png", "roles": ["Carry", "Support", "Disabler", "Initiator", "Nuker"], "aliases": ["沉默术士", "沉默", "sil", "cm", "Silencer"], "tickets_en": ["The Magician", "The Emperor", "The Emperor"]}, {"id": 76, "key": "obsidian_destroyer", "name": "殁境神蚀者", "en_name": "Outworld Devourer", "attr": "int", "tickets": ["女祭司", "女祭司", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/obsidian_destroyer.png", "roles": ["Carry", "Nuker", "Disabler"], "aliases": ["殁境神蚀者", "黑鸟", "od", "destroyer", "hn", "Outworld Devourer"], "tickets_en": ["The High Priestess", "The High Priestess", "Death"]}, {"id": 77, "key": "lycan", "name": "狼人", "en_name": "Lycan", "attr": "str", "tickets": ["力量", "力量", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lycan.png", "roles": ["Carry", "Pusher", "Durable", "Escape"], "aliases": ["狼人", "lycan", "lr", "Lycan"], "tickets_en": ["Strength", "Strength", "Wheel of Fortune"]}, {"id": 78, "key": "brewmaster", "name": "酒仙", "en_name": "Brewmaster", "attr": "all", "tickets": ["恋人", "恋人", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/brewmaster.png", "roles": ["Carry", "Initiator", "Durable", "Disabler", "Nuker"], "aliases": ["酒仙", "熊猫酒仙", "熊猫", "panda", "brew", "jx", "Brewmaster"], "tickets_en": ["The Lovers", "The Lovers", "Wheel of Fortune"]}, {"id": 79, "key": "shadow_demon", "name": "暗影恶魔", "en_name": "Shadow Demon", "attr": "int", "tickets": ["恶魔", "恶魔", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/shadow_demon.png", "roles": ["Support", "Disabler", "Initiator", "Nuker"], "aliases": ["暗影恶魔", "毒狗", "sd", "dg", "Shadow Demon"], "tickets_en": ["The Devil", "The Devil", "Death"]}, {"id": 80, "key": "lone_druid", "name": "德鲁伊", "en_name": "Lone Druid", "attr": "agi", "tickets": ["恋人", "隐士", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lone_druid.png", "roles": ["Carry", "Pusher", "Durable"], "aliases": ["德鲁伊", "熊德", "ld", "xd", "Lone Druid"], "tickets_en": ["The Lovers", "The Hermit", "The Hermit"]}, {"id": 81, "key": "chaos_knight", "name": "混沌骑士", "en_name": "Chaos Knight", "attr": "str", "tickets": ["命运之轮", "命运之轮", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/chaos_knight.png", "roles": ["Carry", "Disabler", "Durable", "Pusher", "Initiator"], "aliases": ["混沌骑士", "混沌", "ck", "hd", "Chaos Knight"], "tickets_en": ["Wheel of Fortune", "Wheel of Fortune", "Wheel of Fortune"]}, {"id": 82, "key": "meepo", "name": "米波", "en_name": "Meepo", "attr": "agi", "tickets": ["魔术师", "恋人", "恋人"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/meepo.png", "roles": ["Carry", "Escape", "Nuker", "Disabler", "Initiator", "Pusher"], "aliases": ["米波", "地卜师", "地卜", "meepo", "dbs", "Meepo"], "tickets_en": ["The Magician", "The Lovers", "The Lovers"]}, {"id": 83, "key": "treant", "name": "树精卫士", "en_name": "Treant Protector", "attr": "str", "tickets": ["恶魔", "隐士", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/treant.png", "roles": ["Support", "Initiator", "Durable", "Disabler", "Escape"], "aliases": ["树精卫士", "大树", "tp", "treant", "ds", "Treant Protector"], "tickets_en": ["The Devil", "The Hermit", "The Star"]}, {"id": 84, "key": "ogre_magi", "name": "食人魔魔法师", "en_name": "Ogre Magi", "attr": "str", "tickets": ["愚者", "命运之轮", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ogre_magi.png", "roles": ["Support", "Nuker", "Disabler", "Durable", "Initiator"], "aliases": ["食人魔魔法师", "蓝胖", "om", "ogre", "lp", "Ogre Magi"], "tickets_en": ["The Fool", "Wheel of Fortune", "Wheel of Fortune"]}, {"id": 85, "key": "undying", "name": "不朽尸王", "en_name": "Undying", "attr": "str", "tickets": ["隐士", "死神", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/undying.png", "roles": ["Support", "Durable", "Disabler", "Nuker"], "aliases": ["不朽尸王", "尸王", "undying", "dirge", "sw", "Undying"], "tickets_en": ["The Hermit", "Death", "Death"]}, {"id": 86, "key": "rubick", "name": "拉比克", "en_name": "Rubick", "attr": "int", "tickets": ["魔术师", "魔术师", "魔术师"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/rubick.png", "roles": ["Support", "Disabler", "Nuker"], "aliases": ["拉比克", "大魔导", "rubick", "rbk", "Rubick"], "tickets_en": ["The Magician", "The Magician", "The Magician"]}, {"id": 87, "key": "disruptor", "name": "干扰者", "en_name": "Disruptor", "attr": "int", "tickets": ["愚者", "星星", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/disruptor.png", "roles": ["Support", "Disabler", "Nuker", "Initiator"], "aliases": ["干扰者", "萨尔", "dis", "thrall", "se", "Disruptor"], "tickets_en": ["The Fool", "The Star", "The Star"]}, {"id": 88, "key": "nyx_assassin", "name": "司夜刺客", "en_name": "Nyx Assassin", "attr": "all", "tickets": ["隐士", "隐士", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/nyx_assassin.png", "roles": ["Disabler", "Nuker", "Initiator", "Escape"], "aliases": ["司夜刺客", "小强", "nyx", "na", "xq", "Nyx Assassin"], "tickets_en": ["The Hermit", "The Hermit", "Wheel of Fortune"]}, {"id": 89, "key": "naga_siren", "name": "娜迦海妖", "en_name": "Naga Siren", "attr": "agi", "tickets": ["女祭司", "恋人", "恋人"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/naga_siren.png", "roles": ["Carry", "Support", "Pusher", "Disabler", "Initiator", "Escape"], "aliases": ["娜迦海妖", "小娜迦", "naga", "xnj", "Naga Siren"], "tickets_en": ["The High Priestess", "The Lovers", "The Lovers"]}, {"id": 90, "key": "keeper_of_the_light", "name": "光之守卫", "en_name": "Keeper of the Light", "attr": "int", "tickets": ["星星", "星星", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/keeper_of_the_light.png", "roles": ["Support", "Nuker", "Disabler"], "aliases": ["光之守卫", "光法", "kotl", "gf", "Keeper of the Light"], "tickets_en": ["The Star", "The Star", "The Star"]}, {"id": 91, "key": "wisp", "name": "艾欧", "en_name": "Io", "attr": "all", "tickets": ["愚者", "愚者", "愚者"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/wisp.png", "roles": ["Support", "Escape", "Nuker"], "aliases": ["艾欧", "小精灵", "io", "wisp", "xjl", "Io"], "tickets_en": ["The Fool", "The Fool", "The Fool"]}, {"id": 92, "key": "visage", "name": "维萨吉", "en_name": "Visage", "attr": "all", "tickets": ["恋人", "恋人", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/visage.png", "roles": ["Support", "Nuker", "Durable", "Disabler", "Pusher"], "aliases": ["维萨吉", "死灵龙", "visage", "sll", "Visage"], "tickets_en": ["The Lovers", "The Lovers", "Death"]}, {"id": 93, "key": "slark", "name": "斯拉克", "en_name": "Slark", "attr": "agi", "tickets": ["恶魔", "力量", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/slark.png", "roles": ["Carry", "Escape", "Disabler", "Nuker"], "aliases": ["斯拉克", "小鱼人", "小鱼", "slark", "xyr", "xy", "Slark"], "tickets_en": ["The Devil", "Strength", "Wheel of Fortune"]}, {"id": 94, "key": "medusa", "name": "美杜莎", "en_name": "Medusa", "attr": "agi", "tickets": ["恶魔", "恶魔", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/medusa.png", "roles": ["Carry", "Disabler", "Durable"], "aliases": ["美杜莎", "一姐", "medusa", "dusa", "yj", "Medusa"], "tickets_en": ["The Devil", "The Devil", "Death"]}, {"id": 95, "key": "troll_warlord", "name": "巨魔战将", "en_name": "Troll Warlord", "attr": "agi", "tickets": ["恶魔", "皇帝", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/troll_warlord.png", "roles": ["Carry", "Pusher", "Disabler", "Durable"], "aliases": ["巨魔战将", "巨魔", "troll", "jm", "Troll Warlord"], "tickets_en": ["The Devil", "The Emperor", "Strength"]}, {"id": 96, "key": "centaur", "name": "半人马战行者", "en_name": "Centaur Warrunner", "attr": "str", "tickets": ["皇帝", "力量", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/centaur.png", "roles": ["Durable", "Initiator", "Disabler", "Nuker", "Escape"], "aliases": ["半人马战行者", "人马", "半人马", "cw", "centaur", "rm", "Centaur Warrunner"], "tickets_en": ["The Emperor", "Strength", "Strength"]}, {"id": 97, "key": "magnataur", "name": "马格纳斯", "en_name": "Magnus", "attr": "all", "tickets": ["力量", "力量", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/magnataur.png", "roles": ["Initiator", "Disabler", "Nuker", "Escape"], "aliases": ["马格纳斯", "猛犸", "mag", "mm", "Magnus"], "tickets_en": ["Strength", "Strength", "Wheel of Fortune"]}, {"id": 98, "key": "shredder", "name": "伐木机", "en_name": "Timbersaw", "attr": "str", "tickets": ["愚者", "愚者", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/shredder.png", "roles": ["Nuker", "Durable", "Escape"], "aliases": ["伐木机", "木机", "timbersaw", "timber", "fmj", "Timbersaw"], "tickets_en": ["The Fool", "The Fool", "Wheel of Fortune"]}, {"id": 99, "key": "bristleback", "name": "刚背兽", "en_name": "Bristleback", "attr": "str", "tickets": ["恶魔", "力量", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bristleback.png", "roles": ["Carry", "Durable", "Initiator", "Nuker"], "aliases": ["刚背兽", "钢背兽", "钢背", "刚背", "bb", "bristle", "gb", "Bristleback"], "tickets_en": ["The Devil", "Strength", "Strength"]}, {"id": 100, "key": "tusk", "name": "巨牙海民", "en_name": "Tusk", "attr": "str", "tickets": ["力量", "隐士", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tusk.png", "roles": ["Initiator", "Disabler", "Nuker"], "aliases": ["巨牙海民", "海民", "tusk", "hm", "Tusk"], "tickets_en": ["Strength", "The Hermit", "The Hermit"]}, {"id": 101, "key": "skywrath_mage", "name": "天怒法师", "en_name": "Skywrath Mage", "attr": "int", "tickets": ["魔术师", "魔术师", "恋人"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/skywrath_mage.png", "roles": ["Support", "Nuker", "Disabler"], "aliases": ["天怒法师", "天怒", "sm", "sky", "tn", "Skywrath Mage"], "tickets_en": ["The Magician", "The Magician", "The Lovers"]}, {"id": 102, "key": "abaddon", "name": "亚巴顿", "en_name": "Abaddon", "attr": "all", "tickets": ["隐士", "隐士", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/abaddon.png", "roles": ["Support", "Carry", "Durable"], "aliases": ["亚巴顿", "死骑", "aba", "abaddon", "sq", "Abaddon"], "tickets_en": ["The Hermit", "The Hermit", "The Hermit"]}, {"id": 103, "key": "elder_titan", "name": "上古巨神", "en_name": "Elder Titan", "attr": "str", "tickets": ["力量", "力量", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/elder_titan.png", "roles": ["Initiator", "Disabler", "Nuker", "Durable"], "aliases": ["上古巨神", "大牛", "et", "titan", "dn", "Elder Titan"], "tickets_en": ["Strength", "Strength", "The Hermit"]}, {"id": 104, "key": "legion_commander", "name": "军团指挥官", "en_name": "Legion Commander", "attr": "str", "tickets": ["皇帝", "皇帝", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/legion_commander.png", "roles": ["Carry", "Disabler", "Initiator", "Durable", "Nuker"], "aliases": ["军团指挥官", "军团", "lc", "jt", "Legion Commander"], "tickets_en": ["The Emperor", "The Emperor", "Death"]}, {"id": 105, "key": "techies", "name": "工程师", "en_name": "Techies", "attr": "all", "tickets": ["愚者", "愚者", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/techies.png", "roles": ["Nuker", "Disabler"], "aliases": ["工程师", "炸弹人", "炸弹", "techies", "zdr", "Techies"], "tickets_en": ["The Fool", "The Fool", "Death"]}, {"id": 106, "key": "ember_spirit", "name": "灰烬之灵", "en_name": "Ember Spirit", "attr": "agi", "tickets": ["魔术师", "恋人", "恋人"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ember_spirit.png", "roles": ["Carry", "Escape", "Nuker", "Disabler", "Initiator"], "aliases": ["灰烬之灵", "火猫", "xin", "hm", "Ember Spirit"], "tickets_en": ["The Magician", "The Lovers", "The Lovers"]}, {"id": 107, "key": "earth_spirit", "name": "大地之灵", "en_name": "Earth Spirit", "attr": "str", "tickets": ["皇帝", "隐士", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/earth_spirit.png", "roles": ["Nuker", "Escape", "Disabler", "Initiator", "Durable"], "aliases": ["大地之灵", "土猫", "ebola", "es", "tm", "Earth Spirit"], "tickets_en": ["The Emperor", "The Hermit", "The Hermit"]}, {"id": 108, "key": "abyssal_underlord", "name": "孽主", "en_name": "Underlord", "attr": "str", "tickets": ["恶魔", "恶魔", "皇帝"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/abyssal_underlord.png", "roles": ["Support", "Nuker", "Disabler", "Durable", "Escape"], "aliases": ["孽主", "大屁股", "深渊领主", "underlord", "dpg", "Underlord"], "tickets_en": ["The Devil", "The Devil", "The Emperor"]}, {"id": 109, "key": "terrorblade", "name": "恐怖利刃", "en_name": "Terrorblade", "attr": "agi", "tickets": ["恶魔", "力量", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/terrorblade.png", "roles": ["Carry", "Pusher", "Nuker"], "aliases": ["恐怖利刃", "tb", "soulkeeper", "kblr", "Terrorblade"], "tickets_en": ["The Devil", "Strength", "Death"]}, {"id": 110, "key": "phoenix", "name": "凤凰", "en_name": "Phoenix", "attr": "str", "tickets": ["愚者", "命运之轮", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/phoenix.png", "roles": ["Support", "Nuker", "Initiator", "Escape", "Disabler"], "aliases": ["凤凰", "phoenix", "fh", "Phoenix"], "tickets_en": ["The Fool", "Wheel of Fortune", "Death"]}, {"id": 111, "key": "oracle", "name": "神谕者", "en_name": "Oracle", "attr": "int", "tickets": ["女祭司", "女祭司", "女祭司"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/oracle.png", "roles": ["Support", "Nuker", "Disabler", "Escape"], "aliases": ["神谕者", "神谕", "oracle", "sy", "Oracle"], "tickets_en": ["The High Priestess", "The High Priestess", "The High Priestess"]}, {"id": 112, "key": "winter_wyvern", "name": "寒冬飞龙", "en_name": "Winter Wyvern", "attr": "int", "tickets": ["隐士", "星星", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/winter_wyvern.png", "roles": ["Support", "Disabler", "Nuker"], "aliases": ["寒冬飞龙", "冰龙", "ww", "bl", "Winter Wyvern"], "tickets_en": ["The Hermit", "The Star", "The Star"]}, {"id": 113, "key": "arc_warden", "name": "天穹守望者", "en_name": "Arc Warden", "attr": "all", "tickets": ["恋人", "恋人", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/arc_warden.png", "roles": ["Carry", "Escape", "Nuker"], "aliases": ["天穹守望者", "电狗", "zet", "arc", "dg", "Arc Warden"], "tickets_en": ["The Lovers", "The Lovers", "The Star"]}, {"id": 114, "key": "monkey_king", "name": "齐天大圣", "en_name": "Monkey King", "attr": "agi", "tickets": ["魔术师", "隐士", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/monkey_king.png", "roles": ["Carry", "Escape", "Disabler", "Initiator"], "aliases": ["齐天大圣", "大圣", "猴子", "mk", "qtds", "ds", "Monkey King"], "tickets_en": ["The Magician", "The Hermit", "The Hermit"]}, {"id": 119, "key": "dark_willow", "name": "邪影芳灵", "en_name": "Dark Willow", "attr": "int", "tickets": ["女祭司", "恶魔", "恋人"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dark_willow.png", "roles": ["Support", "Nuker", "Disabler", "Escape"], "aliases": ["邪影芳灵", "花仙子", "小仙女", "willow", "hxz", "Dark Willow"], "tickets_en": ["The High Priestess", "The Devil", "The Lovers"]}, {"id": 120, "key": "pangolier", "name": "石鳞剑士", "en_name": "Pangolier", "attr": "all", "tickets": ["恶魔", "命运之轮", "命运之轮"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/pangolier.png", "roles": ["Carry", "Nuker", "Disabler", "Durable", "Escape", "Initiator"], "aliases": ["石鳞剑士", "滚滚", "穿山甲", "pango", "gg", "Pangolier"], "tickets_en": ["The Devil", "Wheel of Fortune", "Wheel of Fortune"]}, {"id": 121, "key": "grimstroke", "name": "天涯墨客", "en_name": "Grimstroke", "attr": "int", "tickets": ["恶魔", "恶魔", "恋人"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/grimstroke.png", "roles": ["Support", "Nuker", "Disabler", "Escape"], "aliases": ["天涯墨客", "墨客", "grim", "mk", "Grimstroke"], "tickets_en": ["The Devil", "The Devil", "The Lovers"]}, {"id": 123, "key": "hoodwink", "name": "森海飞霞", "en_name": "Hoodwink", "attr": "agi", "tickets": ["愚者", "魔术师", "恋人"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/hoodwink.png", "roles": ["Support", "Nuker", "Escape", "Disabler"], "aliases": ["森海飞霞", "松鼠", "hoodwink", "ss", "Hoodwink"], "tickets_en": ["The Fool", "The Magician", "The Lovers"]}, {"id": 126, "key": "void_spirit", "name": "虚空之灵", "en_name": "Void Spirit", "attr": "all", "tickets": ["女祭司", "女祭司", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/void_spirit.png", "roles": ["Carry", "Escape", "Nuker", "Disabler"], "aliases": ["虚空之灵", "紫猫", "inai", "zm", "Void Spirit"], "tickets_en": ["The High Priestess", "The High Priestess", "The Hermit"]}, {"id": 128, "key": "snapfire", "name": "电炎绝手", "en_name": "Snapfire", "attr": "all", "tickets": ["愚者", "恋人", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/snapfire.png", "roles": ["Support", "Nuker", "Disabler", "Escape"], "aliases": ["电炎绝手", "老奶奶", "姑妈", "snapfire", "lnn", "Snapfire"], "tickets_en": ["The Fool", "The Lovers", "The Star"]}, {"id": 129, "key": "mars", "name": "玛尔斯", "en_name": "Mars", "attr": "str", "tickets": ["皇帝", "皇帝", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/mars.png", "roles": ["Carry", "Initiator", "Disabler", "Durable"], "aliases": ["玛尔斯", "战神", "火星", "mars", "zs", "Mars"], "tickets_en": ["The Emperor", "The Emperor", "Strength"]}, {"id": 131, "key": "ringmaster", "name": "百戏大王", "en_name": "Ring Master", "attr": "int", "tickets": ["愚者", "魔术师", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ringmaster.png", "roles": ["Support", "Nuker", "Escape", "Disabler"], "aliases": ["百戏大王", "魔戏团长", "马戏团长", "ringmaster", "rm", "mxtz", "Ring Master"], "tickets_en": ["The Fool", "The Magician", "Death"]}, {"id": 135, "key": "dawnbreaker", "name": "破晓辰星", "en_name": "Dawnbreaker", "attr": "str", "tickets": ["愚者", "力量", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dawnbreaker.png", "roles": ["Carry", "Durable"], "aliases": ["破晓辰星", "大锤", "女武神", "db", "dc", "Dawnbreaker"], "tickets_en": ["The Fool", "Strength", "The Star"]}, {"id": 136, "key": "marci", "name": "玛西", "en_name": "Marci", "attr": "all", "tickets": ["力量", "力量", "隐士"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/marci.png", "roles": ["Support", "Carry", "Initiator", "Disabler", "Escape"], "aliases": ["玛西", "小哑巴", "marci", "mx", "Marci"], "tickets_en": ["Strength", "Strength", "The Hermit"]}, {"id": 137, "key": "primal_beast", "name": "原始野兽", "en_name": "Primal Beast", "attr": "str", "tickets": ["皇帝", "力量", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/primal_beast.png", "roles": ["Initiator", "Durable", "Disabler"], "aliases": ["原始野兽", "兽", "pb", "beast", "ysys", "Primal Beast"], "tickets_en": ["The Emperor", "Strength", "Strength"]}, {"id": 138, "key": "muerta", "name": "琼英碧灵", "en_name": "Muerta", "attr": "int", "tickets": ["死神", "死神", "死神"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/muerta.png", "roles": ["Carry", "Nuker", "Disabler"], "aliases": ["琼英碧灵", "鬼妈", "muerta", "gm", "Muerta"], "tickets_en": ["Death", "Death", "Death"]}, {"id": 145, "key": "kez", "name": "凯", "en_name": "Kez", "attr": "agi", "tickets": ["皇帝", "力量", "力量"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/kez.png", "roles": ["Carry", "Escape", "Disabler"], "aliases": ["凯", "kez", "鸟剑客", "鸟人", "Kez"], "tickets_en": ["The Emperor", "Strength", "Strength"]}, {"id": 155, "key": "largo", "name": "拉尔戈", "en_name": "Largo", "attr": "str", "tickets": ["女祭司", "星星", "星星"], "img": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/largo.png", "roles": ["Durable", "Disabler", "Support"], "aliases": ["拉尔戈", "largo", "青蛙", "音乐蛙", "Largo"], "tickets_en": ["The High Priestess", "The Star", "The Star"]}];
+const TAROT_CARDS = [{"id": "fool", "name": "愚者", "en": "The Fool", "icon": "🃏", "color": "#f59e0b", "desc": "新生与初始，无拘无束"}, {"id": "magician", "name": "魔术师", "en": "The Magician", "icon": "🪄", "color": "#a855f7", "desc": "变化与戏法，创造掌控"}, {"id": "priestess", "name": "女祭司", "en": "The High Priestess", "icon": "🔮", "color": "#38bdf8", "desc": "内在智慧，预言灵性"}, {"id": "devil", "name": "恶魔", "en": "The Devil", "icon": "😈", "color": "#dc2626", "desc": "深渊欲望，狂野契约"}, {"id": "emperor", "name": "皇帝", "en": "The Emperor", "icon": "🏛️", "color": "#ef4444", "desc": "王权统治，秩序威严"}, {"id": "lovers", "name": "恋人", "en": "The Lovers", "icon": "❤️", "color": "#f43f5e", "desc": "协同羁绊，双生契约"}, {"id": "strength", "name": "力量", "en": "Strength", "icon": "⚔️", "color": "#f97316", "desc": "刚猛坚韧，无畏战力"}, {"id": "hermit", "name": "隐士", "en": "The Hermit", "icon": "🏮", "color": "#94a3b8", "desc": "沉思隐匿，迷雾探索"}, {"id": "star", "name": "星星", "en": "The Star", "icon": "⭐", "color": "#0ea5e9", "desc": "璀璨希望，原初之光"}, {"id": "wheel", "name": "命运之轮", "en": "Wheel of Fortune", "icon": "☸️", "color": "#14b8a6", "desc": "机缘时运，因果循环"}, {"id": "death", "name": "死神", "en": "Death", "icon": "☠️", "color": "#c084fc", "desc": "旧日终结，灵界更替"}];
+
+</script>
+  <script>
+// DOTA2 暗黑狂欢 · 票券系统逻辑核心
+// 机制：每赢一局，每个英雄有3张票券，随机获得其中2张
+
+// Map card by name
+const CARD_MAP = {};
+TAROT_CARDS.forEach(c => CARD_MAP[c.name] = c);
+
+// Attribute Metadata
+const ATTR_META = {
+  'str': { name: '力量', icon: '🔴', color: '#ef4444', badgeClass: 'bg-red-500/10 text-red-400 border-red-500/30' },
+  'agi': { name: '敏捷', icon: '🟢', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' },
+  'int': { name: '智力', icon: '🔵', color: '#38bdf8', badgeClass: 'bg-sky-500/10 text-sky-400 border-sky-500/30' },
+  'all': { name: '全才', icon: '🟣', color: '#a855f7', badgeClass: 'bg-purple-500/10 text-purple-400 border-purple-500/30' }
+};
+
+// State
+let currentTab = 'codex';
+let currentAttrFilter = 'all';
+let currentRecomAttrFilter = 'all';
+let selectedTicketPill = null;
+let ownedTickets = {};
+let neededTickets = {};
+
+// Initialize default ticket counts
+TAROT_CARDS.forEach(c => {
+  ownedTickets[c.name] = 0;
+  neededTickets[c.name] = 0;
+});
+
+// Initialize application on DOM ready
+window.addEventListener('DOMContentLoaded', () => {
+  populateTicketPills();
+  populateTicketSelect();
+  renderCodex();
+  renderTicketSetupGrid();
+  
+  // Default sample setup for instant preview
+  applyPreset('demo', false);
+  updateRecommendations();
+});
+
+// Tab Switcher
+function switchTab(tab) {
+  currentTab = tab;
+  const codexSec = document.getElementById('pageCodex');
+  const recomSec = document.getElementById('pageRecom');
+  const btnCodex = document.getElementById('tabBtnCodex');
+  const btnRecom = document.getElementById('tabBtnRecom');
+
+  if (tab === 'codex') {
+    codexSec.classList.remove('hidden');
+    recomSec.classList.add('hidden');
+    btnCodex.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md";
+    btnRecom.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-300 hover:text-white hover:bg-slate-800/60";
+  } else {
+    codexSec.classList.add('hidden');
+    recomSec.classList.remove('hidden');
+    btnRecom.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md";
+    btnCodex.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-300 hover:text-white hover:bg-slate-800/60";
+    updateRecommendations();
+  }
+}
+
+// Populate ticket pills in Codex
+function populateTicketPills() {
+  const container = document.getElementById('ticketPillContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  
+  TAROT_CARDS.forEach(card => {
+    const count = HEROES_DATA.filter(h => h.tickets.includes(card.name)).length;
+    const pill = document.createElement('button');
+    pill.className = `ticket-pill text-xs px-2.5 py-1 rounded-lg border transition-all flex items-center space-x-1.5 bg-[#121722] border-slate-800 text-slate-300 hover:border-amber-500/50`;
+    pill.dataset.ticket = card.name;
+    pill.onclick = () => selectTicketPill(card.name);
+    pill.innerHTML = `
+      <span>${card.icon}</span>
+      <span>${card.name}</span>
+      <span class="text-[10px] text-slate-400 bg-slate-800/80 px-1.5 py-0.2 rounded-full">${count}</span>
+    `;
+    container.appendChild(pill);
+  });
+}
+
+// Populate ticket dropdown select
+function populateTicketSelect() {
+  const select = document.getElementById('ticketSelectFilter');
+  if (!select) return;
+  TAROT_CARDS.forEach(card => {
+    const opt = document.createElement('option');
+    opt.value = card.name;
+    opt.textContent = `${card.icon} ${card.name} (${card.en})`;
+    select.appendChild(opt);
+  });
+}
+
+// Select ticket pill
+function selectTicketPill(ticketName) {
+  if (selectedTicketPill === ticketName) {
+    selectedTicketPill = null;
+  } else {
+    selectedTicketPill = ticketName;
+  }
+  const select = document.getElementById('ticketSelectFilter');
+  if (select) select.value = selectedTicketPill || '';
+  updatePillStyles();
+  renderCodex();
+}
+
+function updatePillStyles() {
+  document.querySelectorAll('.ticket-pill').forEach(pill => {
+    if (pill.dataset.ticket === selectedTicketPill) {
+      pill.className = `ticket-pill text-xs px-2.5 py-1 rounded-lg border transition-all flex items-center space-x-1.5 bg-amber-500/20 border-amber-500 text-amber-200 font-bold shadow-md shadow-amber-950/40`;
+    } else {
+      pill.className = `ticket-pill text-xs px-2.5 py-1 rounded-lg border transition-all flex items-center space-x-1.5 bg-[#121722] border-slate-800 text-slate-300 hover:border-amber-500/50`;
+    }
+  });
+}
+
+function resetTicketPills() {
+  selectedTicketPill = null;
+  const select = document.getElementById('ticketSelectFilter');
+  if (select) select.value = '';
+  updatePillStyles();
+  renderCodex();
+}
+
+// Set Attribute filter in Codex
+function setAttrFilter(attr) {
+  currentAttrFilter = attr;
+  document.querySelectorAll('.attr-tab').forEach(btn => {
+    if (btn.dataset.attr === attr) {
+      btn.className = "attr-tab px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow";
+    } else {
+      btn.className = "attr-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/70 hover:bg-slate-700/70 transition-all border border-slate-700/40";
+    }
+  });
+  renderCodex();
+}
+
+function clearSearch() {
+  const input = document.getElementById('heroSearchInput');
+  if (input) input.value = '';
+  const clearBtn = document.getElementById('clearSearchBtn');
+  if (clearBtn) clearBtn.classList.add('hidden');
+  renderCodex();
+}
+
+function resetAllFilters() {
+  const input = document.getElementById('heroSearchInput');
+  if (input) input.value = '';
+  const clearBtn = document.getElementById('clearSearchBtn');
+  if (clearBtn) clearBtn.classList.add('hidden');
+  selectedTicketPill = null;
+  const select = document.getElementById('ticketSelectFilter');
+  if (select) select.value = '';
+  setAttrFilter('all');
+  updatePillStyles();
+  renderCodex();
+}
+
+// Filter and Render Codex Heroes
+function filterCodex() {
+  const searchInput = document.getElementById('heroSearchInput');
+  const searchVal = searchInput ? searchInput.value.trim() : '';
+  const clearBtn = document.getElementById('clearSearchBtn');
+  if (clearBtn) {
+    if (searchVal) clearBtn.classList.remove('hidden');
+    else clearBtn.classList.add('hidden');
+  }
+
+  const select = document.getElementById('ticketSelectFilter');
+  const selectVal = select ? select.value : '';
+  if (selectVal !== selectedTicketPill) {
+    selectedTicketPill = selectVal || null;
+    updatePillStyles();
+  }
+
+  renderCodex();
+}
+
+function renderCodex() {
+  const searchInput = document.getElementById('heroSearchInput');
+  const search = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  const grid = document.getElementById('codexGrid');
+  const emptyState = document.getElementById('codexEmptyState');
+  const counterEl = document.getElementById('codexHeroCount');
+
+  if (!grid) return;
+
+  const filtered = HEROES_DATA.filter(h => {
+    // Attribute filter
+    if (currentAttrFilter !== 'all') {
+      if (currentAttrFilter === 'all_attr') {
+        if (h.attr !== 'all') return false;
+      } else if (h.attr !== currentAttrFilter) {
+        return false;
+      }
+    }
+
+    // Ticket pill/select filter
+    if (selectedTicketPill) {
+      if (!h.tickets.includes(selectedTicketPill)) return false;
+    }
+
+    // Search filter (Chinese name, English name, tickets, aliases, pinyin initials)
+    if (search) {
+      const matchName = h.name.toLowerCase().includes(search);
+      const matchEn = h.en_name.toLowerCase().includes(search);
+      const matchKey = h.key.toLowerCase().includes(search);
+      const matchAliases = (h.aliases || []).some(a => a.toLowerCase().includes(search));
+      const matchTicket = h.tickets.some(t => t.toLowerCase().includes(search));
+      if (!matchName && !matchEn && !matchKey && !matchAliases && !matchTicket) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+
+  if (counterEl) counterEl.textContent = `共 ${filtered.length} 位英雄`;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    if (emptyState) emptyState.classList.remove('hidden');
+    return;
+  }
+
+  if (emptyState) emptyState.classList.add('hidden');
+
+  // Attribute sections metadata for clear visual partitioning
+  const ATTR_SECTIONS = [
+    { key: 'str', title: '力量英雄', en: 'Strength Heroes', icon: '🔴', color: '#ef4444', borderClass: 'border-l-4 border-l-red-500', headerBg: 'bg-red-500/10 border-red-500/30 text-red-300', desc: '刚烈坚韧，擅长前排冲锋与团控，产出【力量】、【隐士】、【皇帝】、【恶魔】等专属票券。' },
+    { key: 'agi', title: '敏捷英雄', en: 'Agility Heroes', icon: '🟢', color: '#10b981', borderClass: 'border-l-4 border-l-emerald-500', headerBg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300', desc: '灵动迅捷，具备极高的物理爆发与持续输出，产出【隐士】、【死神】、【魔术师】、【命运之轮】等专属票券。' },
+    { key: 'int', title: '智力英雄', en: 'Intelligence Heroes', icon: '🔵', color: '#38bdf8', borderClass: 'border-l-4 border-l-sky-500', headerBg: 'bg-sky-500/10 border-sky-500/30 text-sky-300', desc: '博学通灵，掌控大量戏法、法术爆发与战略支援，产出【魔术师】、【女祭司】、【愚者】、【星星】等专属票券。' },
+    { key: 'all', title: '全才英雄', en: 'Universal Heroes', icon: '🟣', color: '#a855f7', borderClass: 'border-l-4 border-l-purple-500', headerBg: 'bg-purple-500/10 border-purple-500/30 text-purple-300', desc: '多维平衡，均衡汲取三大属性精华为战，产出【恋人】、【女祭司】、【命运之轮】、【恶魔】等专属票券。' }
+  ];
+
+  let sectionsHtml = '';
+  ATTR_SECTIONS.forEach(sec => {
+    const secHeroes = filtered.filter(h => h.attr === sec.key);
+    if (secHeroes.length > 0) {
+      sectionsHtml += `
+        <div class="space-y-3 pt-2">
+          <!-- Attribute Header Banner -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-2.5 border-b border-slate-800/80 gap-2">
+            <div class="flex items-center space-x-2.5">
+              <span class="text-xl">${sec.icon}</span>
+              <h2 class="text-base font-bold text-white tracking-wide">${sec.title}</h2>
+              <span class="text-xs text-slate-400 font-normal">(${sec.en})</span>
+              <span class="text-xs px-2.5 py-0.5 rounded-full font-bold border ${sec.headerBg}">
+                ${secHeroes.length} 位
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 max-w-lg leading-relaxed">${sec.desc}</p>
+          </div>
+          <!-- Grid of Cards for this attribute -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-2.5">
+            ${secHeroes.map(h => renderHeroCard(h, sec.borderClass)).join('')}
+          </div>
+        </div>
+      `;
+    }
+  });
+
+  grid.innerHTML = sectionsHtml;
+}
+
+// Render individual hero card (Codex compact)
+function renderHeroCard(h, attrBorderClass = '') {
+  const attrInfo = ATTR_META[h.attr] || { name: '未知', icon: '⚪', badgeClass: 'bg-slate-700 text-slate-300' };
+  
+  // Render 3 ticket cards in a compact horizontal 3-column row
+  const ticketBadges = h.tickets.map(tName => {
+    const card = CARD_MAP[tName] || { icon: '🃏', color: '#94a3b8', num: '?' };
+    return `
+      <div onclick="openTicketModal('${tName}')" class="cursor-pointer flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg bg-slate-900/80 border border-slate-800 hover:border-amber-500/60 hover:bg-amber-500/10 text-slate-200 hover:text-amber-300 transition-all group/t" title="${tName} (点击查看详情)">
+        <span class="text-base sm:text-lg leading-none">${card.icon}</span>
+        <span class="text-[10px] leading-tight truncate max-w-full mt-0.5 font-medium">${tName}</span>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="card-glass rounded-xl p-2.5 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between group shadow-sm hover:shadow-xl ${attrBorderClass}">
+      <!-- Hero Header -->
+      <div class="flex items-center space-x-2.5 mb-2">
+        <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden bg-slate-800 border border-slate-700 flex-shrink-0">
+          <img 
+            src="${h.img}" 
+            alt="${h.name}" 
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            loading="lazy"
+            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'40\\' height=\\'40\\' viewBox=\\'0 0 40 40\\'><rect width=\\'40\\' height=\\'40\\' fill=\\'%231e293b\\'/><text x=\\'50%\\' y=\\'55%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%2394a3b8\\' font-size=\\'11\\' font-weight=\\'bold\\'>${h.name.slice(0, 2)}</text></svg>';"
+          >
+          <span class="absolute bottom-0 right-0 text-[9px] leading-none px-1 py-0.5 rounded-tl bg-black/80 font-mono">
+            ${attrInfo.icon}
+          </span>
+        </div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold text-white group-hover:text-amber-400 transition-colors truncate" title="${h.name}">
+              ${h.name}
+            </h3>
+            <span class="text-[9px] px-1.5 py-0.2 rounded font-mono ${attrInfo.badgeClass}">
+              ${attrInfo.name}
+            </span>
+          </div>
+          <p class="text-[10px] text-slate-400 truncate">${h.en_name}</p>
+        </div>
+      </div>
+
+      <!-- 3 Tickets in a single compact row -->
+      <div class="pt-1.5 border-t border-slate-800/80">
+        <div class="text-[9px] text-slate-400 font-medium mb-1">产出票券 (3抽2):</div>
+        <div class="grid grid-cols-3 gap-1">
+          ${ticketBadges}
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div class="mt-2 pt-1.5 border-t border-slate-800/60">
+        <button onclick="quickTargetHero('${h.name}')" class="w-full text-[11px] py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 transition flex items-center justify-center gap-1 font-medium">
+          <span>设为需求 ➔</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// Quick target hero to recommendation page
+function quickTargetHero(heroName) {
+  const hero = HEROES_DATA.find(h => h.name === heroName);
+  if (!hero) return;
+  
+  // Set needed tickets to hero's 3 tickets
+  TAROT_CARDS.forEach(c => neededTickets[c.name] = 0);
+  hero.tickets.forEach(t => neededTickets[t] = 2);
+  
+  renderTicketSetupGrid();
+  switchTab('recom');
+  showToast(`已将【${hero.name}】的 3 张专属票券设为需求目标！`, '🎯');
+}
+
+// Open ticket modal
+function openTicketModal(ticketName) {
+  const card = CARD_MAP[ticketName];
+  if (!card) return;
+
+  document.getElementById('modalTicketIcon').textContent = card.icon;
+  document.getElementById('modalTicketName').textContent = card.name;
+  document.getElementById('modalTicketNum').textContent = `塔罗序号: ${card.num}`;
+  document.getElementById('modalTicketEn').textContent = card.en;
+  document.getElementById('modalTicketDesc').textContent = `寓意特性：${card.desc}。在暗黑狂欢的马戏团专列中，消耗此票券可解锁特定对应车厢节点与奖励。`;
+
+  const heroes = HEROES_DATA.filter(h => h.tickets.includes(ticketName));
+  document.getElementById('modalHeroCount').textContent = `${heroes.length} 位英雄`;
+
+  const listContainer = document.getElementById('modalHeroList');
+  listContainer.innerHTML = heroes.map(h => {
+    const attrInfo = ATTR_META[h.attr];
+    return `
+      <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-xs">
+        <span>${attrInfo.icon}</span>
+        <span class="font-medium text-slate-200">${h.name}</span>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('ticketModal').classList.remove('hidden');
+}
+
+function closeTicketModal() {
+  document.getElementById('ticketModal').classList.add('hidden');
+}
+
+// ==================== RECOMMENDATION PAGE LOGIC ====================
+
+function renderTicketSetupGrid() {
+  const grid = document.getElementById('ticketSetupGrid');
+  if (!grid) return;
+  grid.innerHTML = TAROT_CARDS.map(card => {
+    const owned = ownedTickets[card.name] || 0;
+    const needed = neededTickets[card.name] || 0;
+    const deficit = Math.max(0, needed - owned);
+
+    let deficitBadge = '';
+    if (needed === 0) {
+      deficitBadge = `<span class="text-[11px] text-slate-500">无需求</span>`;
+    } else if (deficit === 0) {
+      deficitBadge = `<span class="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">已满足 ✓</span>`;
+    } else {
+      deficitBadge = `<span class="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/30">缺 ${deficit} 张</span>`;
+    }
+
+    return `
+      <div class="card-glass rounded-xl p-3 border border-slate-800 flex flex-col justify-between space-y-2">
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-base">${card.icon}</span>
+            <span class="text-xs font-bold text-slate-200">${card.name}</span>
+          </div>
+          ${deficitBadge}
+        </div>
+
+        <!-- Inputs (Owned vs Needed) -->
+        <div class="grid grid-cols-2 gap-2 text-xs pt-1 border-t border-slate-800/60">
+          <!-- Owned -->
+          <div>
+            <label class="block text-[10px] text-slate-400 mb-1">拥有量</label>
+            <div class="flex items-center bg-[#0d121a] rounded-lg border border-slate-700/80 overflow-hidden">
+              <button onclick="changeOwned('${card.name}', -1)" class="w-6 h-7 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800">-</button>
+              <input 
+                type="number" 
+                min="0" 
+                value="${owned}" 
+                onchange="setOwned('${card.name}', this.value)"
+                class="w-full bg-transparent text-center text-xs text-emerald-300 font-bold focus:outline-none py-1"
+              >
+              <button onclick="changeOwned('${card.name}', 1)" class="w-6 h-7 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800">+</button>
+            </div>
+          </div>
+
+          <!-- Needed -->
+          <div>
+            <label class="block text-[10px] text-slate-400 mb-1">需求量</label>
+            <div class="flex items-center bg-[#0d121a] rounded-lg border border-slate-700/80 overflow-hidden">
+              <button onclick="changeNeeded('${card.name}', -1)" class="w-6 h-7 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800">-</button>
+              <input 
+                type="number" 
+                min="0" 
+                value="${needed}" 
+                onchange="setNeeded('${card.name}', this.value)"
+                class="w-full bg-transparent text-center text-xs text-amber-300 font-bold focus:outline-none py-1"
+              >
+              <button onclick="changeNeeded('${card.name}', 1)" class="w-6 h-7 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function changeOwned(cardName, delta) {
+  ownedTickets[cardName] = Math.max(0, (ownedTickets[cardName] || 0) + delta);
+  renderTicketSetupGrid();
+  updateRecommendations();
+}
+
+function setOwned(cardName, val) {
+  ownedTickets[cardName] = Math.max(0, parseInt(val) || 0);
+  renderTicketSetupGrid();
+  updateRecommendations();
+}
+
+function changeNeeded(cardName, delta) {
+  neededTickets[cardName] = Math.max(0, (neededTickets[cardName] || 0) + delta);
+  renderTicketSetupGrid();
+  updateRecommendations();
+}
+
+function setNeeded(cardName, val) {
+  neededTickets[cardName] = Math.max(0, parseInt(val) || 0);
+  renderTicketSetupGrid();
+  updateRecommendations();
+}
+
+function applyPreset(presetType, toastNotify = true) {
+  TAROT_CARDS.forEach(c => {
+    ownedTickets[c.name] = 0;
+    neededTickets[c.name] = 0;
+  });
+
+  if (presetType === 'node1') {
+    neededTickets['力量'] = 2;
+    neededTickets['隐士'] = 2;
+    neededTickets['皇帝'] = 1;
+    if (toastNotify) showToast('已应用【第1车厢关卡】需求预设！', '🚂');
+  } else if (presetType === 'boss') {
+    neededTickets['命运之轮'] = 2;
+    neededTickets['恶魔'] = 2;
+    neededTickets['死神'] = 2;
+    neededTickets['魔术师'] = 1;
+    if (toastNotify) showToast('已应用【首领决战关卡】需求预设！', '👑');
+  } else if (presetType === 'demo') {
+    neededTickets['力量'] = 2;
+    neededTickets['隐士'] = 1;
+    neededTickets['恶魔'] = 2;
+    ownedTickets['恶魔'] = 0;
+    if (toastNotify) showToast('已应用【典型缺口测试】预设！', '💡');
+  }
+
+  renderTicketSetupGrid();
+  updateRecommendations();
+}
+
+function resetSetup() {
+  TAROT_CARDS.forEach(c => {
+    ownedTickets[c.name] = 0;
+    neededTickets[c.name] = 0;
+  });
+  renderTicketSetupGrid();
+  updateRecommendations();
+  showToast('已清空全部票券设置！', '🧹');
+}
+
+// Set Attribute filter for Recommendations
+function setRecomAttrFilter(attr) {
+  currentRecomAttrFilter = attr;
+  document.querySelectorAll('.recom-attr-btn').forEach(btn => {
+    if (btn.dataset.attr === attr) {
+      btn.className = "recom-attr-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow";
+    } else {
+      btn.className = "recom-attr-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700 transition border border-slate-700/40";
+    }
+  });
+  updateRecommendations();
+}
+
+// Calculate Deficits & Recommendations
+function updateRecommendations() {
+  let totalNeeded = 0;
+  let totalOwned = 0;
+  let totalDeficit = 0;
+  const deficits = {};
+
+  TAROT_CARDS.forEach(c => {
+    const o = ownedTickets[c.name] || 0;
+    const n = neededTickets[c.name] || 0;
+    const def = Math.max(0, n - o);
+    deficits[c.name] = def;
+    totalNeeded += n;
+    totalOwned += o;
+    totalDeficit += def;
+  });
+
+  // Update overview statistics
+  const statNeeded = document.getElementById('statTotalNeeded');
+  const statOwned = document.getElementById('statTotalOwned');
+  const statDeficit = document.getElementById('statTotalDeficit');
+
+  if (statNeeded) statNeeded.innerHTML = `${totalNeeded} <span class="text-xs text-slate-400 font-normal">张</span>`;
+  if (statOwned) statOwned.innerHTML = `${totalOwned} <span class="text-xs text-slate-400 font-normal">张</span>`;
+  if (statDeficit) statDeficit.innerHTML = `${totalDeficit} <span class="text-xs text-slate-400 font-normal">张</span>`;
+
+  // Update nav badge
+  const navBadge = document.getElementById('navDeficitBadge');
+  if (navBadge) {
+    if (totalDeficit > 0) {
+      navBadge.textContent = totalDeficit;
+      navBadge.classList.remove('hidden');
+    } else {
+      navBadge.classList.add('hidden');
+    }
+  }
+
+  // Calculate recommendations for all heroes
+  const tier1 = [];
+  const tier2 = [];
+  const tier3 = [];
+
+  HEROES_DATA.forEach(h => {
+    // Filter by recommendation attribute preference
+    if (currentRecomAttrFilter !== 'all') {
+      if (currentRecomAttrFilter === 'all_attr') {
+        if (h.attr !== 'all') return;
+      } else if (h.attr !== currentRecomAttrFilter) {
+        return;
+      }
+    }
+
+    const [t1, t2, t3] = h.tickets;
+    const combos = [
+      [t1, t2],
+      [t1, t3],
+      [t2, t3]
+    ];
+
+    // Evaluate useful yield for each combo
+    let usefulCounts = [];
+    combos.forEach(([a, b]) => {
+      let u = 0;
+      if (a === b) {
+        u += Math.min(2, deficits[a] || 0);
+      } else {
+        if ((deficits[a] || 0) > 0) u += 1;
+        if ((deficits[b] || 0) > 0) u += 1;
+      }
+      usefulCounts.push(u);
+    });
+
+    const expectedYield = usefulCounts.reduce((acc, v) => acc + v, 0) / 3.0;
+    const p2 = usefulCounts.filter(u => u === 2).length / 3.0;
+    const p1 = usefulCounts.filter(u => u === 1).length / 3.0;
+    const p0 = usefulCounts.filter(u => u === 0).length / 3.0;
+
+    // Count distinct tickets that match active deficits
+    const matchedTickets = h.tickets.filter(t => (deficits[t] || 0) > 0);
+    const matchCount = matchedTickets.length;
+
+    // Sum of deficits for sorting priority
+    const matchedDeficitSum = matchedTickets.reduce((acc, t) => acc + (deficits[t] || 0), 0);
+
+    const recItem = {
+      hero: h,
+      expectedYield: expectedYield,
+      p2: p2,
+      p1: p1,
+      p0: p0,
+      matchedTickets: matchedTickets,
+      matchCount: matchCount,
+      matchedDeficitSum: matchedDeficitSum
+    };
+
+    // Tier classification strictly adhering to the prompt:
+    // Tier 1: 3/3 tickets needed in deficit (expected yield = 2.0)
+    // Tier 2: 2/3 tickets needed in deficit (expected yield = 1.33)
+    // Tier 3: 1/3 tickets needed in deficit (expected yield = 0.67)
+    if (matchCount === 3 && expectedYield >= 1.8) {
+      tier1.push(recItem);
+    } else if (matchCount === 2) {
+      tier2.push(recItem);
+    } else if (matchCount === 1) {
+      tier3.push(recItem);
+    }
+  });
+
+  // Sort tiers: higher deficit sum first, then higher expected yield
+  tier1.sort((a, b) => b.matchedDeficitSum - a.matchedDeficitSum || b.expectedYield - a.expectedYield);
+  tier2.sort((a, b) => b.matchedDeficitSum - a.matchedDeficitSum || b.expectedYield - a.expectedYield);
+  tier3.sort((a, b) => b.matchedDeficitSum - a.matchedDeficitSum || b.expectedYield - a.expectedYield);
+
+  // Estimated wins needed
+  let estimatedGames = 0;
+  if (totalDeficit > 0) {
+    const bestExpected = tier1.length > 0 ? 2.0 : (tier2.length > 0 ? 1.33 : 0.67);
+    estimatedGames = Math.ceil(totalDeficit / bestExpected);
+  }
+  const statGames = document.getElementById('statEstimatedGames');
+  if (statGames) statGames.innerHTML = `${estimatedGames} <span class="text-xs text-slate-400 font-normal">局胜场</span>`;
+
+  // Render the tier sections
+  renderTierSection('tier1', tier1, deficits);
+  renderTierSection('tier2', tier2, deficits);
+  renderTierSection('tier3', tier3, deficits);
+}
+
+function renderTierSection(tierId, list, deficits) {
+  const grid = document.getElementById(`${tierId}Grid`);
+  const emptyEl = document.getElementById(`${tierId}Empty`);
+  const countEl = document.getElementById(`${tierId}Count`);
+
+  if (countEl) countEl.textContent = `${list.length} 位英雄`;
+  if (!grid) return;
+
+  if (list.length === 0) {
+    grid.innerHTML = '';
+    if (emptyEl) emptyEl.classList.remove('hidden');
+    return;
+  }
+
+  if (emptyEl) emptyEl.classList.add('hidden');
+  grid.innerHTML = list.map(item => {
+    const h = item.hero;
+    const attrInfo = ATTR_META[h.attr] || { name: '未知', icon: '⚪', badgeClass: 'text-slate-400' };
+
+    // Highlight matched tickets with icon & glowing background (not full rows)
+    const ticketsHtml = h.tickets.map(tName => {
+      const isNeeded = (deficits[tName] || 0) > 0;
+      const card = CARD_MAP[tName] || { icon: '🃏' };
+      const defCount = deficits[tName] || 0;
+
+      if (isNeeded) {
+        return `
+          <div class="flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg bg-amber-500/25 border border-amber-400 text-amber-200 shadow-[0_0_8px_rgba(245,158,11,0.25)] ring-1 ring-amber-400/30 font-bold transition-all" title="${tName}: 仍缺 ${defCount} 张 (急需获取)">
+            <span class="text-base sm:text-lg leading-none">${card.icon}</span>
+            <span class="text-[10px] leading-tight truncate max-w-full mt-0.5 font-bold text-amber-200">${tName}</span>
+          </div>
+        `;
+      } else {
+        return `
+          <div class="flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg bg-slate-900/50 border border-slate-800/80 text-slate-500 opacity-40 transition-all" title="${tName}: 已满足 (非急需)">
+            <span class="text-base sm:text-lg leading-none">${card.icon}</span>
+            <span class="text-[10px] leading-tight truncate max-w-full mt-0.5 font-normal text-slate-400">${tName}</span>
+          </div>
+        `;
+      }
+    }).join('');
+
+    // Percentage breakdown
+    const p2Str = (item.p2 * 100).toFixed(1) + '%';
+    const p1Str = (item.p1 * 100).toFixed(1) + '%';
+    const p0Str = (item.p0 * 100).toFixed(1) + '%';
+
+    let tierBadge = '';
+    if (item.matchCount === 3) {
+      tierBadge = `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">3/3</span>`;
+    } else if (item.matchCount === 2) {
+      tierBadge = `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/40">2/3</span>`;
+    } else {
+      tierBadge = `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">1/3</span>`;
+    }
+
+    return `
+      <div class="card-glass rounded-xl p-2.5 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between group shadow-sm hover:shadow-xl">
+        <!-- Hero Info -->
+        <div class="flex items-center space-x-2.5">
+          <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden bg-slate-800 border border-slate-700 flex-shrink-0">
+            <img 
+              src="${h.img}" 
+              alt="${h.name}" 
+              class="w-full h-full object-cover"
+              loading="lazy"
+              onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'40\\' height=\\'40\\' viewBox=\\'0 0 40 40\\'><rect width=\\'40\\' height=\\'40\\' fill=\\'%231e293b\\'/><text x=\\'50%\\' y=\\'55%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%2394a3b8\\' font-size=\\'11\\' font-weight=\\'bold\\'>${h.name.slice(0, 2)}</text></svg>';"
+            >
+            <span class="absolute bottom-0 right-0 text-[9px] px-1 py-0.5 rounded-tl bg-black/80">
+              ${attrInfo.icon}
+            </span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold text-white group-hover:text-amber-400 transition-colors truncate" title="${h.name}">${h.name}</h4>
+              ${tierBadge}
+            </div>
+            <div class="text-[10px] text-amber-400 font-medium truncate mt-0.5">
+              期望: <span class="font-bold text-amber-300">${item.expectedYield.toFixed(2)}</span> 张/局
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Tickets in a single compact row with glowing background for matches -->
+        <div class="grid grid-cols-3 gap-1 my-2">
+          ${ticketsHtml}
+        </div>
+
+        <!-- Drop Odds Strip (Ultra compact) -->
+        <div class="bg-slate-950/60 rounded p-1 border border-slate-800/80 text-[9px] flex items-center justify-between text-slate-400 font-mono mb-1.5">
+          <span title="抽中2张所需票券">双收: <span class="text-emerald-400 font-semibold">${p2Str}</span></span>
+          <span title="抽中1张所需票券">单张: <span class="text-sky-400 font-semibold">${p1Str}</span></span>
+          <span title="未抽中所需票券">浪费: <span class="${item.p0 > 0 ? 'text-rose-400' : 'text-slate-500'} font-semibold">${p0Str}</span></span>
+        </div>
+
+        <!-- Action Simulation Button -->
+        <button 
+          onclick="simulateMatchWin('${h.name}')" 
+          class="w-full py-1 text-[11px] font-semibold bg-amber-500/10 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 rounded-lg transition-colors flex items-center justify-center gap-1 shadow-sm"
+        >
+          <span>🎲</span>
+          <span>模拟获胜抽2张</span>
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+// Simulate match win (Random 2 out of 3 tickets)
+function simulateMatchWin(heroName) {
+  const hero = HEROES_DATA.find(h => h.name === heroName);
+  if (!hero) return;
+
+  const tickets = [...hero.tickets];
+  // Shuffle and pick 2
+  tickets.sort(() => Math.random() - 0.5);
+  const won1 = tickets[0];
+  const won2 = tickets[1];
+
+  // Add to inventory
+  ownedTickets[won1] = (ownedTickets[won1] || 0) + 1;
+  ownedTickets[won2] = (won2 === won1) ? (ownedTickets[won2] || 0) + 1 : (ownedTickets[won2] || 0) + 1;
+
+  renderTicketSetupGrid();
+  updateRecommendations();
+
+  showToast(`🎉 获胜！使用【${hero.name}】随机掉落了：【${won1}】+【${won2}】！`, '🏆');
+}
+
+// Toast notification
+let toastTimeout = null;
+function showToast(msg, icon = '✨') {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  document.getElementById('toastMsg').textContent = msg;
+  document.getElementById('toastIcon').textContent = icon;
+
+  toast.classList.remove('translate-x-full', 'opacity-0');
+  toast.classList.add('translate-x-0', 'opacity-100');
+
+  if (toastTimeout) clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.add('translate-x-full', 'opacity-0');
+    toast.classList.remove('translate-x-0', 'opacity-100');
+  }, 3500);
+}
+
+</script>
+</body>
+</html>
