@@ -348,8 +348,8 @@ function switchTab(tab) {
   const btnCodex = document.getElementById('tabBtnCodex');
   const btnRecom = document.getElementById('tabBtnRecom');
 
-  const activeClasses = "flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl text-sm sm:text-base font-extrabold transition-all duration-300 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 text-slate-950 shadow-lg shadow-amber-500/30 ring-2 ring-amber-400/50 scale-[1.02]";
-  const inactiveClasses = "flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white hover:bg-slate-300/60 dark:hover:bg-slate-800/60";
+  const activeClasses = "flex items-center justify-center space-x-2 px-4 sm:px-5 py-2.5 rounded-xl text-sm sm:text-base font-extrabold transition-all duration-300 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 text-slate-950 shadow-lg shadow-amber-500/30 ring-2 ring-amber-400/50 scale-[1.02]";
+  const inactiveClasses = "flex items-center justify-center space-x-2 px-4 sm:px-5 py-2.5 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white hover:bg-slate-300/60 dark:hover:bg-slate-800/60";
 
   if (tab === 'codex') {
     codexSec.classList.remove('hidden');
