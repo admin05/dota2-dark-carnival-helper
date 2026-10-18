@@ -67,7 +67,7 @@ const I18N = {
     statusDeficit: "缺 {n} 张",
     // Recommendations
     recomTitle: "智能英雄推荐",
-    recomSubtitle: "基于 3 抽 2 随机掉落概率计算收益期望。点击卡片【模拟获胜】可体验随机掉落与自动更新库存",
+    recomSubtitle: "基于 3 抽 2 随机掉落概率计算净缺口收益期望，自动分档呈现最优出战英雄",
     allAttrs: "全部属性",
     noDemandTitle: "当前未设定票券需求",
     noDemandDesc: "请在上方【票券库存与目标需求】中点击对应票券的【需求 [+]】按钮，系统将根据 3 抽 2 概率实时为您计算最优通关英雄！",
@@ -84,8 +84,6 @@ const I18N = {
     oddsP2: "双收",
     oddsP1: "单张",
     oddsP0: "浪费",
-    btnSimulate: "模拟获胜抽2张",
-    simulateSuccess: "🎉 获胜！使用【{hero}】随机掉落了：【{t1}】+【{t2}】！",
     resetToast: "已清空全部票券设置！",
     // Modal
     modalTarotNum: "塔罗序号: {num}",
@@ -146,7 +144,7 @@ const I18N = {
     statusDeficit: "{n} needed",
     // Recommendations
     recomTitle: "Smart Hero Recommendations",
-    recomSubtitle: "Ranked by expected net deficit yield based on 2-of-3 drop odds. Click [Simulate Win] to test drops.",
+    recomSubtitle: "Ranked by expected net deficit yield based on 2-of-3 drop odds to find your optimal heroes.",
     allAttrs: "All Attributes",
     noDemandTitle: "No Ticket Demands Set",
     noDemandDesc: "Click the [+] button under [Need] for target tickets above. The solver will instantly calculate the best heroes!",
@@ -163,8 +161,6 @@ const I18N = {
     oddsP2: "Double",
     oddsP1: "Single",
     oddsP0: "Waste",
-    btnSimulate: "Simulate Win (2 of 3)",
-    simulateSuccess: "🎉 Win! Hero [{hero}] dropped: [{t1}] + [{t2}]!",
     resetToast: "All ticket counts have been reset!",
     // Modal
     modalTarotNum: "Tarot No.: {num}",
@@ -1081,55 +1077,16 @@ function renderTierSection(tierId, list, deficits) {
         </div>
 
         <!-- Drop Odds Strip (Ultra compact) -->
-        <div class="bg-slate-100 dark:bg-slate-950/60 rounded p-1 border border-slate-200 dark:border-slate-800/80 text-[9px] flex items-center justify-between text-slate-500 dark:text-slate-400 font-mono mb-1.5">
+        <div class="bg-slate-100 dark:bg-slate-950/60 rounded p-1 border border-slate-200 dark:border-slate-800/80 text-[9px] flex items-center justify-between text-slate-500 dark:text-slate-400 font-mono">
           <span title="${currentLang === 'en' ? 'Odds for 2 needed tickets' : '抽中2张所需票券'}">${t('oddsP2')}: <span class="text-emerald-600 dark:text-emerald-400 font-semibold">${p2Str}</span></span>
           <span title="${currentLang === 'en' ? 'Odds for 1 needed ticket' : '抽中1张所需票券'}">${t('oddsP1')}: <span class="text-sky-600 dark:text-sky-400 font-semibold">${p1Str}</span></span>
           <span title="${currentLang === 'en' ? 'Odds for waste' : '未抽中所需票券'}">${t('oddsP0')}: <span class="${item.p0 > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-400 dark:text-slate-500'} font-semibold">${p0Str}</span></span>
         </div>
-
-        <!-- Action Simulation Button -->
-        <button 
-          onclick="simulateMatchWin('${h.name}')" 
-          class="w-full py-1 text-[11px] font-semibold bg-amber-500/10 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-lg transition-colors flex items-center justify-center gap-1 shadow-sm active:scale-98"
-        >
-          <span>🎲</span>
-          <span>${t('btnSimulate')}</span>
-        </button>
       </div>
     `;
   }).join('');
 }
 
-// Simulate match win (Random 2 out of 3 tickets)
-function simulateMatchWin(heroName) {
-  const hero = HEROES_DATA.find(h => h.name === heroName);
-  if (!hero) return;
-
-  const tickets = [...hero.tickets];
-  // Shuffle and pick 2
-  tickets.sort(() => Math.random() - 0.5);
-  const won1 = tickets[0];
-  const won2 = tickets[1];
-
-  // Add to inventory
-  ownedTickets[won1] = (ownedTickets[won1] || 0) + 1;
-  ownedTickets[won2] = (won2 === won1) ? (ownedTickets[won2] || 0) + 1 : (ownedTickets[won2] || 0) + 1;
-
-  renderTicketSetupGrid();
-  updateRecommendations();
-
-  const heroDisplayName = currentLang === 'en' ? hero.en_name : hero.name;
-  const t1Name = currentLang === 'en' ? (CARD_MAP[won1]?.en || won1) : won1;
-  const t2Name = currentLang === 'en' ? (CARD_MAP[won2]?.en || won2) : won2;
-
-  const msg = t('simulateSuccess', {
-    hero: heroDisplayName,
-    t1: t1Name,
-    t2: t2Name
-  });
-
-  showToast(msg, '🏆');
-}
 
 // Toast notification
 let toastTimeout = null;

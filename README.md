@@ -15,7 +15,6 @@ A lightweight helper for the Dota 2 Dark Carnival event, calculating optimal her
 
 - **📖 127 Hero Codex**: Complete 11 Tarot ticket mappings categorized by 4 attributes (Strength, Agility, Intelligence, Universal). Instant search by name, abbreviation (e.g. `am`, `sf`, `pa`), or ticket.
 - **🎯 Smart Recommender**: Set your owned and needed tickets to get instant hero recommendations ranked by expected yield (Tier 1: 2.0/win, Tier 2: 1.33/win, Tier 3: 0.67/win).
-- **🎲 Drop Simulator**: Test the true 2-of-3 random drop upon victory in real time.
 - **🌓 Themes & i18n**: Dark/Light mode and English/Chinese bilingual support with persistent settings.
 
 ---
