@@ -1,4 +1,5 @@
 import os
+import re
 
 # Project root is the parent directory of scripts/
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,12 +14,15 @@ with open(os.path.join(ROOT_DIR, 'app.js'), 'r', encoding='utf-8') as f:
     app_js = f.read()
 
 # Inline the scripts into a standalone distribution bundle
-bundle = html.replace(
-    '<script src="data.js"></script>',
-    f'<script>\n{data_js}\n</script>'
-).replace(
-    '<script src="app.js"></script>',
-    f'<script>\n{app_js}\n</script>'
+bundle = re.sub(
+    r'<script src="data\.js[^"]*"></script>',
+    f'<script>\n{data_js}\n</script>',
+    html
+)
+bundle = re.sub(
+    r'<script src="app\.js[^"]*"></script>',
+    f'<script>\n{app_js}\n</script>',
+    bundle
 )
 
 # Write to project root

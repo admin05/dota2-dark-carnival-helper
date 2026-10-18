@@ -666,7 +666,7 @@ function t(key, params = {}) {
   const dict = I18N[currentLang] || I18N['zh'];
   let text = dict[key] || key;
   for (const [k, v] of Object.entries(params)) {
-    text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
+    text = text.replace(new RegExp(`\{${k}\}`, 'g'), v);
   }
   return text;
 }
@@ -1145,7 +1145,7 @@ function renderHeroCard(h, attrBorderClass = '') {
             alt="${heroPrimaryName}" 
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             loading="lazy"
-            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'40\\' height=\\'40\\' viewBox=\\'0 0 40 40\\'><rect width=\\'40\\' height=\\'40\\' fill=\\'%231e293b\\'/><text x=\\'50%\\' y=\\'55%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%2394a3b8\\' font-size=\\'11\\' font-weight=\\'bold\\'>${h.name.slice(0, 2)}</text></svg>';"
+            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 40 40\'><rect width=\'40\' height=\'40\' fill=\'%231e293b\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2394a3b8\' font-size=\'11\' font-weight=\'bold\'>${h.name.slice(0, 2)}</text></svg>';"
           >
           <span class="absolute bottom-0 right-0 text-[9px] leading-none px-1 py-0.5 rounded-tl bg-black/70 text-white font-mono">
             ${attrInfo.icon}
@@ -1544,7 +1544,7 @@ function renderTierSection(tierId, list, deficits) {
               alt="${heroPrimaryName}" 
               class="w-full h-full object-cover"
               loading="lazy"
-              onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'40\\' height=\\'40\\' viewBox=\\'0 0 40 40\\'><rect width=\\'40\\' height=\\'40\\' fill=\\'%231e293b\\'/><text x=\\'50%\\' y=\\'55%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%2394a3b8\\' font-size=\\'11\\' font-weight=\\'bold\\'>${h.name.slice(0, 2)}</text></svg>';"
+              onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 40 40\'><rect width=\'40\' height=\'40\' fill=\'%231e293b\'/><text x=\'50%\' y=\'55%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2394a3b8\' font-size=\'11\' font-weight=\'bold\'>${h.name.slice(0, 2)}</text></svg>';"
             >
             <span class="absolute bottom-0 right-0 text-[9px] px-1 py-0.5 rounded-tl bg-black/70 text-white">
               ${attrInfo.icon}
