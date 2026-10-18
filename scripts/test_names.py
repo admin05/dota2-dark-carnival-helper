@@ -28,7 +28,12 @@ CHINESE_NAMES = {
     "marci": "玛西", "primal_beast": "原始野兽", "muerta": "琼英碧灵", "ringmaster": "百戏大王", "kez": "凯"
 }
 
-with open('heroes_raw.json') as f:
+import os
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RAW_FILE = os.path.join(ROOT_DIR, 'data', 'heroes_raw.json')
+
+with open(RAW_FILE, 'r', encoding='utf-8') as f:
     heroes = json.load(f)
 
 missing = []
@@ -38,3 +43,4 @@ for h in heroes.values():
         missing.append(sname)
 
 print(f"Total heroes: {len(heroes)}, Missing names: {len(missing)} -> {missing}")
+

@@ -61,11 +61,22 @@ python3 -m http.server 8080
 ```text
 ├── index.html                  # 现代化响应式 Web 主页面
 ├── app.js                      # 核心业务逻辑、期望计算、国际化与 DOM 渲染
-├── data.js                     # 127 位英雄及 11 种塔罗票券基础数据集
+├── data.js                     # 127 位英雄及 11 种塔罗票券浏览器数据集
 ├── dark_carnival_helper.html   # 全内嵌单文件一体化 HTML (方便随时分享/离线使用)
-├── bundle_app.py               # 单文件一键打包脚本
 ├── start.sh                    # 本地快速启动脚本
-├── heroes_data.json            # 结构化英雄票券原始 JSON 数据
+├── data/                       # 结构化原始与整合数据集
+│   ├── heroes_data.json        # 127 位英雄票券核心映射数据集
+│   ├── heroes_raw.json         # Dota 官方接口原始英雄数据
+│   ├── liquipedia_extracted.json # Liquipedia 官方票券映射数据
+│   └── official_dota2_heroes.json # 官方全量英雄定义
+├── scripts/                    # 构建、打包与数据处理工具集
+│   ├── bundle_app.py           # 单文件一键打包脚本
+│   ├── make_files.py           # 基于 data/ 生成 data.js 的构建脚本
+│   ├── apply_liquipedia.py     # 同步 Liquipedia 票券数据至主库
+│   ├── enrich_aliases.py       # 拼音缩写及别名搜索增强脚本
+│   ├── generate_dataset.py     # 英雄数据集初始构建流程
+│   ├── build_web.py            # 数据读取验证检查脚本
+│   └── test_names.py           # 英雄命名覆盖度测试
 ├── README.md                   # 默认英文文档 (Default English)
 └── README.zh-CN.md             # 简体中文说明文档
 ```

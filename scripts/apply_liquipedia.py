@@ -1,9 +1,15 @@
+import os
 import json
+from collections import Counter
 
-with open('liquipedia_extracted.json') as f:
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(ROOT_DIR, 'data')
+
+with open(os.path.join(DATA_DIR, 'liquipedia_extracted.json'), 'r', encoding='utf-8') as f:
     lp_data = json.load(f)
 
-with open('heroes_data.json') as f:
+heroes_path = os.path.join(DATA_DIR, 'heroes_data.json')
+with open(heroes_path, 'r', encoding='utf-8') as f:
     heroes = json.load(f)
 
 # Name aliases for matching
@@ -31,7 +37,6 @@ for h in heroes:
     assert len(h['tickets']) == 3, f"{h['name']} does not have 3 tickets"
 
 # Check distribution of 11 tickets
-from collections import Counter
 c = Counter()
 for h in heroes:
     for t in h['tickets']:
@@ -41,7 +46,7 @@ print("\nOfficial 11 Ticket Distribution across all 127 heroes (127 * 3 = 381):"
 for t, cnt in c.most_common():
     print(f"  {t:6s}: {cnt:2d} 次 ({cnt/381*100:.1f}%)")
 
-with open('heroes_data.json', 'w', encoding='utf-8') as f:
+with open(heroes_path, 'w', encoding='utf-8') as f:
     json.dump(heroes, f, ensure_ascii=False, indent=2)
 
-print("\nUpdated heroes_data.json with 100% exact Liquipedia data!")
+print("\nUpdated data/heroes_data.json with 100% exact Liquipedia data!")

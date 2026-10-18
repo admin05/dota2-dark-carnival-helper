@@ -130,7 +130,12 @@ ALIASES = {
     "largo": ["拉尔戈", "largo", "青蛙", "音乐蛙"]
 }
 
-with open('heroes_data.json', 'r', encoding='utf-8') as f:
+import os
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HEROES_FILE = os.path.join(ROOT_DIR, 'data', 'heroes_data.json')
+
+with open(HEROES_FILE, 'r', encoding='utf-8') as f:
     heroes = json.load(f)
 
 for h in heroes:
@@ -143,7 +148,8 @@ for h in heroes:
         aliases.append(h['en_name'])
     h['aliases'] = aliases
 
-with open('heroes_data.json', 'w', encoding='utf-8') as f:
+with open(HEROES_FILE, 'w', encoding='utf-8') as f:
     json.dump(heroes, f, ensure_ascii=False, indent=2)
 
-print(f"Updated {len(heroes)} heroes with rich aliases!")
+print(f"Updated {len(heroes)} heroes with rich aliases in {HEROES_FILE}!")
+

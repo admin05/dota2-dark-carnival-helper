@@ -1,6 +1,11 @@
+import os
 import json
 
-with open('heroes_data.json', 'r', encoding='utf-8') as f:
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_FILE = os.path.join(ROOT_DIR, 'data', 'heroes_data.json')
+OUTPUT_FILE = os.path.join(ROOT_DIR, 'data.js')
+
+with open(DATA_FILE, 'r', encoding='utf-8') as f:
     heroes_data = json.load(f)
 
 # The 11 official Dark Carnival tickets from Liquipedia
@@ -18,8 +23,8 @@ tarot_cards = [
     {"id": "death", "name": "死神", "en": "Death", "icon": "☠️", "color": "#c084fc", "desc": "旧日终结，灵界更替"}
 ]
 
-with open('data.js', 'w', encoding='utf-8') as f:
+with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
     f.write('const HEROES_DATA = ' + json.dumps(heroes_data, ensure_ascii=False) + ';\n')
     f.write('const TAROT_CARDS = ' + json.dumps(tarot_cards, ensure_ascii=False) + ';\n')
 
-print(f"Generated data.js with {len(heroes_data)} heroes and {len(tarot_cards)} tickets!")
+print(f"Generated {OUTPUT_FILE} with {len(heroes_data)} heroes and {len(tarot_cards)} tickets!")

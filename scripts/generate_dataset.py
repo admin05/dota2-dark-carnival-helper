@@ -155,8 +155,14 @@ ANCHORS = {
     "largo": ["力量", "愚者", "战车"]
 }
 
-with open('heroes_raw.json') as f:
+import os
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(ROOT_DIR, 'data')
+
+with open(os.path.join(DATA_DIR, 'heroes_raw.json'), 'r', encoding='utf-8') as f:
     raw_heroes = json.load(f)
+
 
 heroes_list = []
 for h in raw_heroes.values():
@@ -210,7 +216,8 @@ for h in heroes_list:
 
 print(f"Cards used: {len(used_cards)}/22 -> {sorted(list(used_cards))}")
 
-with open('heroes_data.json', 'w', encoding='utf-8') as f:
+with open(os.path.join(DATA_DIR, 'heroes_data.json'), 'w', encoding='utf-8') as f:
     json.dump(heroes_list, f, ensure_ascii=False, indent=2)
 
-print("Saved heroes_data.json successfully!")
+print("Saved data/heroes_data.json successfully!")
+

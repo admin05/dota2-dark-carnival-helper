@@ -61,11 +61,22 @@ Open `http://localhost:8080/index.html` in your browser.
 ```text
 ├── index.html                  # Responsive modern Web application entry point
 ├── app.js                      # Core business logic, solver, i18n & DOM rendering
-├── data.js                     # Complete dataset for 127 heroes and 11 Tarot cards
+├── data.js                     # Browser dataset for 127 heroes and 11 Tarot cards
 ├── dark_carnival_helper.html   # Standalone all-in-one HTML bundle for offline/portable use
-├── bundle_app.py               # Single-file HTML bundle generation script
 ├── start.sh                    # Quick local launcher script
-├── heroes_data.json            # Structured hero ticket JSON data
+├── data/                       # Structured JSON datasets & metadata
+│   ├── heroes_data.json        # Unified 127 hero dataset with Tarot mappings
+│   ├── heroes_raw.json         # Raw API hero metadata dump
+│   ├── liquipedia_extracted.json # Extracted ticket mapping from Liquipedia
+│   └── official_dota2_heroes.json # Official Valve hero definitions
+├── scripts/                    # Build, bundle & data pipeline tools
+│   ├── bundle_app.py           # Single-file HTML bundle generation tool
+│   ├── make_files.py           # Generates data.js from data/heroes_data.json
+│   ├── apply_liquipedia.py     # Synchronizes Liquipedia mappings into dataset
+│   ├── enrich_aliases.py       # Pinyin & acronym search enricher
+│   ├── generate_dataset.py     # Hero dataset builder
+│   ├── build_web.py            # Quick dataset verification check
+│   └── test_names.py           # Hero name coverage test
 ├── README.md                   # English documentation (Default)
 └── README.zh-CN.md             # Chinese documentation (中文说明)
 ```
