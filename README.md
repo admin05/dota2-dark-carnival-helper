@@ -1,6 +1,11 @@
 # 🎪 DOTA2 暗黑狂欢 · 票券图鉴与智能英雄推荐助手
 *(Dota 2 Dark Carnival Ticket Codex & Recommendation System)*
 
+[![Online Demo](https://img.shields.io/badge/GitHub%20Pages-点击在线使用-success?logo=github&style=for-the-badge)](https://islanddddddd.github.io/dota2-dark-carnival-helper/)
+[![License](https://img.shields.io/badge/License-MIT-amber?style=for-the-badge)](https://github.com/islanddddddd/dota2-dark-carnival-helper)
+
+> 🌐 **在线体验入口**：👉 **[https://islanddddddd.github.io/dota2-dark-carnival-helper/](https://islanddddddd.github.io/dota2-dark-carnival-helper/)**
+
 基于 Liquipedia 官方暗黑狂欢票券映射数据（`Dark Carnival/Ticket Mapping`）与「单场获胜 3 抽 2」核心掉落机制打造的 DOTA 2 专列通关助手。
 
 ---
@@ -27,13 +32,11 @@
 
 ## 🚀 快速启动
 
-### 方式 1：GitHub Pages 在线访问（推荐）
-在 GitHub 仓库中开启 Pages 后，即可随时通过公网链接免安装直接使用：
-1. 进入本仓库的 **Settings** -> **Pages**。
-2. 在 **Build and deployment** > **Source** 下选择：
-   - 方式 A（最简）：选择 `Deploy from a branch` -> 分支选择 `main`，目录选择 `/ (root)`，点击 **Save**。
-   - 方式 B（自动工作流）：选择 `GitHub Actions`，仓库已内置自动化工作流，每次推送将自动构建发布。
-3. 稍等片刻，即可在 `https://<您的GitHub用户名>.github.io/<仓库名>/` 在线畅玩！
+### 方式 1：GitHub Pages 在线访问（推荐，免安装）
+随时通过公网链接免安装直接使用：
+👉 **[https://islanddddddd.github.io/dota2-dark-carnival-helper/](https://islanddddddd.github.io/dota2-dark-carnival-helper/)**
+
+*(如需在自己的 GitHub 仓库重新配置 Pages，只需前往仓库 **Settings** -> **Pages**，在 Source 中选择 `Deploy from a branch` 并保存即可)*
 
 ### 方式 2：本地双击即开（单文件离线版）
 直接双击打开 [`dark_carnival_helper.html`](./dark_carnival_helper.html) 即可在任何现代浏览器中运行（零依赖、无需安装任何环境）。
