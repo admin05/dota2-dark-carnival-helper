@@ -5,23 +5,197 @@
 const CARD_MAP = {};
 TAROT_CARDS.forEach(c => CARD_MAP[c.name] = c);
 
-// Attribute Metadata
+// Attribute Metadata (Bilingual)
 const ATTR_META = {
-  'str': { name: '力量', icon: '🔴', color: '#ef4444', badgeClass: 'bg-red-500/10 text-red-400 border-red-500/30' },
-  'agi': { name: '敏捷', icon: '🟢', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' },
-  'int': { name: '智力', icon: '🔵', color: '#38bdf8', badgeClass: 'bg-sky-500/10 text-sky-400 border-sky-500/30' },
-  'all': { name: '全才', icon: '🟣', color: '#a855f7', badgeClass: 'bg-purple-500/10 text-purple-400 border-purple-500/30' }
+  'str': { name: '力量', en: 'Strength', icon: '🔴', color: '#ef4444', badgeClass: 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30' },
+  'agi': { name: '敏捷', en: 'Agility', icon: '🟢', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' },
+  'int': { name: '智力', en: 'Intelligence', icon: '🔵', color: '#38bdf8', badgeClass: 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/30' },
+  'all': { name: '全才', en: 'Universal', icon: '🟣', color: '#a855f7', badgeClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30' }
 };
 
-// State
+// ==================== I18N DICTIONARY ====================
+const I18N = {
+  zh: {
+    appTitle: "暗黑狂欢 · 票券助手",
+    appSubtitle: "每胜 1 局从 3 张票券中随机抽 2 张 | 智能图鉴 & 最优通关算法",
+    navBadge: "百戏大王专列",
+    tabCodex: "英雄票券图鉴",
+    tabRecom: "筛选与智能推荐",
+    langBtn: "English",
+    // Codex
+    codexTitle: "全英雄暗黑狂欢票券图鉴",
+    codexHeroCount: "共 {count} 位英雄",
+    codexDesc: "按四大主属性划分（力量、敏捷、智力、全才），每位英雄绑定专属的 3 张塔罗牌票券。支持英雄名、缩写拼音（如 ck、sf、am）及票券反查筛选。",
+    searchPlaceholder: "搜索英雄名 / 英文 / 缩写拼音 / 票券名...",
+    attrAll: "全部",
+    attrStr: "力量",
+    attrAgi: "敏捷",
+    attrInt: "智力",
+    attrUniversal: "全才",
+    filterTicketLabel: "过滤特定票券:",
+    optAllTickets: "全部票券 (不限)",
+    quickTicketHint: "快捷票券检索（点击任意票券即可精准筛选出可产出该票券的所有英雄）：",
+    resetTicketFilter: "重置票券筛选",
+    emptyHeroes: "未找到符合条件的英雄",
+    emptyHeroesSub: "请尝试更换搜索关键字或清除票券过滤条件",
+    clearFilters: "清除所有筛选条件",
+    ticketsYield: "产出票券 (3抽2):",
+    // Recom overview
+    mechTitle: "核心机制 & 智能推荐算法说明",
+    mechBadge: "单场获胜：3 抽 2 (随机获取2张)",
+    mechDesc: "每个英雄固定产出 3 种票券。获胜后系统从 3 张中随机掉落 2 张（3 种二元组合概率各占 1/3）。系统根据您的【拥有量】与【需求量】实时计算净缺口，将全英雄自动划分为：",
+    mechTier1Text: "🥇 第 1 档（完美契合）",
+    mechTier1Sub: "3 张票券全部为急需！无论抽到哪 2 张都 100% 有效，单局期望 2.0 张，零浪费。",
+    mechTier2Text: "🥈 第 2 档（高效精选）",
+    mechTier2Sub: "2 张票券为急需。保底 100% 获得至少 1 张所需，有 33.3% 概率双收，期望 1.33 张/局。",
+    mechTier3Text: "🥉 第 3 档（替补选择）",
+    mechTier3Sub: "1 张票券为急需。66.7% 概率获得 1 张所需，期望 0.67 张/局。",
+    statNeeded: "总需求目标",
+    statOwned: "当前已拥有",
+    statDeficit: "净缺口（待获取）",
+    statEstimatedGames: "预计最快通关",
+    unitCards: "张",
+    unitWins: "局胜场",
+    // Setup
+    setupTitle: "票券库存与目标需求",
+    setupSubtitle: "设置拥有的票券与通关所需的目标票券，系统实时计算净缺口并推荐英雄",
+    resetBtn: "清空重置",
+    ownedLabel: "拥有",
+    needLabel: "需求",
+    statusNoNeed: "无需求",
+    statusMet: "已满足 ✓",
+    statusDeficit: "缺 {n} 张",
+    // Recommendations
+    recomTitle: "智能英雄推荐",
+    recomSubtitle: "基于 3 抽 2 随机掉落概率计算收益期望。点击卡片【模拟获胜】可体验随机掉落与自动更新库存",
+    allAttrs: "全部属性",
+    noDemandTitle: "当前未设定票券需求",
+    noDemandDesc: "请在上方【票券库存与目标需求】中点击对应票券的【需求 [+]】按钮，系统将根据 3 抽 2 概率实时为您计算最优通关英雄！",
+    tier1Title: "🥇 第 1 档 · 极力推荐",
+    tier1Sub: "3/3 需求完美匹配 | 单局期望 2.0 张 | 0% 浪费率",
+    tier1Empty: "暂无 3 张票券全部命中的完美英雄。请查看第 2 档高效英雄组合！",
+    tier2Title: "🥈 第 2 档 · 高效精选",
+    tier2Sub: "2/3 需求匹配 | 保底 100% 获得至少 1 张所需 | 期望 1.33 张/局",
+    tier2Empty: "当前无第 2 档推荐英雄。",
+    tier3Title: "🥉 第 3 档 · 备选补充",
+    tier3Sub: "1/3 需求匹配 | 66.7% 概率获得 1 张所需 | 期望 0.67 张/局",
+    tier3Empty: "当前无第 3 档推荐英雄。",
+    expectedYield: "期望: <span class=\"font-bold text-amber-600 dark:text-amber-300\">{val}</span> 张/局",
+    oddsP2: "双收",
+    oddsP1: "单张",
+    oddsP0: "浪费",
+    btnSimulate: "模拟获胜抽2张",
+    simulateSuccess: "🎉 获胜！使用【{hero}】随机掉落了：【{t1}】+【{t2}】！",
+    resetToast: "已清空全部票券设置！",
+    // Modal
+    modalTarotNum: "塔罗序号: {num}",
+    modalDescPrefix: "寓意特性：{desc}。在暗黑狂欢的马戏团专列中，消耗此票券可解锁特定对应车厢节点与奖励。",
+    modalYieldHeroesLabel: "可产出此票券的所有英雄：",
+    modalHeroCount: "{count} 位英雄",
+    modalClose: "关闭"
+  },
+  en: {
+    appTitle: "Dark Carnival · Ticket Helper",
+    appSubtitle: "Pick 2 of 3 tickets per win | Smart Codex & Optimal Recommender",
+    navBadge: "Ringmaster Train",
+    tabCodex: "Hero Ticket Codex",
+    tabRecom: "Filter & Recommendations",
+    langBtn: "中文",
+    // Codex
+    codexTitle: "All Heroes Dark Carnival Ticket Codex",
+    codexHeroCount: "Total {count} Heroes",
+    codexDesc: "Categorized by 4 primary attributes (Strength, Agility, Intelligence, Universal). Each hero yields 3 specific Tarot tickets. Supports hero names, abbreviations, and ticket filtering.",
+    searchPlaceholder: "Search hero name / abbreviation / ticket...",
+    attrAll: "All",
+    attrStr: "Strength",
+    attrAgi: "Agility",
+    attrInt: "Intelligence",
+    attrUniversal: "Universal",
+    filterTicketLabel: "Filter by ticket:",
+    optAllTickets: "All Tickets (Any)",
+    quickTicketHint: "Quick Ticket Finder (click any ticket to filter heroes producing it):",
+    resetTicketFilter: "Reset Filter",
+    emptyHeroes: "No matching heroes found",
+    emptyHeroesSub: "Try changing your search keywords or clearing ticket filters",
+    clearFilters: "Clear All Filters",
+    ticketsYield: "Yields (Pick 2 of 3):",
+    // Recom overview
+    mechTitle: "Core Mechanics & Recommender Guide",
+    mechBadge: "Match Win: Pick 2 out of 3",
+    mechDesc: "Each hero offers 3 fixed tickets. Winning drops 2 of them randomly (1/3 odds for each combination). The solver computes your net deficits in real-time and ranks heroes into 3 tiers:",
+    mechTier1Text: "🥇 Tier 1 (Perfect Match)",
+    mechTier1Sub: "All 3 tickets needed! 100% useful regardless of drop, expected yield 2.0 tickets/win, 0% waste.",
+    mechTier2Text: "🥈 Tier 2 (High Efficiency)",
+    mechTier2Sub: "2 out of 3 tickets needed. Guaranteed >=1 needed, 33.3% double hit, expected yield 1.33 tickets/win.",
+    mechTier3Text: "🥉 Tier 3 (Alternative Pick)",
+    mechTier3Sub: "1 out of 3 tickets needed. 66.7% chance to get 1 needed, expected yield 0.67 tickets/win.",
+    statNeeded: "Total Target",
+    statOwned: "Total Owned",
+    statDeficit: "Net Deficit",
+    statEstimatedGames: "Estimated Wins",
+    unitCards: "tickets",
+    unitWins: "wins",
+    // Setup
+    setupTitle: "Ticket Inventory & Demands",
+    setupSubtitle: "Configure your owned tickets and target demands to calculate real-time deficits",
+    resetBtn: "Reset All",
+    ownedLabel: "Owned",
+    needLabel: "Need",
+    statusNoNeed: "None",
+    statusMet: "Met ✓",
+    statusDeficit: "{n} needed",
+    // Recommendations
+    recomTitle: "Smart Hero Recommendations",
+    recomSubtitle: "Ranked by expected net deficit yield based on 2-of-3 drop odds. Click [Simulate Win] to test drops.",
+    allAttrs: "All Attributes",
+    noDemandTitle: "No Ticket Demands Set",
+    noDemandDesc: "Click the [+] button under [Need] for target tickets above. The solver will instantly calculate the best heroes!",
+    tier1Title: "🥇 Tier 1 · Highly Recommended",
+    tier1Sub: "3/3 Demand Matched | Expected 2.0 / win | 0% Waste",
+    tier1Empty: "No Tier 1 heroes match all 3 tickets currently. Check Tier 2 choices!",
+    tier2Title: "🥈 Tier 2 · High Efficiency",
+    tier2Sub: "2/3 Demand Matched | Guaranteed >=1 needed | Expected 1.33 / win",
+    tier2Empty: "No Tier 2 heroes for current deficits.",
+    tier3Title: "🥉 Tier 3 · Alternative Picks",
+    tier3Sub: "1/3 Demand Matched | 66.7% chance for 1 needed | Expected 0.67 / win",
+    tier3Empty: "No Tier 3 heroes for current deficits.",
+    expectedYield: "Exp: <span class=\"font-bold text-amber-600 dark:text-amber-300\">{val}</span> / win",
+    oddsP2: "Double",
+    oddsP1: "Single",
+    oddsP0: "Waste",
+    btnSimulate: "Simulate Win (2 of 3)",
+    simulateSuccess: "🎉 Win! Hero [{hero}] dropped: [{t1}] + [{t2}]!",
+    resetToast: "All ticket counts have been reset!",
+    // Modal
+    modalTarotNum: "Tarot No.: {num}",
+    modalDescPrefix: "Tarot Lore: {desc}. Used in Dark Carnival circus cars to unlock special nodes and rewards.",
+    modalYieldHeroesLabel: "Heroes yielding this ticket:",
+    modalHeroCount: "{count} Heroes",
+    modalClose: "Close"
+  }
+};
+
+// Helper translation function
+function t(key, params = {}) {
+  const dict = I18N[currentLang] || I18N['zh'];
+  let text = dict[key] || key;
+  for (const [k, v] of Object.entries(params)) {
+    text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
+  }
+  return text;
+}
+
+// Application State
 let currentTab = 'codex';
+let currentLang = localStorage.getItem('dota2_carnival_lang') || 'zh';
+let currentTheme = localStorage.getItem('dota2_carnival_theme') || 'dark';
 let currentAttrFilter = 'all';
 let currentRecomAttrFilter = 'all';
 let selectedTicketPill = null;
 let ownedTickets = {};
 let neededTickets = {};
 
-// Initialize default ticket counts
+// Initialize default ticket counts (clean 0 by default, no preset)
 TAROT_CARDS.forEach(c => {
   ownedTickets[c.name] = 0;
   neededTickets[c.name] = 0;
@@ -29,17 +203,148 @@ TAROT_CARDS.forEach(c => {
 
 // Initialize application on DOM ready
 window.addEventListener('DOMContentLoaded', () => {
+  applyTheme();
+  applyLanguage();
   populateTicketPills();
   populateTicketSelect();
   renderCodex();
   renderTicketSetupGrid();
-  
-  // Default sample setup for instant preview
-  applyPreset('demo', false);
   updateRecommendations();
 });
 
-// Tab Switcher
+// ==================== THEME MANAGEMENT ====================
+function applyTheme() {
+  const root = document.documentElement;
+  const iconEl = document.getElementById('themeBtnIcon');
+  if (currentTheme === 'dark') {
+    root.classList.add('dark');
+    if (iconEl) iconEl.textContent = '☀️'; // Shows sun to switch to light
+  } else {
+    root.classList.remove('dark');
+    if (iconEl) iconEl.textContent = '🌙'; // Shows moon to switch to dark
+  }
+}
+
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('dota2_carnival_theme', currentTheme);
+  applyTheme();
+}
+
+// ==================== LANGUAGE MANAGEMENT ====================
+function applyLanguage() {
+  document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
+  
+  // Navigation & Static Header
+  const setElText = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  };
+
+  setElText('navAppTitle', t('appTitle'));
+  setElText('navAppSubtitle', t('appSubtitle'));
+  setElText('navBadge', t('navBadge'));
+  setElText('tabCodexText', t('tabCodex'));
+  setElText('tabRecomText', t('tabRecom'));
+  setElText('langBtnText', t('langBtn'));
+
+  // Codex page
+  setElText('codexTitleText', t('codexTitle'));
+  setElText('codexDescText', t('codexDesc'));
+  const searchInput = document.getElementById('heroSearchInput');
+  if (searchInput) searchInput.placeholder = t('searchPlaceholder');
+
+  setElText('filterTicketLabel', t('filterTicketLabel'));
+  setElText('optAllTickets', t('optAllTickets'));
+  setElText('quickTicketHintText', t('quickTicketHint'));
+  setElText('resetTicketPillsBtn', t('resetTicketFilter'));
+  setElText('emptyStateTitle', t('emptyHeroes'));
+  setElText('emptyStateSub', t('emptyHeroesSub'));
+  setElText('clearAllFiltersBtn', t('clearFilters'));
+
+  // Attribute tabs text
+  updateAttrTabLabels();
+
+  // Recommendations overview
+  setElText('mechTitleText', t('mechTitle'));
+  setElText('mechBadgeText', t('mechBadge'));
+  setElText('mechDescText', t('mechDesc'));
+  setElText('mechTier1Text', t('mechTier1Text'));
+  setElText('mechTier1Sub', t('mechTier1Sub'));
+  setElText('mechTier2Text', t('mechTier2Text'));
+  setElText('mechTier2Sub', t('mechTier2Sub'));
+  setElText('mechTier3Text', t('mechTier3Text'));
+  setElText('mechTier3Sub', t('mechTier3Sub'));
+
+  setElText('statNeededLabel', t('statNeeded'));
+  setElText('statOwnedLabel', t('statOwned'));
+  setElText('statDeficitLabel', t('statDeficit'));
+  setElText('statEstimatedGamesLabel', t('statEstimatedGames'));
+  setElText('unitNeeded', t('unitCards'));
+  setElText('unitOwned', t('unitCards'));
+  setElText('unitDeficit', t('unitCards'));
+  setElText('unitGames', t('unitWins'));
+
+  // Setup Section
+  setElText('setupSectionTitle', t('setupTitle'));
+  setElText('setupSectionSub', t('setupSubtitle'));
+  setElText('resetBtnText', t('resetBtn'));
+
+  // Recom Section
+  setElText('recomSectionTitle', t('recomTitle'));
+  setElText('recomSectionSub', t('recomSubtitle'));
+  setElText('noDemandTitle', t('noDemandTitle'));
+  setElText('noDemandDesc', t('noDemandDesc'));
+
+  // Recom attribute filters
+  setElText('recomAttrAll', t('allAttrs'));
+  setElText('recomAttrStr', t('attrStr'));
+  setElText('recomAttrAgi', t('attrAgi'));
+  setElText('recomAttrInt', t('attrInt'));
+  setElText('recomAttrUniversal', t('attrUniversal'));
+
+  // Tier headers
+  setElText('tier1Badge', t('tier1Title'));
+  setElText('tier1Subtitle', t('tier1Sub'));
+  setElText('tier1Empty', t('tier1Empty'));
+
+  setElText('tier2Badge', t('tier2Title'));
+  setElText('tier2Subtitle', t('tier2Sub'));
+  setElText('tier2Empty', t('tier2Empty'));
+
+  setElText('tier3Badge', t('tier3Title'));
+  setElText('tier3Subtitle', t('tier3Sub'));
+  setElText('tier3Empty', t('tier3Empty'));
+
+  // Modal
+  setElText('modalYieldHeroesLabel', t('modalYieldHeroesLabel'));
+  setElText('modalCloseBtn', t('modalClose'));
+}
+
+function updateAttrTabLabels() {
+  const setElText = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  };
+  setElText('attrTabAll', `${t('attrAll')} (127)`);
+  setElText('attrTabStr', `${t('attrStr')} (36)`);
+  setElText('attrTabAgi', `${t('attrAgi')} (35)`);
+  setElText('attrTabInt', `${t('attrInt')} (34)`);
+  setElText('attrTabUniversal', `${t('attrUniversal')} (22)`);
+}
+
+function toggleLang() {
+  currentLang = currentLang === 'zh' ? 'en' : 'zh';
+  localStorage.setItem('dota2_carnival_lang', currentLang);
+  applyLanguage();
+  populateTicketPills();
+  populateTicketSelect();
+  renderCodex();
+  renderTicketSetupGrid();
+  updateRecommendations();
+}
+
+// ==================== TAB SWITCHER (Redesigned & Prominent) ====================
 function switchTab(tab) {
   currentTab = tab;
   const codexSec = document.getElementById('pageCodex');
@@ -47,19 +352,24 @@ function switchTab(tab) {
   const btnCodex = document.getElementById('tabBtnCodex');
   const btnRecom = document.getElementById('tabBtnRecom');
 
+  const activeClasses = "flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl text-sm sm:text-base font-extrabold transition-all duration-300 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 text-slate-950 shadow-lg shadow-amber-500/30 ring-2 ring-amber-400/50 scale-[1.02]";
+  const inactiveClasses = "flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white hover:bg-slate-300/60 dark:hover:bg-slate-800/60";
+
   if (tab === 'codex') {
     codexSec.classList.remove('hidden');
     recomSec.classList.add('hidden');
-    btnCodex.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md";
-    btnRecom.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-300 hover:text-white hover:bg-slate-800/60";
+    btnCodex.className = activeClasses;
+    btnRecom.className = inactiveClasses;
   } else {
     codexSec.classList.add('hidden');
     recomSec.classList.remove('hidden');
-    btnRecom.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md";
-    btnCodex.className = "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-300 hover:text-white hover:bg-slate-800/60";
+    btnRecom.className = activeClasses;
+    btnCodex.className = inactiveClasses;
     updateRecommendations();
   }
 }
+
+// ==================== CODEX PAGE ====================
 
 // Populate ticket pills in Codex
 function populateTicketPills() {
@@ -70,13 +380,18 @@ function populateTicketPills() {
   TAROT_CARDS.forEach(card => {
     const count = HEROES_DATA.filter(h => h.tickets.includes(card.name)).length;
     const pill = document.createElement('button');
-    pill.className = `ticket-pill text-xs px-2.5 py-1 rounded-lg border transition-all flex items-center space-x-1.5 bg-[#121722] border-slate-800 text-slate-300 hover:border-amber-500/50`;
+    const isSelected = selectedTicketPill === card.name;
+    const displayName = currentLang === 'en' ? card.en : card.name;
+
+    pill.className = isSelected
+      ? `ticket-pill text-xs px-2.5 py-1 rounded-lg border transition-all flex items-center space-x-1.5 bg-amber-500/20 border-amber-500 text-amber-700 dark:text-amber-200 font-bold shadow-sm`
+      : `ticket-pill text-xs px-2.5 py-1 rounded-lg border transition-all flex items-center space-x-1.5 bg-white dark:bg-[#121722] border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-amber-500/50`;
     pill.dataset.ticket = card.name;
     pill.onclick = () => selectTicketPill(card.name);
     pill.innerHTML = `
       <span>${card.icon}</span>
-      <span>${card.name}</span>
-      <span class="text-[10px] text-slate-400 bg-slate-800/80 px-1.5 py-0.2 rounded-full">${count}</span>
+      <span>${displayName}</span>
+      <span class="text-[10px] text-slate-500 dark:text-slate-400 bg-slate-200/80 dark:bg-slate-800/80 px-1.5 py-0.2 rounded-full">${count}</span>
     `;
     container.appendChild(pill);
   });
@@ -86,12 +401,16 @@ function populateTicketPills() {
 function populateTicketSelect() {
   const select = document.getElementById('ticketSelectFilter');
   if (!select) return;
+  const currentVal = select.value;
+  select.innerHTML = `<option value="">${t('optAllTickets')}</option>`;
   TAROT_CARDS.forEach(card => {
     const opt = document.createElement('option');
     opt.value = card.name;
-    opt.textContent = `${card.icon} ${card.name} (${card.en})`;
+    const label = currentLang === 'en' ? `${card.icon} ${card.en} (${card.name})` : `${card.icon} ${card.name} (${card.en})`;
+    opt.textContent = label;
     select.appendChild(opt);
   });
+  select.value = currentVal;
 }
 
 // Select ticket pill
@@ -110,9 +429,9 @@ function selectTicketPill(ticketName) {
 function updatePillStyles() {
   document.querySelectorAll('.ticket-pill').forEach(pill => {
     if (pill.dataset.ticket === selectedTicketPill) {
-      pill.className = `ticket-pill text-xs px-2.5 py-1 rounded-lg border transition-all flex items-center space-x-1.5 bg-amber-500/20 border-amber-500 text-amber-200 font-bold shadow-md shadow-amber-950/40`;
+      pill.className = `ticket-pill text-xs px-2.5 py-1 rounded-lg border transition-all flex items-center space-x-1.5 bg-amber-500/20 border-amber-500 text-amber-700 dark:text-amber-200 font-bold shadow-sm`;
     } else {
-      pill.className = `ticket-pill text-xs px-2.5 py-1 rounded-lg border transition-all flex items-center space-x-1.5 bg-[#121722] border-slate-800 text-slate-300 hover:border-amber-500/50`;
+      pill.className = `ticket-pill text-xs px-2.5 py-1 rounded-lg border transition-all flex items-center space-x-1.5 bg-white dark:bg-[#121722] border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-amber-500/50`;
     }
   });
 }
@@ -132,7 +451,7 @@ function setAttrFilter(attr) {
     if (btn.dataset.attr === attr) {
       btn.className = "attr-tab px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow";
     } else {
-      btn.className = "attr-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/70 hover:bg-slate-700/70 transition-all border border-slate-700/40";
+      btn.className = "attr-tab px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800/70 hover:bg-slate-200 dark:hover:bg-slate-700/70 transition-all border border-slate-300 dark:border-slate-700/40";
     }
   });
   renderCodex();
@@ -210,7 +529,8 @@ function renderCodex() {
       const matchKey = h.key.toLowerCase().includes(search);
       const matchAliases = (h.aliases || []).some(a => a.toLowerCase().includes(search));
       const matchTicket = h.tickets.some(t => t.toLowerCase().includes(search));
-      if (!matchName && !matchEn && !matchKey && !matchAliases && !matchTicket) {
+      const matchTicketEn = (h.tickets_en || []).some(t => t.toLowerCase().includes(search));
+      if (!matchName && !matchEn && !matchKey && !matchAliases && !matchTicket && !matchTicketEn) {
         return false;
       }
     }
@@ -218,7 +538,9 @@ function renderCodex() {
     return true;
   });
 
-  if (counterEl) counterEl.textContent = `共 ${filtered.length} 位英雄`;
+  if (counterEl) {
+    counterEl.textContent = t('codexHeroCount', { count: filtered.length });
+  }
 
   if (filtered.length === 0) {
     grid.innerHTML = '';
@@ -228,31 +550,72 @@ function renderCodex() {
 
   if (emptyState) emptyState.classList.add('hidden');
 
-  // Attribute sections metadata for clear visual partitioning
+  // Attribute sections metadata
   const ATTR_SECTIONS = [
-    { key: 'str', title: '力量英雄', en: 'Strength Heroes', icon: '🔴', color: '#ef4444', borderClass: 'border-l-4 border-l-red-500', headerBg: 'bg-red-500/10 border-red-500/30 text-red-300', desc: '刚烈坚韧，擅长前排冲锋与团控，产出【力量】、【隐士】、【皇帝】、【恶魔】等专属票券。' },
-    { key: 'agi', title: '敏捷英雄', en: 'Agility Heroes', icon: '🟢', color: '#10b981', borderClass: 'border-l-4 border-l-emerald-500', headerBg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300', desc: '灵动迅捷，具备极高的物理爆发与持续输出，产出【隐士】、【死神】、【魔术师】、【命运之轮】等专属票券。' },
-    { key: 'int', title: '智力英雄', en: 'Intelligence Heroes', icon: '🔵', color: '#38bdf8', borderClass: 'border-l-4 border-l-sky-500', headerBg: 'bg-sky-500/10 border-sky-500/30 text-sky-300', desc: '博学通灵，掌控大量戏法、法术爆发与战略支援，产出【魔术师】、【女祭司】、【愚者】、【星星】等专属票券。' },
-    { key: 'all', title: '全才英雄', en: 'Universal Heroes', icon: '🟣', color: '#a855f7', borderClass: 'border-l-4 border-l-purple-500', headerBg: 'bg-purple-500/10 border-purple-500/30 text-purple-300', desc: '多维平衡，均衡汲取三大属性精华为战，产出【恋人】、【女祭司】、【命运之轮】、【恶魔】等专属票券。' }
+    { 
+      key: 'str', 
+      titleZh: '力量英雄', 
+      titleEn: 'Strength Heroes', 
+      icon: '🔴', 
+      borderClass: 'border-l-4 border-l-red-500', 
+      headerBg: 'bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-300', 
+      descZh: '刚烈坚韧，擅长前排冲锋与团控，产出【力量】、【隐士】、【皇帝】、【恶魔】等专属票券。',
+      descEn: 'Tough and resilient frontliners yielding Strength, The Hermit, The Emperor, The Devil tickets.'
+    },
+    { 
+      key: 'agi', 
+      titleZh: '敏捷英雄', 
+      titleEn: 'Agility Heroes', 
+      icon: '🟢', 
+      borderClass: 'border-l-4 border-l-emerald-500', 
+      headerBg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-300', 
+      descZh: '灵动迅捷，具备极高的物理爆发与持续输出，产出【隐士】、【死神】、【魔术师】、【命运之轮】等专属票券。',
+      descEn: 'Agile damage dealers yielding The Hermit, Death, The Magician, Wheel of Fortune tickets.'
+    },
+    { 
+      key: 'int', 
+      titleZh: '智力英雄', 
+      titleEn: 'Intelligence Heroes', 
+      icon: '🔵', 
+      borderClass: 'border-l-4 border-l-sky-500', 
+      headerBg: 'bg-sky-500/10 border-sky-500/30 text-sky-600 dark:text-sky-300', 
+      descZh: '博学通灵，掌控大量戏法、法术爆发与战略支援，产出【魔术师】、【女祭司】、【愚者】、【星星】等专属票券。',
+      descEn: 'Scholarly spellcasters yielding The Magician, The High Priestess, The Fool, The Star tickets.'
+    },
+    { 
+      key: 'all', 
+      titleZh: '全才英雄', 
+      titleEn: 'Universal Heroes', 
+      icon: '🟣', 
+      borderClass: 'border-l-4 border-l-purple-500', 
+      headerBg: 'bg-purple-500/10 border-purple-500/30 text-purple-600 dark:text-purple-300', 
+      descZh: '多维平衡，均衡汲取三大属性精华为战，产出【恋人】、【女祭司】、【命运之轮】、【恶魔】等专属票券。',
+      descEn: 'Well-rounded power scaling yielding The Lovers, The High Priestess, Wheel of Fortune, The Devil tickets.'
+    }
   ];
 
   let sectionsHtml = '';
   ATTR_SECTIONS.forEach(sec => {
     const secHeroes = filtered.filter(h => h.attr === sec.key);
     if (secHeroes.length > 0) {
+      const secTitle = currentLang === 'en' ? sec.titleEn : sec.titleZh;
+      const secSub = currentLang === 'en' ? sec.titleZh : sec.titleEn;
+      const secDesc = currentLang === 'en' ? sec.descEn : sec.descZh;
+      const heroUnit = currentLang === 'en' ? 'Heroes' : '位';
+
       sectionsHtml += `
         <div class="space-y-3 pt-2">
           <!-- Attribute Header Banner -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-2.5 border-b border-slate-800/80 gap-2">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-2.5 border-b border-slate-200 dark:border-slate-800/80 gap-2">
             <div class="flex items-center space-x-2.5">
               <span class="text-xl">${sec.icon}</span>
-              <h2 class="text-base font-bold text-white tracking-wide">${sec.title}</h2>
-              <span class="text-xs text-slate-400 font-normal">(${sec.en})</span>
+              <h2 class="text-base font-bold text-slate-900 dark:text-white tracking-wide">${secTitle}</h2>
+              <span class="text-xs text-slate-500 dark:text-slate-400 font-normal">(${secSub})</span>
               <span class="text-xs px-2.5 py-0.5 rounded-full font-bold border ${sec.headerBg}">
-                ${secHeroes.length} 位
+                ${secHeroes.length} ${heroUnit}
               </span>
             </div>
-            <p class="text-xs text-slate-400 max-w-lg leading-relaxed">${sec.desc}</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 max-w-lg leading-relaxed">${secDesc}</p>
           </div>
           <!-- Grid of Cards for this attribute -->
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-2.5">
@@ -266,80 +629,64 @@ function renderCodex() {
   grid.innerHTML = sectionsHtml;
 }
 
-// Render individual hero card (Codex compact)
+// Render individual hero card in Codex (Clean, compact, NO "设为需求" button)
 function renderHeroCard(h, attrBorderClass = '') {
-  const attrInfo = ATTR_META[h.attr] || { name: '未知', icon: '⚪', badgeClass: 'bg-slate-700 text-slate-300' };
+  const attrInfo = ATTR_META[h.attr] || { name: '未知', en: 'Unknown', icon: '⚪', badgeClass: 'bg-slate-700 text-slate-300' };
   
+  const heroPrimaryName = currentLang === 'en' ? h.en_name : h.name;
+  const heroSecondaryName = currentLang === 'en' ? h.name : h.en_name;
+  const attrName = currentLang === 'en' ? attrInfo.en : attrInfo.name;
+
   // Render 3 ticket cards in a compact horizontal 3-column row
   const ticketBadges = h.tickets.map(tName => {
-    const card = CARD_MAP[tName] || { icon: '🃏', color: '#94a3b8', num: '?' };
+    const card = CARD_MAP[tName] || { icon: '🃏', color: '#94a3b8', num: '?', en: tName };
+    const displayName = currentLang === 'en' ? card.en : tName;
     return `
-      <div onclick="openTicketModal('${tName}')" class="cursor-pointer flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg bg-slate-900/80 border border-slate-800 hover:border-amber-500/60 hover:bg-amber-500/10 text-slate-200 hover:text-amber-300 transition-all group/t" title="${tName} (点击查看详情)">
+      <div onclick="openTicketModal('${tName}')" class="cursor-pointer flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-amber-500/60 hover:bg-amber-500/10 text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-300 transition-all group/t" title="${displayName} (${card.en})">
         <span class="text-base sm:text-lg leading-none">${card.icon}</span>
-        <span class="text-[10px] leading-tight truncate max-w-full mt-0.5 font-medium">${tName}</span>
+        <span class="text-[10px] leading-tight truncate max-w-full mt-0.5 font-medium">${displayName}</span>
       </div>
     `;
   }).join('');
 
   return `
-    <div class="card-glass rounded-xl p-2.5 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between group shadow-sm hover:shadow-xl ${attrBorderClass}">
+    <div class="card-glass rounded-xl p-2.5 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between group shadow-sm hover:shadow-xl ${attrBorderClass}">
       <!-- Hero Header -->
       <div class="flex items-center space-x-2.5 mb-2">
-        <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden bg-slate-800 border border-slate-700 flex-shrink-0">
+        <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex-shrink-0">
           <img 
             src="${h.img}" 
-            alt="${h.name}" 
+            alt="${heroPrimaryName}" 
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             loading="lazy"
             onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'40\\' height=\\'40\\' viewBox=\\'0 0 40 40\\'><rect width=\\'40\\' height=\\'40\\' fill=\\'%231e293b\\'/><text x=\\'50%\\' y=\\'55%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%2394a3b8\\' font-size=\\'11\\' font-weight=\\'bold\\'>${h.name.slice(0, 2)}</text></svg>';"
           >
-          <span class="absolute bottom-0 right-0 text-[9px] leading-none px-1 py-0.5 rounded-tl bg-black/80 font-mono">
+          <span class="absolute bottom-0 right-0 text-[9px] leading-none px-1 py-0.5 rounded-tl bg-black/70 text-white font-mono">
             ${attrInfo.icon}
           </span>
         </div>
         <div class="min-w-0 flex-1">
           <div class="flex items-center justify-between">
-            <h3 class="text-xs font-bold text-white group-hover:text-amber-400 transition-colors truncate" title="${h.name}">
-              ${h.name}
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white group-hover:text-amber-500 transition-colors truncate" title="${heroPrimaryName}">
+              ${heroPrimaryName}
             </h3>
             <span class="text-[9px] px-1.5 py-0.2 rounded font-mono ${attrInfo.badgeClass}">
-              ${attrInfo.name}
+              ${attrName}
             </span>
           </div>
-          <p class="text-[10px] text-slate-400 truncate">${h.en_name}</p>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate">${heroSecondaryName}</p>
         </div>
       </div>
 
       <!-- 3 Tickets in a single compact row -->
-      <div class="pt-1.5 border-t border-slate-800/80">
-        <div class="text-[9px] text-slate-400 font-medium mb-1">产出票券 (3抽2):</div>
+      <div class="pt-1.5 border-t border-slate-200 dark:border-slate-800/80">
+        <div class="text-[9px] text-slate-500 dark:text-slate-400 font-medium mb-1">${t('ticketsYield')}</div>
         <div class="grid grid-cols-3 gap-1">
           ${ticketBadges}
         </div>
       </div>
-
-      <!-- Action Button -->
-      <div class="mt-2 pt-1.5 border-t border-slate-800/60">
-        <button onclick="quickTargetHero('${h.name}')" class="w-full text-[11px] py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 transition flex items-center justify-center gap-1 font-medium">
-          <span>设为需求 ➔</span>
-        </button>
-      </div>
     </div>
   `;
-}
-
-// Quick target hero to recommendation page
-function quickTargetHero(heroName) {
-  const hero = HEROES_DATA.find(h => h.name === heroName);
-  if (!hero) return;
-  
-  // Set needed tickets to hero's 3 tickets
-  TAROT_CARDS.forEach(c => neededTickets[c.name] = 0);
-  hero.tickets.forEach(t => neededTickets[t] = 2);
-  
-  renderTicketSetupGrid();
-  switchTab('recom');
-  showToast(`已将【${hero.name}】的 3 张专属票券设为需求目标！`, '🎯');
 }
 
 // Open ticket modal
@@ -347,22 +694,26 @@ function openTicketModal(ticketName) {
   const card = CARD_MAP[ticketName];
   if (!card) return;
 
+  const displayName = currentLang === 'en' ? card.en : card.name;
+  const subName = currentLang === 'en' ? card.name : card.en;
+
   document.getElementById('modalTicketIcon').textContent = card.icon;
-  document.getElementById('modalTicketName').textContent = card.name;
-  document.getElementById('modalTicketNum').textContent = `塔罗序号: ${card.num}`;
-  document.getElementById('modalTicketEn').textContent = card.en;
-  document.getElementById('modalTicketDesc').textContent = `寓意特性：${card.desc}。在暗黑狂欢的马戏团专列中，消耗此票券可解锁特定对应车厢节点与奖励。`;
+  document.getElementById('modalTicketName').textContent = displayName;
+  document.getElementById('modalTicketNum').textContent = t('modalTarotNum', { num: card.num });
+  document.getElementById('modalTicketEn').textContent = subName;
+  document.getElementById('modalTicketDesc').textContent = t('modalDescPrefix', { desc: card.desc });
 
   const heroes = HEROES_DATA.filter(h => h.tickets.includes(ticketName));
-  document.getElementById('modalHeroCount').textContent = `${heroes.length} 位英雄`;
+  document.getElementById('modalHeroCount').textContent = t('modalHeroCount', { count: heroes.length });
 
   const listContainer = document.getElementById('modalHeroList');
   listContainer.innerHTML = heroes.map(h => {
     const attrInfo = ATTR_META[h.attr];
+    const heroName = currentLang === 'en' ? h.en_name : h.name;
     return `
-      <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-xs">
+      <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
         <span>${attrInfo.icon}</span>
-        <span class="font-medium text-slate-200">${h.name}</span>
+        <span class="font-medium text-slate-700 dark:text-slate-200">${heroName}</span>
       </div>
     `;
   }).join('');
@@ -374,67 +725,71 @@ function closeTicketModal() {
   document.getElementById('ticketModal').classList.add('hidden');
 }
 
-// ==================== RECOMMENDATION PAGE LOGIC ====================
+// ==================== RECOMMENDATION & SETUP LOGIC (Clean & Compact) ====================
 
+// Render streamlined ticket setup grid (Height-efficient, no scrollbar, gorgeous micro-controls)
 function renderTicketSetupGrid() {
   const grid = document.getElementById('ticketSetupGrid');
   if (!grid) return;
+
   grid.innerHTML = TAROT_CARDS.map(card => {
     const owned = ownedTickets[card.name] || 0;
     const needed = neededTickets[card.name] || 0;
     const deficit = Math.max(0, needed - owned);
 
+    const cardDisplayName = currentLang === 'en' ? card.en : card.name;
+
     let deficitBadge = '';
     if (needed === 0) {
-      deficitBadge = `<span class="text-[11px] text-slate-500">无需求</span>`;
+      deficitBadge = `<span class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">${t('statusNoNeed')}</span>`;
     } else if (deficit === 0) {
-      deficitBadge = `<span class="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">已满足 ✓</span>`;
+      deficitBadge = `<span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded-md border border-emerald-500/30">${t('statusMet')}</span>`;
     } else {
-      deficitBadge = `<span class="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/30">缺 ${deficit} 张</span>`;
+      deficitBadge = `<span class="text-[10px] font-bold text-rose-600 dark:text-rose-400 bg-rose-500/10 px-1.5 py-0.2 rounded-md border border-rose-500/30">${t('statusDeficit', { n: deficit })}</span>`;
     }
 
     return `
-      <div class="card-glass rounded-xl p-3 border border-slate-800 flex flex-col justify-between space-y-2">
-        <!-- Header -->
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-2">
-            <span class="text-base">${card.icon}</span>
-            <span class="text-xs font-bold text-slate-200">${card.name}</span>
+      <div class="card-glass rounded-xl p-2 sm:p-2.5 border border-slate-200 dark:border-slate-800/80 flex items-center justify-between gap-2 shadow-sm hover:border-amber-500/40 transition-all">
+        <!-- Left: Icon & Name & Deficit Status -->
+        <div class="flex items-center space-x-2 min-w-0 flex-1">
+          <span class="text-xl sm:text-2xl flex-shrink-0 cursor-pointer select-none" onclick="openTicketModal('${card.name}')">${card.icon}</span>
+          <div class="min-w-0 flex-1">
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate cursor-pointer hover:text-amber-500 transition-colors" onclick="openTicketModal('${card.name}')" title="${cardDisplayName} (${card.en})">${cardDisplayName}</div>
+            <div class="mt-0.5">${deficitBadge}</div>
           </div>
-          ${deficitBadge}
         </div>
 
-        <!-- Inputs (Owned vs Needed) -->
-        <div class="grid grid-cols-2 gap-2 text-xs pt-1 border-t border-slate-800/60">
-          <!-- Owned -->
-          <div>
-            <label class="block text-[10px] text-slate-400 mb-1">拥有量</label>
-            <div class="flex items-center bg-[#0d121a] rounded-lg border border-slate-700/80 overflow-hidden">
-              <button onclick="changeOwned('${card.name}', -1)" class="w-6 h-7 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800">-</button>
+        <!-- Right: Inline Micro Controls (Owned & Need) -->
+        <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <!-- Owned Stepper -->
+          <div class="flex flex-col items-center">
+            <span class="text-[9px] text-slate-500 dark:text-slate-400 font-medium leading-none mb-1">${t('ownedLabel')}</span>
+            <div class="flex items-center h-6 rounded-md bg-emerald-500/10 dark:bg-emerald-950/30 border border-emerald-500/40 overflow-hidden">
+              <button onclick="changeOwned('${card.name}', -1)" class="w-5 h-full flex items-center justify-center text-xs text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/25 font-bold transition select-none">-</button>
               <input 
                 type="number" 
                 min="0" 
                 value="${owned}" 
-                onchange="setOwned('${card.name}', this.value)"
-                class="w-full bg-transparent text-center text-xs text-emerald-300 font-bold focus:outline-none py-1"
+                onchange="setOwned('${card.name}', this.value)" 
+                class="w-7 h-full text-center text-xs font-bold bg-transparent text-emerald-700 dark:text-emerald-300 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               >
-              <button onclick="changeOwned('${card.name}', 1)" class="w-6 h-7 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800">+</button>
+              <button onclick="changeOwned('${card.name}', 1)" class="w-5 h-full flex items-center justify-center text-xs text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/25 font-bold transition select-none">+</button>
             </div>
           </div>
 
-          <!-- Needed -->
-          <div>
-            <label class="block text-[10px] text-slate-400 mb-1">需求量</label>
-            <div class="flex items-center bg-[#0d121a] rounded-lg border border-slate-700/80 overflow-hidden">
-              <button onclick="changeNeeded('${card.name}', -1)" class="w-6 h-7 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800">-</button>
+          <!-- Need Stepper -->
+          <div class="flex flex-col items-center">
+            <span class="text-[9px] text-slate-500 dark:text-slate-400 font-medium leading-none mb-1">${t('needLabel')}</span>
+            <div class="flex items-center h-6 rounded-md bg-amber-500/10 dark:bg-amber-950/30 border border-amber-500/40 overflow-hidden">
+              <button onclick="changeNeeded('${card.name}', -1)" class="w-5 h-full flex items-center justify-center text-xs text-amber-600 dark:text-amber-400 hover:bg-amber-500/25 font-bold transition select-none">-</button>
               <input 
                 type="number" 
                 min="0" 
                 value="${needed}" 
-                onchange="setNeeded('${card.name}', this.value)"
-                class="w-full bg-transparent text-center text-xs text-amber-300 font-bold focus:outline-none py-1"
+                onchange="setNeeded('${card.name}', this.value)" 
+                class="w-7 h-full text-center text-xs font-bold bg-transparent text-amber-700 dark:text-amber-300 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               >
-              <button onclick="changeNeeded('${card.name}', 1)" class="w-6 h-7 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800">+</button>
+              <button onclick="changeNeeded('${card.name}', 1)" class="w-5 h-full flex items-center justify-center text-xs text-amber-600 dark:text-amber-400 hover:bg-amber-500/25 font-bold transition select-none">+</button>
             </div>
           </div>
         </div>
@@ -467,35 +822,7 @@ function setNeeded(cardName, val) {
   updateRecommendations();
 }
 
-function applyPreset(presetType, toastNotify = true) {
-  TAROT_CARDS.forEach(c => {
-    ownedTickets[c.name] = 0;
-    neededTickets[c.name] = 0;
-  });
-
-  if (presetType === 'node1') {
-    neededTickets['力量'] = 2;
-    neededTickets['隐士'] = 2;
-    neededTickets['皇帝'] = 1;
-    if (toastNotify) showToast('已应用【第1车厢关卡】需求预设！', '🚂');
-  } else if (presetType === 'boss') {
-    neededTickets['命运之轮'] = 2;
-    neededTickets['恶魔'] = 2;
-    neededTickets['死神'] = 2;
-    neededTickets['魔术师'] = 1;
-    if (toastNotify) showToast('已应用【首领决战关卡】需求预设！', '👑');
-  } else if (presetType === 'demo') {
-    neededTickets['力量'] = 2;
-    neededTickets['隐士'] = 1;
-    neededTickets['恶魔'] = 2;
-    ownedTickets['恶魔'] = 0;
-    if (toastNotify) showToast('已应用【典型缺口测试】预设！', '💡');
-  }
-
-  renderTicketSetupGrid();
-  updateRecommendations();
-}
-
+// Reset all counts
 function resetSetup() {
   TAROT_CARDS.forEach(c => {
     ownedTickets[c.name] = 0;
@@ -503,7 +830,7 @@ function resetSetup() {
   });
   renderTicketSetupGrid();
   updateRecommendations();
-  showToast('已清空全部票券设置！', '🧹');
+  showToast(t('resetToast'), '🧹');
 }
 
 // Set Attribute filter for Recommendations
@@ -513,7 +840,7 @@ function setRecomAttrFilter(attr) {
     if (btn.dataset.attr === attr) {
       btn.className = "recom-attr-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-amber-500 text-slate-950 shadow";
     } else {
-      btn.className = "recom-attr-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700 transition border border-slate-700/40";
+      btn.className = "recom-attr-btn px-2.5 py-1 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 transition border border-slate-300 dark:border-slate-700/40";
     }
   });
   updateRecommendations();
@@ -541,9 +868,9 @@ function updateRecommendations() {
   const statOwned = document.getElementById('statTotalOwned');
   const statDeficit = document.getElementById('statTotalDeficit');
 
-  if (statNeeded) statNeeded.innerHTML = `${totalNeeded} <span class="text-xs text-slate-400 font-normal">张</span>`;
-  if (statOwned) statOwned.innerHTML = `${totalOwned} <span class="text-xs text-slate-400 font-normal">张</span>`;
-  if (statDeficit) statDeficit.innerHTML = `${totalDeficit} <span class="text-xs text-slate-400 font-normal">张</span>`;
+  if (statNeeded) statNeeded.innerHTML = `${totalNeeded} <span class="text-xs text-slate-500 dark:text-slate-400 font-normal">${t('unitCards')}</span>`;
+  if (statOwned) statOwned.innerHTML = `${totalOwned} <span class="text-xs text-slate-500 dark:text-slate-400 font-normal">${t('unitCards')}</span>`;
+  if (statDeficit) statDeficit.innerHTML = `${totalDeficit} <span class="text-xs text-slate-500 dark:text-slate-400 font-normal">${t('unitCards')}</span>`;
 
   // Update nav badge
   const navBadge = document.getElementById('navDeficitBadge');
@@ -553,6 +880,16 @@ function updateRecommendations() {
       navBadge.classList.remove('hidden');
     } else {
       navBadge.classList.add('hidden');
+    }
+  }
+
+  // Zero-demand guide display
+  const noDemandGuide = document.getElementById('noDemandGuide');
+  if (noDemandGuide) {
+    if (totalNeeded === 0 && totalDeficit === 0) {
+      noDemandGuide.classList.remove('hidden');
+    } else {
+      noDemandGuide.classList.add('hidden');
     }
   }
 
@@ -639,7 +976,7 @@ function updateRecommendations() {
     estimatedGames = Math.ceil(totalDeficit / bestExpected);
   }
   const statGames = document.getElementById('statEstimatedGames');
-  if (statGames) statGames.innerHTML = `${estimatedGames} <span class="text-xs text-slate-400 font-normal">局胜场</span>`;
+  if (statGames) statGames.innerHTML = `${estimatedGames} <span class="text-xs text-slate-500 dark:text-slate-400 font-normal">${t('unitWins')}</span>`;
 
   // Render the tier sections
   renderTierSection('tier1', tier1, deficits);
@@ -652,7 +989,8 @@ function renderTierSection(tierId, list, deficits) {
   const emptyEl = document.getElementById(`${tierId}Empty`);
   const countEl = document.getElementById(`${tierId}Count`);
 
-  if (countEl) countEl.textContent = `${list.length} 位英雄`;
+  const unitStr = currentLang === 'en' ? 'Heroes' : '位英雄';
+  if (countEl) countEl.textContent = `${list.length} ${unitStr}`;
   if (!grid) return;
 
   if (list.length === 0) {
@@ -664,26 +1002,31 @@ function renderTierSection(tierId, list, deficits) {
   if (emptyEl) emptyEl.classList.add('hidden');
   grid.innerHTML = list.map(item => {
     const h = item.hero;
-    const attrInfo = ATTR_META[h.attr] || { name: '未知', icon: '⚪', badgeClass: 'text-slate-400' };
+    const attrInfo = ATTR_META[h.attr] || { name: '未知', en: 'Unknown', icon: '⚪', badgeClass: 'text-slate-400' };
 
-    // Highlight matched tickets with icon & glowing background (not full rows)
+    const heroPrimaryName = currentLang === 'en' ? h.en_name : h.name;
+
+    // Highlight matched tickets with icon & glowing background
     const ticketsHtml = h.tickets.map(tName => {
       const isNeeded = (deficits[tName] || 0) > 0;
-      const card = CARD_MAP[tName] || { icon: '🃏' };
+      const card = CARD_MAP[tName] || { icon: '🃏', en: tName };
       const defCount = deficits[tName] || 0;
+      const displayName = currentLang === 'en' ? card.en : tName;
 
       if (isNeeded) {
+        const titleText = currentLang === 'en' ? `${displayName}: ${defCount} needed (High Priority)` : `${tName}: 仍缺 ${defCount} 张 (急需获取)`;
         return `
-          <div class="flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg bg-amber-500/25 border border-amber-400 text-amber-200 shadow-[0_0_8px_rgba(245,158,11,0.25)] ring-1 ring-amber-400/30 font-bold transition-all" title="${tName}: 仍缺 ${defCount} 张 (急需获取)">
+          <div class="flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg bg-amber-500/20 dark:bg-amber-500/25 border border-amber-500 dark:border-amber-400 text-amber-700 dark:text-amber-200 shadow-[0_0_8px_rgba(245,158,11,0.2)] font-bold transition-all" title="${titleText}">
             <span class="text-base sm:text-lg leading-none">${card.icon}</span>
-            <span class="text-[10px] leading-tight truncate max-w-full mt-0.5 font-bold text-amber-200">${tName}</span>
+            <span class="text-[10px] leading-tight truncate max-w-full mt-0.5 font-bold">${displayName}</span>
           </div>
         `;
       } else {
+        const titleText = currentLang === 'en' ? `${displayName}: Fulfilled` : `${tName}: 已满足 (非急需)`;
         return `
-          <div class="flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg bg-slate-900/50 border border-slate-800/80 text-slate-500 opacity-40 transition-all" title="${tName}: 已满足 (非急需)">
+          <div class="flex flex-col items-center justify-center py-1.5 px-0.5 rounded-lg bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/80 text-slate-400 dark:text-slate-500 opacity-50 transition-all" title="${titleText}">
             <span class="text-base sm:text-lg leading-none">${card.icon}</span>
-            <span class="text-[10px] leading-tight truncate max-w-full mt-0.5 font-normal text-slate-400">${tName}</span>
+            <span class="text-[10px] leading-tight truncate max-w-full mt-0.5 font-normal">${displayName}</span>
           </div>
         `;
       }
@@ -696,36 +1039,38 @@ function renderTierSection(tierId, list, deficits) {
 
     let tierBadge = '';
     if (item.matchCount === 3) {
-      tierBadge = `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">3/3</span>`;
+      tierBadge = `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40">3/3</span>`;
     } else if (item.matchCount === 2) {
-      tierBadge = `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/40">2/3</span>`;
+      tierBadge = `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-500/40">2/3</span>`;
     } else {
-      tierBadge = `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">1/3</span>`;
+      tierBadge = `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-500/40">1/3</span>`;
     }
 
+    const expText = t('expectedYield', { val: item.expectedYield.toFixed(2) });
+
     return `
-      <div class="card-glass rounded-xl p-2.5 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between group shadow-sm hover:shadow-xl">
+      <div class="card-glass rounded-xl p-2.5 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between group shadow-sm hover:shadow-xl">
         <!-- Hero Info -->
         <div class="flex items-center space-x-2.5">
-          <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden bg-slate-800 border border-slate-700 flex-shrink-0">
+          <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex-shrink-0">
             <img 
               src="${h.img}" 
-              alt="${h.name}" 
+              alt="${heroPrimaryName}" 
               class="w-full h-full object-cover"
               loading="lazy"
               onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'40\\' height=\\'40\\' viewBox=\\'0 0 40 40\\'><rect width=\\'40\\' height=\\'40\\' fill=\\'%231e293b\\'/><text x=\\'50%\\' y=\\'55%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%2394a3b8\\' font-size=\\'11\\' font-weight=\\'bold\\'>${h.name.slice(0, 2)}</text></svg>';"
             >
-            <span class="absolute bottom-0 right-0 text-[9px] px-1 py-0.5 rounded-tl bg-black/80">
+            <span class="absolute bottom-0 right-0 text-[9px] px-1 py-0.5 rounded-tl bg-black/70 text-white">
               ${attrInfo.icon}
             </span>
           </div>
           <div class="min-w-0 flex-1">
             <div class="flex items-center justify-between">
-              <h4 class="text-xs font-bold text-white group-hover:text-amber-400 transition-colors truncate" title="${h.name}">${h.name}</h4>
+              <h4 class="text-xs font-bold text-slate-900 dark:text-white group-hover:text-amber-500 transition-colors truncate" title="${heroPrimaryName}">${heroPrimaryName}</h4>
               ${tierBadge}
             </div>
-            <div class="text-[10px] text-amber-400 font-medium truncate mt-0.5">
-              期望: <span class="font-bold text-amber-300">${item.expectedYield.toFixed(2)}</span> 张/局
+            <div class="text-[10px] text-amber-700 dark:text-amber-400 font-medium truncate mt-0.5">
+              ${expText}
             </div>
           </div>
         </div>
@@ -736,19 +1081,19 @@ function renderTierSection(tierId, list, deficits) {
         </div>
 
         <!-- Drop Odds Strip (Ultra compact) -->
-        <div class="bg-slate-950/60 rounded p-1 border border-slate-800/80 text-[9px] flex items-center justify-between text-slate-400 font-mono mb-1.5">
-          <span title="抽中2张所需票券">双收: <span class="text-emerald-400 font-semibold">${p2Str}</span></span>
-          <span title="抽中1张所需票券">单张: <span class="text-sky-400 font-semibold">${p1Str}</span></span>
-          <span title="未抽中所需票券">浪费: <span class="${item.p0 > 0 ? 'text-rose-400' : 'text-slate-500'} font-semibold">${p0Str}</span></span>
+        <div class="bg-slate-100 dark:bg-slate-950/60 rounded p-1 border border-slate-200 dark:border-slate-800/80 text-[9px] flex items-center justify-between text-slate-500 dark:text-slate-400 font-mono mb-1.5">
+          <span title="${currentLang === 'en' ? 'Odds for 2 needed tickets' : '抽中2张所需票券'}">${t('oddsP2')}: <span class="text-emerald-600 dark:text-emerald-400 font-semibold">${p2Str}</span></span>
+          <span title="${currentLang === 'en' ? 'Odds for 1 needed ticket' : '抽中1张所需票券'}">${t('oddsP1')}: <span class="text-sky-600 dark:text-sky-400 font-semibold">${p1Str}</span></span>
+          <span title="${currentLang === 'en' ? 'Odds for waste' : '未抽中所需票券'}">${t('oddsP0')}: <span class="${item.p0 > 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-400 dark:text-slate-500'} font-semibold">${p0Str}</span></span>
         </div>
 
         <!-- Action Simulation Button -->
         <button 
           onclick="simulateMatchWin('${h.name}')" 
-          class="w-full py-1 text-[11px] font-semibold bg-amber-500/10 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 rounded-lg transition-colors flex items-center justify-center gap-1 shadow-sm"
+          class="w-full py-1 text-[11px] font-semibold bg-amber-500/10 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-lg transition-colors flex items-center justify-center gap-1 shadow-sm active:scale-98"
         >
           <span>🎲</span>
-          <span>模拟获胜抽2张</span>
+          <span>${t('btnSimulate')}</span>
         </button>
       </div>
     `;
@@ -773,7 +1118,17 @@ function simulateMatchWin(heroName) {
   renderTicketSetupGrid();
   updateRecommendations();
 
-  showToast(`🎉 获胜！使用【${hero.name}】随机掉落了：【${won1}】+【${won2}】！`, '🏆');
+  const heroDisplayName = currentLang === 'en' ? hero.en_name : hero.name;
+  const t1Name = currentLang === 'en' ? (CARD_MAP[won1]?.en || won1) : won1;
+  const t2Name = currentLang === 'en' ? (CARD_MAP[won2]?.en || won2) : won2;
+
+  const msg = t('simulateSuccess', {
+    hero: heroDisplayName,
+    t1: t1Name,
+    t2: t2Name
+  });
+
+  showToast(msg, '🏆');
 }
 
 // Toast notification
