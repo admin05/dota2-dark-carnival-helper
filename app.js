@@ -755,37 +755,53 @@ function renderTicketSetupGrid() {
           </div>
         </div>
 
-        <!-- Right: Inline Micro Controls (Owned & Need) -->
-        <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+        <!-- Right: Inline Stepper Controls (Owned & Need) -->
+        <div class="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
           <!-- Owned Stepper -->
           <div class="flex flex-col items-center">
-            <span class="text-[9px] text-slate-500 dark:text-slate-400 font-medium leading-none mb-1">${t('ownedLabel')}</span>
-            <div class="flex items-center h-6 rounded-md bg-emerald-500/10 dark:bg-emerald-950/30 border border-emerald-500/40 overflow-hidden">
-              <button onclick="changeOwned('${card.name}', -1)" class="w-5 h-full flex items-center justify-center text-xs text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/25 font-bold transition select-none">-</button>
+            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold leading-none mb-1">${t('ownedLabel')}</span>
+            <div class="flex items-center h-8 rounded-lg bg-emerald-500/10 dark:bg-emerald-950/40 border border-emerald-500/40 shadow-sm overflow-hidden">
+              <button 
+                onclick="changeOwned('${card.name}', -1)" 
+                class="w-7 sm:w-8 h-full flex items-center justify-center text-sm font-black text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/30 active:scale-90 transition-all select-none cursor-pointer"
+                title="减少拥有量"
+              >-</button>
               <input 
                 type="number" 
                 min="0" 
                 value="${owned}" 
                 onchange="setOwned('${card.name}', this.value)" 
-                class="w-7 h-full text-center text-xs font-bold bg-transparent text-emerald-700 dark:text-emerald-300 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                class="w-7 sm:w-8 h-full text-center text-xs sm:text-sm font-extrabold bg-transparent text-emerald-800 dark:text-emerald-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               >
-              <button onclick="changeOwned('${card.name}', 1)" class="w-5 h-full flex items-center justify-center text-xs text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/25 font-bold transition select-none">+</button>
+              <button 
+                onclick="changeOwned('${card.name}', 1)" 
+                class="w-7 sm:w-8 h-full flex items-center justify-center text-sm font-black text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/30 active:scale-90 transition-all select-none cursor-pointer"
+                title="增加拥有量"
+              >+</button>
             </div>
           </div>
 
           <!-- Need Stepper -->
           <div class="flex flex-col items-center">
-            <span class="text-[9px] text-slate-500 dark:text-slate-400 font-medium leading-none mb-1">${t('needLabel')}</span>
-            <div class="flex items-center h-6 rounded-md bg-amber-500/10 dark:bg-amber-950/30 border border-amber-500/40 overflow-hidden">
-              <button onclick="changeNeeded('${card.name}', -1)" class="w-5 h-full flex items-center justify-center text-xs text-amber-600 dark:text-amber-400 hover:bg-amber-500/25 font-bold transition select-none">-</button>
+            <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold leading-none mb-1">${t('needLabel')}</span>
+            <div class="flex items-center h-8 rounded-lg bg-amber-500/10 dark:bg-amber-950/40 border border-amber-500/40 shadow-sm overflow-hidden">
+              <button 
+                onclick="changeNeeded('${card.name}', -1)" 
+                class="w-7 sm:w-8 h-full flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/30 active:scale-90 transition-all select-none cursor-pointer"
+                title="减少需求量"
+              >-</button>
               <input 
                 type="number" 
                 min="0" 
                 value="${needed}" 
                 onchange="setNeeded('${card.name}', this.value)" 
-                class="w-7 h-full text-center text-xs font-bold bg-transparent text-amber-700 dark:text-amber-300 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                class="w-7 sm:w-8 h-full text-center text-xs sm:text-sm font-extrabold bg-transparent text-amber-800 dark:text-amber-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               >
-              <button onclick="changeNeeded('${card.name}', 1)" class="w-5 h-full flex items-center justify-center text-xs text-amber-600 dark:text-amber-400 hover:bg-amber-500/25 font-bold transition select-none">+</button>
+              <button 
+                onclick="changeNeeded('${card.name}', 1)" 
+                class="w-7 sm:w-8 h-full flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/30 active:scale-90 transition-all select-none cursor-pointer"
+                title="增加需求量"
+              >+</button>
             </div>
           </div>
         </div>
