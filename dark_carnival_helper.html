@@ -1159,11 +1159,8 @@ function renderHeroCard(h, attrBorderClass = '') {
       </div>
 
       <!-- 3 Tickets in a single compact row -->
-      <div class="pt-1.5 border-t border-slate-200 dark:border-slate-800/80">
-        <div class="text-[9px] text-slate-500 dark:text-slate-400 font-medium mb-1">${t('ticketsYield')}</div>
-        <div class="grid grid-cols-3 gap-1">
-          ${ticketBadges}
-        </div>
+      <div class="pt-1.5 border-t border-slate-200 dark:border-slate-800/80 grid grid-cols-3 gap-1">
+        ${ticketBadges}
       </div>
     </div>
   `;
