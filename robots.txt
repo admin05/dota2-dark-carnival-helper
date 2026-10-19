@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://islanddddddd.github.io/dota2-dark-carnival-helper/sitemap.xml

@@ -3,7 +3,7 @@
 **[English](README.md) | [中文说明](README.zh-CN.md)**
 
 [![Online Demo](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-success?logo=github&style=for-the-badge)](https://islanddddddd.github.io/dota2-dark-carnival-helper/)
-[![License](https://img.shields.io/badge/License-MIT-amber?style=for-the-badge)](https://github.com/1207446924/dota2-dark-carnival-helper)
+[![License](https://img.shields.io/badge/License-MIT-amber?style=for-the-badge)](https://github.com/islanddddddd/dota2-dark-carnival-helper)
 
 > 🌐 **Live Web App**: **[https://islanddddddd.github.io/dota2-dark-carnival-helper/](https://islanddddddd.github.io/dota2-dark-carnival-helper/)**
 
