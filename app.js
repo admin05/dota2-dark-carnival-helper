@@ -18,7 +18,7 @@ const I18N = {
   zh: {
     appTitle: "暗黑狂欢 · 票券助手",
     appSubtitle: "每胜 1 局从 3 张票券中随机抽 2 张 | 智能图鉴 & 最优通关算法",
-    navBadge: "百戏大王专列",
+    navBadge: "百戏大王专列 · v2.3.0",
     tabCodex: "英雄票券图鉴",
     tabRecom: "筛选与智能推荐",
     langBtn: "English",
@@ -92,7 +92,7 @@ const I18N = {
   en: {
     appTitle: "Dark Carnival · Ticket Helper",
     appSubtitle: "Pick 2 of 3 tickets per win | Smart Codex & Optimal Recommender",
-    navBadge: "Ringmaster Train",
+    navBadge: "Ringmaster Train · v2.3.0",
     tabCodex: "Hero Ticket Codex",
     tabRecom: "Filter & Recommendations",
     langBtn: "中文",
