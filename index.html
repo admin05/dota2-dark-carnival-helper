@@ -286,11 +286,23 @@
               type="text" 
               id="heroSearchInput" 
               oninput="filterCodex()"
+              oncompositionstart="isComposing = true"
+              oncompositionend="onCodexCompositionEnd()"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
               placeholder="搜索英雄名 / 英文 / 缩写拼音 / 票券名..." 
               class="w-full bg-white dark:bg-[#121824] text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 pl-10 pr-9 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700/80 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500/50 transition-all shadow-inner"
             >
-            <span class="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500 text-base">🔍</span>
-            <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-white text-sm">✕</button>
+            <span class="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500 text-base pointer-events-none select-none">🔍</span>
+            <button 
+              id="clearSearchBtn" 
+              onclick="clearSearch()" 
+              class="hidden absolute right-1.5 top-1.5 w-7 h-7 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 text-xs transition active:scale-95 cursor-pointer"
+              title="清除搜索 / Clear Search"
+              aria-label="Clear Search"
+            >✕</button>
           </div>
         </div>
 

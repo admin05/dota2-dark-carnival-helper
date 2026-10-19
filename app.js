@@ -291,6 +291,8 @@ let tradeConfig = {
   enableFourToOne: false
 };
 let lastCalculatedPlan = null;
+let isComposing = false;
+let codexDebounceTimer = null;
 
 // Initialize default ticket counts (clean 0 by default, no preset)
 TAROT_CARDS.forEach(c => {
@@ -363,10 +365,18 @@ if (document.readyState === 'loading') {
   initApp();
 }
 
-// Global keyboard shortcuts (Escape to close modals)
+// Global keyboard shortcuts (Escape to close modals or clear search)
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    closeTicketModal();
+    const modal = document.getElementById('ticketModal');
+    if (modal && !modal.classList.contains('hidden')) {
+      closeTicketModal();
+      return;
+    }
+    const searchInput = document.getElementById('heroSearchInput');
+    if (searchInput && searchInput.value) {
+      clearSearch();
+    }
   }
 });
 
@@ -641,10 +651,13 @@ function setAttrFilter(attr) {
 
 function clearSearch() {
   const input = document.getElementById('heroSearchInput');
-  if (input) input.value = '';
+  if (input) {
+    input.value = '';
+    input.focus();
+  }
   const clearBtn = document.getElementById('clearSearchBtn');
   if (clearBtn) clearBtn.classList.add('hidden');
-  renderCodex();
+  filterCodex(true);
 }
 
 function resetAllFilters() {
@@ -657,11 +670,11 @@ function resetAllFilters() {
   if (select) select.value = '';
   setAttrFilter('all');
   updatePillStyles();
-  renderCodex();
+  filterCodex(true);
 }
 
-// Filter and Render Codex Heroes
-function filterCodex() {
+// Filter and Render Codex Heroes (with IME composition guard and 100ms debouncing)
+function filterCodex(immediate = false) {
   const searchInput = document.getElementById('heroSearchInput');
   const searchVal = searchInput ? searchInput.value.trim() : '';
   const clearBtn = document.getElementById('clearSearchBtn');
@@ -677,7 +690,23 @@ function filterCodex() {
     updatePillStyles();
   }
 
-  renderCodex();
+  if (isComposing) return;
+
+  if (immediate) {
+    if (codexDebounceTimer) clearTimeout(codexDebounceTimer);
+    renderCodex();
+    return;
+  }
+
+  if (codexDebounceTimer) clearTimeout(codexDebounceTimer);
+  codexDebounceTimer = setTimeout(() => {
+    renderCodex();
+  }, 100);
+}
+
+function onCodexCompositionEnd() {
+  isComposing = false;
+  filterCodex(true);
 }
 
 function renderCodex() {
@@ -1149,42 +1178,45 @@ function renderTicketSetupGrid() {
 }
 
 function changeOwned(cardName, delta) {
-  ownedTickets[cardName] = Math.max(0, (ownedTickets[cardName] || 0) + delta);
+  ownedTickets[cardName] = Math.min(999, Math.max(0, (ownedTickets[cardName] || 0) + delta));
   saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
 }
 
 function setOwned(cardName, val) {
-  ownedTickets[cardName] = Math.max(0, parseInt(val) || 0);
+  const parsed = parseInt(val, 10);
+  ownedTickets[cardName] = isNaN(parsed) ? 0 : Math.min(999, Math.max(0, parsed));
   saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
 }
 
 function changeNeeded(cardName, delta) {
-  neededTickets[cardName] = Math.max(0, (neededTickets[cardName] || 0) + delta);
+  neededTickets[cardName] = Math.min(999, Math.max(0, (neededTickets[cardName] || 0) + delta));
   saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
 }
 
 function setNeeded(cardName, val) {
-  neededTickets[cardName] = Math.max(0, parseInt(val) || 0);
+  const parsed = parseInt(val, 10);
+  neededTickets[cardName] = isNaN(parsed) ? 0 : Math.min(999, Math.max(0, parsed));
   saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
 }
 
 function changeScrap(delta) {
-  ownedScrap = Math.max(0, (ownedScrap || 0) + delta);
+  ownedScrap = Math.min(9999, Math.max(0, (ownedScrap || 0) + delta));
   saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
 }
 
 function setScrap(val) {
-  ownedScrap = Math.max(0, parseInt(val) || 0);
+  const parsed = parseInt(val, 10);
+  ownedScrap = isNaN(parsed) ? 0 : Math.min(9999, Math.max(0, parsed));
   saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
