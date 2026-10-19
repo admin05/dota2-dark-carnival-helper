@@ -674,13 +674,21 @@ const I18N = {
     unitWins: "局胜场",
     // Setup
     setupTitle: "票券库存与目标需求",
-    setupSubtitle: "设置拥有的票券与通关所需的目标票券，系统实时计算净缺口并推荐英雄",
+    setupSubtitle: "设置拥有的票券与通关所需的目标票券，系统实时计算净缺口并推演最优英雄与交易路线",
     resetBtn: "清空重置",
     ownedLabel: "拥有",
-    needLabel: "需求",
-    statusNoNeed: "无需求",
-    statusMet: "已满足 ✓",
+    needLabel: "目标",
+    statusNoNeed: "未设需求",
+    statusMet: "✓ 已达成",
     statusDeficit: "缺 {n} 张",
+    statusSurplus: "溢出 +{n}",
+    statusMetSurplus: "满 (溢+{n})",
+    progressLabel: "达成进度",
+    nextTradeProgress: "下次兑换进度",
+    quickTradeStep: "快捷增减",
+    scrapSub: "6 废票 = 任意 1 票",
+    scrapShortfall: "差 {n} 张",
+    scrapCanTrade: "可换 {n} 张",
     // Recommendations
     recomTitle: "智能英雄推荐",
     recomSubtitle: "基于 3 抽 2 随机掉落概率计算净缺口收益期望，自动分档呈现最优出战英雄",
@@ -782,14 +790,22 @@ const I18N = {
     unitCards: "tickets",
     unitWins: "wins",
     // Setup
-    setupTitle: "Ticket Inventory & Demands",
-    setupSubtitle: "Configure your owned tickets and target demands to calculate real-time deficits",
+    setupTitle: "Ticket Inventory & Target Goals",
+    setupSubtitle: "Configure your owned tickets and target demands to calculate real-time deficits and clearance routes",
     resetBtn: "Reset All",
     ownedLabel: "Owned",
-    needLabel: "Need",
-    statusNoNeed: "None",
-    statusMet: "Met ✓",
-    statusDeficit: "{n} needed",
+    needLabel: "Target",
+    statusNoNeed: "No Target",
+    statusMet: "✓ Met",
+    statusDeficit: "Need {n}",
+    statusSurplus: "Surplus +{n}",
+    statusMetSurplus: "Met (+{n})",
+    progressLabel: "Progress",
+    nextTradeProgress: "Next Trade",
+    quickTradeStep: "Quick Trade",
+    scrapSub: "6 Scrap = Any 1 Card",
+    scrapShortfall: "{n} to Trade",
+    scrapCanTrade: "Can Trade {n}",
     // Recommendations
     recomTitle: "Smart Hero Recommendations",
     recomSubtitle: "Ranked by expected net deficit yield based on 2-of-3 drop odds to find your optimal heroes.",
@@ -1467,7 +1483,7 @@ function closeTicketModal() {
 
 // ==================== RECOMMENDATION & SETUP LOGIC (Clean & Compact) ====================
 
-// Render streamlined ticket setup grid (Height-efficient, 11 Tarot cards + 1 Scrap ticket = 12 balanced grid)
+// Render redesigned ticket setup grid (High-aesthetic Tarot Cards + Dedicated Pods + Progress Bars)
 function renderTicketSetupGrid() {
   const grid = document.getElementById('ticketSetupGrid');
   if (!grid) return;
@@ -1476,38 +1492,85 @@ function renderTicketSetupGrid() {
     const owned = ownedTickets[card.name] || 0;
     const needed = neededTickets[card.name] || 0;
     const deficit = Math.max(0, needed - owned);
+    const surplus = Math.max(0, owned - needed);
 
     const cardDisplayName = currentLang === 'en' ? card.en : card.name;
+    const cardSubName = currentLang === 'en' ? card.name : card.en;
 
+    // Status Badge & Progress Calculation
     let deficitBadge = '';
+    let progressPercent = 0;
+    let progressText = '0%';
+    let progressTrackClass = 'bg-slate-200 dark:bg-slate-800';
+    let progressFillClass = 'bg-slate-300 dark:bg-slate-700';
+
     if (needed === 0) {
-      deficitBadge = `<span class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">${t('statusNoNeed')}</span>`;
+      if (owned > 0) {
+        deficitBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/15 text-purple-600 dark:text-purple-300 border border-purple-500/30 whitespace-nowrap">${t('statusSurplus', { n: owned })}</span>`;
+        progressPercent = 100;
+        progressText = `+${owned}`;
+        progressFillClass = 'bg-gradient-to-r from-purple-500 to-indigo-500';
+      } else {
+        deficitBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 dark:bg-slate-800/80 text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-800 whitespace-nowrap">${t('statusNoNeed')}</span>`;
+        progressPercent = 0;
+        progressText = '0%';
+        progressFillClass = 'bg-slate-300 dark:bg-slate-700';
+      }
     } else if (deficit === 0) {
-      deficitBadge = `<span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded-md border border-emerald-500/30">${t('statusMet')}</span>`;
+      if (surplus > 0) {
+        deficitBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-[0_0_8px_rgba(16,185,129,0.15)] whitespace-nowrap">${t('statusMetSurplus', { n: surplus })}</span>`;
+      } else {
+        deficitBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-[0_0_8px_rgba(16,185,129,0.15)] whitespace-nowrap">${t('statusMet')}</span>`;
+      }
+      progressPercent = 100;
+      progressText = `${owned}/${needed} (100%)`;
+      progressFillClass = 'bg-gradient-to-r from-emerald-500 to-teal-400';
     } else {
-      deficitBadge = `<span class="text-[10px] font-bold text-rose-600 dark:text-rose-400 bg-rose-500/10 px-1.5 py-0.2 rounded-md border border-rose-500/30">${t('statusDeficit', { n: deficit })}</span>`;
+      deficitBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 shadow-[0_0_8px_rgba(244,63,94,0.15)] whitespace-nowrap">${t('statusDeficit', { n: deficit })}</span>`;
+      progressPercent = Math.min(100, Math.round((owned / needed) * 100));
+      progressText = `${owned}/${needed} (${progressPercent}%)`;
+      progressFillClass = 'bg-gradient-to-r from-amber-500 to-rose-500';
     }
 
     return `
-      <div class="card-glass rounded-xl p-2 sm:p-2.5 border border-slate-200 dark:border-slate-800/80 flex items-center justify-between gap-2 shadow-sm hover:border-amber-500/40 transition-all">
-        <!-- Left: Icon & Name & Deficit Status -->
-        <div class="flex items-center space-x-2 min-w-0 flex-1">
-          <span class="text-xl sm:text-2xl flex-shrink-0 cursor-pointer select-none" onclick="openTicketModal('${card.name}')">${card.icon}</span>
-          <div class="min-w-0 flex-1">
-            <div class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate cursor-pointer hover:text-amber-500 transition-colors" onclick="openTicketModal('${card.name}')" title="${cardDisplayName} (${card.en})">${cardDisplayName}</div>
-            <div class="mt-0.5">${deficitBadge}</div>
+      <div class="card-glass rounded-2xl p-3 sm:p-3.5 border border-slate-200/90 dark:border-slate-800/80 hover:border-amber-500/40 transition-all duration-200 shadow-sm hover:shadow-md flex flex-col justify-between space-y-2.5">
+        <!-- Top Row: Icon, Roman Numeral, Card Name & Dynamic Status Badge -->
+        <div class="flex items-center justify-between gap-1.5">
+          <div class="flex items-center space-x-2 min-w-0 cursor-pointer group/title" onclick="openTicketModal('${card.name}')" title="${cardDisplayName} (${card.en})">
+            <span class="text-2xl sm:text-3xl flex-shrink-0 transition-transform group-hover/title:scale-110 select-none">${card.icon}</span>
+            <div class="min-w-0">
+              <div class="flex items-center space-x-1">
+                <span class="text-[9px] font-mono text-slate-400 dark:text-slate-500 font-semibold leading-none">${card.num}</span>
+                <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate group-hover/title:text-amber-500 transition-colors">${cardDisplayName}</h3>
+              </div>
+              <span class="text-[10px] text-slate-400 dark:text-slate-500 truncate block leading-tight mt-0.5">${cardSubName}</span>
+            </div>
+          </div>
+          <div class="flex-shrink-0">
+            ${deficitBadge}
           </div>
         </div>
 
-        <!-- Right: Inline Stepper Controls (Owned & Need) -->
-        <div class="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
-          <!-- Owned Stepper -->
-          <div class="flex flex-col items-center">
-            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold leading-none mb-1">${t('ownedLabel')}</span>
-            <div class="flex items-center h-8 rounded-lg bg-emerald-500/10 dark:bg-emerald-950/40 border border-emerald-500/40 shadow-sm overflow-hidden">
+        <!-- Middle Row: Slim Visual Progress Bar -->
+        <div class="space-y-1">
+          <div class="flex items-center justify-between text-[10px] font-mono leading-none">
+            <span class="text-slate-400 dark:text-slate-500">${t('progressLabel')}</span>
+            <span class="font-bold text-slate-600 dark:text-slate-300">${progressText}</span>
+          </div>
+          <div class="w-full h-1.5 rounded-full ${progressTrackClass} overflow-hidden">
+            <div class="h-full rounded-full ${progressFillClass} transition-all duration-300" style="width: ${progressPercent}%"></div>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Ergonomic Dual Pods (Owned Inventory vs Target Demand) -->
+        <div class="grid grid-cols-2 gap-2 pt-0.5">
+          <!-- Left Pod: 拥有 (Owned) -->
+          <div class="rounded-xl p-1.5 bg-emerald-500/5 dark:bg-emerald-950/20 border border-emerald-500/20 flex flex-col items-center">
+            <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mb-1 leading-none">${t('ownedLabel')}</span>
+            <div class="flex items-center justify-between w-full h-7 rounded-lg bg-white/90 dark:bg-slate-900/90 border border-emerald-500/30 overflow-hidden shadow-xs">
               <button 
                 onclick="changeOwned('${card.name}', -1)" 
-                class="w-7 sm:w-8 h-full flex items-center justify-center text-sm font-black text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/30 active:scale-90 transition-all select-none cursor-pointer"
+                class="w-7 h-full flex items-center justify-center text-sm font-black text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 active:scale-90 transition select-none cursor-pointer"
                 title="减少拥有量"
               >-</button>
               <input 
@@ -1515,23 +1578,23 @@ function renderTicketSetupGrid() {
                 min="0" 
                 value="${owned}" 
                 onchange="setOwned('${card.name}', this.value)" 
-                class="w-7 sm:w-8 h-full text-center text-xs sm:text-sm font-extrabold bg-transparent text-emerald-800 dark:text-emerald-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                class="w-8 h-full text-center text-xs font-mono font-black bg-transparent text-emerald-800 dark:text-emerald-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               >
               <button 
                 onclick="changeOwned('${card.name}', 1)" 
-                class="w-7 sm:w-8 h-full flex items-center justify-center text-sm font-black text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/30 active:scale-90 transition-all select-none cursor-pointer"
+                class="w-7 h-full flex items-center justify-center text-sm font-black text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 active:scale-90 transition select-none cursor-pointer"
                 title="增加拥有量"
               >+</button>
             </div>
           </div>
 
-          <!-- Need Stepper -->
-          <div class="flex flex-col items-center">
-            <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold leading-none mb-1">${t('needLabel')}</span>
-            <div class="flex items-center h-8 rounded-lg bg-amber-500/10 dark:bg-amber-950/40 border border-amber-500/40 shadow-sm overflow-hidden">
+          <!-- Right Pod: 目标 (Target Demand) -->
+          <div class="rounded-xl p-1.5 bg-amber-500/5 dark:bg-amber-950/20 border border-amber-500/20 flex flex-col items-center">
+            <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 mb-1 leading-none">${t('needLabel')}</span>
+            <div class="flex items-center justify-between w-full h-7 rounded-lg bg-white/90 dark:bg-slate-900/90 border border-amber-500/30 overflow-hidden shadow-xs">
               <button 
                 onclick="changeNeeded('${card.name}', -1)" 
-                class="w-7 sm:w-8 h-full flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/30 active:scale-90 transition-all select-none cursor-pointer"
+                class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
                 title="减少需求量"
               >-</button>
               <input 
@@ -1539,11 +1602,11 @@ function renderTicketSetupGrid() {
                 min="0" 
                 value="${needed}" 
                 onchange="setNeeded('${card.name}', this.value)" 
-                class="w-7 sm:w-8 h-full text-center text-xs sm:text-sm font-extrabold bg-transparent text-amber-800 dark:text-amber-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                class="w-8 h-full text-center text-xs font-mono font-black bg-transparent text-amber-800 dark:text-amber-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               >
               <button 
                 onclick="changeNeeded('${card.name}', 1)" 
-                class="w-7 sm:w-8 h-full flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/30 active:scale-90 transition-all select-none cursor-pointer"
+                class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
                 title="增加需求量"
               >+</button>
             </div>
@@ -1553,57 +1616,86 @@ function renderTicketSetupGrid() {
     `;
   }).join('');
 
-  // 12th Card: Universal Scrap Ticket (🎟️ 废票)
+  // 12th Card: Universal Scrap Ticket (🎟️ 通用废票 - Carnival Golden Currency)
   const scrapExchangeCount = Math.floor(ownedScrap / 6);
+  const remainderToTrade = 6 - (ownedScrap % 6);
+  const scrapProgressPercent = Math.round(((ownedScrap % 6) / 6) * 100);
+
   const scrapBadge = scrapExchangeCount > 0
-    ? `<span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/15 px-1.5 py-0.2 rounded-md border border-amber-500/30">${currentLang === 'en' ? `Tradeable: ${scrapExchangeCount}` : `可兑换 ${scrapExchangeCount} 张`}</span>`
-    : `<span class="text-[10px] text-slate-400 dark:text-slate-500 font-medium">${currentLang === 'en' ? '6 : 1 Trade' : '6张换1张'}</span>`;
+    ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40 shadow-[0_0_8px_rgba(245,158,11,0.2)] whitespace-nowrap">${t('scrapCanTrade', { n: scrapExchangeCount })}</span>`
+    : `<span class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-800 whitespace-nowrap">${t('scrapShortfall', { n: remainderToTrade })}</span>`;
 
   const scrapCardHtml = `
-    <div class="card-glass rounded-xl p-2 sm:p-2.5 border border-amber-500/30 dark:border-amber-500/30 bg-amber-500/5 flex items-center justify-between gap-2 shadow-sm hover:border-amber-500/60 transition-all">
-      <!-- Left: Icon & Name & Scrap Status -->
-      <div class="flex items-center space-x-2 min-w-0 flex-1">
-        <span class="text-xl sm:text-2xl flex-shrink-0 select-none">🎟️</span>
-        <div class="min-w-0 flex-1">
-          <div class="text-xs font-bold text-amber-700 dark:text-amber-300 truncate" title="${t('scrapDesc')}">${t('scrapTitle')}</div>
-          <div class="mt-0.5">${scrapBadge}</div>
+    <div class="card-glass rounded-2xl p-3 sm:p-3.5 border-2 border-amber-500/40 hover:border-amber-500/70 bg-gradient-to-br from-amber-500/10 via-yellow-500/5 to-purple-500/5 transition-all duration-200 shadow-sm hover:shadow-md flex flex-col justify-between space-y-2.5">
+      <!-- Top Row: Icon, Currency Tag, Title & Trade Power Badge -->
+      <div class="flex items-center justify-between gap-1.5">
+        <div class="flex items-center space-x-2 min-w-0" title="${t('scrapDesc')}">
+          <span class="text-2xl sm:text-3xl flex-shrink-0 select-none">🎟️</span>
+          <div class="min-w-0">
+            <div class="flex items-center space-x-1">
+              <span class="text-[9px] font-mono text-amber-600 dark:text-amber-400 font-bold leading-none">BANK</span>
+              <h3 class="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-300 truncate">${t('scrapTitle')}</h3>
+            </div>
+            <span class="text-[10px] text-amber-600/80 dark:text-amber-400/80 truncate block leading-tight mt-0.5">${t('scrapSub')}</span>
+          </div>
+        </div>
+        <div class="flex-shrink-0">
+          ${scrapBadge}
         </div>
       </div>
 
-      <!-- Right: Stepper for Scrap Owned & Quick +6 -->
-      <div class="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
-        <!-- Owned Stepper -->
-        <div class="flex flex-col items-center">
-          <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold leading-none mb-1">${t('ownedLabel')}</span>
-          <div class="flex items-center h-8 rounded-lg bg-emerald-500/10 dark:bg-emerald-950/40 border border-emerald-500/40 shadow-sm overflow-hidden">
+      <!-- Middle Row: Next Trade Cycle Progress -->
+      <div class="space-y-1">
+        <div class="flex items-center justify-between text-[10px] font-mono leading-none">
+          <span class="text-amber-700/80 dark:text-amber-300/80 font-medium">${t('nextTradeProgress')}</span>
+          <span class="font-bold text-amber-700 dark:text-amber-300">${ownedScrap % 6} / 6 (${scrapProgressPercent}%)</span>
+        </div>
+        <div class="w-full h-1.5 rounded-full bg-amber-950/20 dark:bg-amber-950/40 overflow-hidden">
+          <div class="h-full rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-300 transition-all duration-300" style="width: ${((ownedScrap % 6) / 6) * 100}%"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Dual Pods (Scrap Owned Stepper + Quick Trade Shortcuts) -->
+      <div class="grid grid-cols-2 gap-2 pt-0.5">
+        <!-- Left Pod: 废票存量 -->
+        <div class="rounded-xl p-1.5 bg-amber-500/10 dark:bg-amber-950/30 border border-amber-500/30 flex flex-col items-center">
+          <span class="text-[10px] font-bold text-amber-700 dark:text-amber-300 mb-1 leading-none">${t('ownedLabel')}</span>
+          <div class="flex items-center justify-between w-full h-7 rounded-lg bg-white/90 dark:bg-slate-900/90 border border-amber-500/40 overflow-hidden shadow-xs">
             <button 
               onclick="changeScrap(-1)" 
-              class="w-7 sm:w-8 h-full flex items-center justify-center text-sm font-black text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/30 active:scale-90 transition-all select-none cursor-pointer"
-              title="减少废票"
+              class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
+              title="减少 1 张废票"
             >-</button>
             <input 
               type="number" 
               min="0" 
               value="${ownedScrap}" 
               onchange="setScrap(this.value)" 
-              class="w-7 sm:w-8 h-full text-center text-xs sm:text-sm font-extrabold bg-transparent text-emerald-800 dark:text-emerald-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              class="w-8 h-full text-center text-xs font-mono font-black bg-transparent text-amber-800 dark:text-amber-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             >
             <button 
               onclick="changeScrap(1)" 
-              class="w-7 sm:w-8 h-full flex items-center justify-center text-sm font-black text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/30 active:scale-90 transition-all select-none cursor-pointer"
-              title="增加废票"
+              class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
+              title="增加 1 张废票"
             >+</button>
           </div>
         </div>
 
-        <!-- Quick +6 Button (Preserves visual symmetry with Need stepper) -->
-        <div class="flex flex-col items-center">
-          <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold leading-none mb-1">+6</span>
-          <button 
-            onclick="changeScrap(6)" 
-            class="h-8 px-2.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 active:scale-95 border border-amber-500/40 text-amber-700 dark:text-amber-300 font-bold text-xs flex items-center justify-center transition cursor-pointer"
-            title="快捷增加 6 张废票"
-          >+6 🎟️</button>
+        <!-- Right Pod: 快捷增减 (Quick Trades: +6 / -6) -->
+        <div class="rounded-xl p-1.5 bg-amber-500/10 dark:bg-amber-950/30 border border-amber-500/30 flex flex-col items-center">
+          <span class="text-[10px] font-bold text-amber-700 dark:text-amber-300 mb-1 leading-none">${t('quickTradeStep')}</span>
+          <div class="grid grid-cols-2 gap-1 w-full h-7">
+            <button 
+              onclick="changeScrap(-6)" 
+              class="h-full rounded-md bg-white/80 dark:bg-slate-900/80 hover:bg-rose-500/15 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-rose-600 font-bold text-[11px] flex items-center justify-center transition active:scale-90 cursor-pointer"
+              title="快捷减少 6 张废票 (1次兑换)"
+            >-6</button>
+            <button 
+              onclick="changeScrap(6)" 
+              class="h-full rounded-md bg-gradient-to-r from-amber-500 to-amber-600 hover:brightness-110 text-slate-950 font-black text-[11px] flex items-center justify-center transition active:scale-90 shadow-xs cursor-pointer"
+              title="快捷增加 6 张废票 (1次兑换)"
+            >+6</button>
+          </div>
         </div>
       </div>
     </div>
