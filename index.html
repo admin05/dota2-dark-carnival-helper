@@ -149,7 +149,7 @@
                 暗黑狂欢 · 票券助手
               </span>
               <span id="navBadge" class="px-2 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 rounded-full animate-pulse">
-                百戏大王专列 · v2.3.0
+                百戏大王专列 · v2.4.0
               </span>
             </div>
             <p id="navAppSubtitle" class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">每胜 1 局从 3 张票券中随机抽 2 张 | 智能图鉴 & 最优通关算法</p>
@@ -382,6 +382,63 @@
         </div>
       </div>
 
+      <!-- Clearance Path & Trading Center: 最快最稳通关路径 & 交易中心 -->
+      <div class="card-glass rounded-2xl p-4 sm:p-5 border border-amber-500/40 bg-gradient-to-br from-amber-500/5 via-slate-500/5 to-purple-500/5 space-y-4 shadow-sm" id="clearancePlanSection">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-500/20 pb-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>🗺️</span>
+              <span id="planSectionTitle">最快最稳通关路径规划</span>
+              <span class="text-[10px] bg-amber-500/10 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/20 font-medium">智能求解</span>
+            </h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5" id="planSectionSub">
+              根据当前票券库存、废票与交易规则，推演达成目标的最少对局场次与最优出战路线
+            </p>
+          </div>
+
+          <!-- Quick Stats Highlights -->
+          <div class="flex items-center gap-2 flex-wrap" id="planStatsContainer">
+            <span id="planStatFastest" class="px-3 py-1 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40 shadow-sm">
+              ⚡ 理论最快 0 局
+            </span>
+            <span id="planStatExpected" class="px-3 py-1 rounded-xl text-xs font-bold bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-500/40 shadow-sm">
+              🛡️ 稳健推荐 0 局
+            </span>
+          </div>
+        </div>
+
+        <!-- Trade Rules Controls (Toggles) -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-slate-100 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+          <div class="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 flex-shrink-0">
+            <span>⚙️</span>
+            <span id="tradeConfigLabel">交易兑换选项：</span>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <!-- Scrap 6:1 (Default ON) -->
+            <label class="flex items-center space-x-1.5 cursor-pointer select-none px-2.5 py-1 rounded-lg text-xs font-bold transition border border-amber-500/40 bg-amber-500/15 text-amber-800 dark:text-amber-200 shadow-sm" id="lblTradeScrap">
+              <input type="checkbox" id="toggleTradeScrap" checked onchange="toggleTradeRule('enableScrap')" class="rounded text-amber-500 focus:ring-0">
+              <span id="tradeRuleScrapText">🎟️ 废票兑换 (6换1)</span>
+            </label>
+            <!-- 3 identical -> 1 (Default OFF) -->
+            <label class="flex items-center space-x-1.5 cursor-pointer select-none px-2.5 py-1 rounded-lg text-xs font-medium transition border border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300" id="lblTradeThree">
+              <input type="checkbox" id="toggleTradeThree" onchange="toggleTradeRule('enableThreeToOne')" class="rounded text-amber-500 focus:ring-0">
+              <span id="tradeRuleThreeText">🃏 相同 3 换 1</span>
+            </label>
+            <!-- 4 distinct -> 1 (Default OFF) -->
+            <label class="flex items-center space-x-1.5 cursor-pointer select-none px-2.5 py-1 rounded-lg text-xs font-medium transition border border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300" id="lblTradeFour">
+              <input type="checkbox" id="toggleTradeFour" onchange="toggleTradeRule('enableFourToOne')" class="rounded text-amber-500 focus:ring-0">
+              <span id="tradeRuleFourText">🎴 不同 4 换 1</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Dynamic Clearance Path & Trades Plan Container -->
+        <div id="clearancePlanContent" class="space-y-3">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
       <!-- Recommendations Section: 智能英雄推荐 (No (a)/(b)) -->
       <div class="space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -535,7 +592,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=2.3.0"></script>
-  <script src="app.js?v=2.3.0"></script>
+  <script src="data.js?v=2.4.0"></script>
+  <script src="app.js?v=2.4.0"></script>
 </body>
 </html>
