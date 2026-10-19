@@ -499,8 +499,8 @@ function switchTab(tab) {
   const btnCodex = document.getElementById('tabBtnCodex');
   const btnRecom = document.getElementById('tabBtnRecom');
 
-  const activeClasses = "flex items-center justify-center space-x-2 px-4 sm:px-5 py-2.5 rounded-xl text-sm sm:text-base font-extrabold transition-all duration-300 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 text-slate-950 shadow-lg shadow-amber-500/30 ring-2 ring-amber-400/50 scale-[1.02]";
-  const inactiveClasses = "flex items-center justify-center space-x-2 px-4 sm:px-5 py-2.5 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white hover:bg-slate-300/60 dark:hover:bg-slate-800/60";
+  const activeClasses = "flex-1 md:flex-initial flex items-center justify-center space-x-1.5 sm:space-x-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-extrabold transition-all duration-200 select-none cursor-pointer bg-white dark:bg-slate-800 text-amber-700 dark:text-amber-300 shadow-sm border border-amber-500/40 dark:border-amber-400/40 ring-1 ring-amber-500/20 dark:ring-amber-400/20";
+  const inactiveClasses = "flex-1 md:flex-initial flex items-center justify-center space-x-1.5 sm:space-x-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 select-none cursor-pointer text-slate-600 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-300/40 dark:hover:bg-slate-800/50 border border-transparent";
 
   if (tab === 'codex') {
     codexSec.classList.remove('hidden');
