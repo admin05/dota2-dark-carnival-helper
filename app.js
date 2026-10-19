@@ -22,6 +22,7 @@ const I18N = {
     tabCodex: "英雄票券图鉴",
     tabRecom: "筛选与智能推荐",
     langBtn: "English",
+    repoTooltip: "GitHub 源码仓库",
     // Codex
     codexTitle: "全英雄暗黑狂欢票券图鉴",
     codexHeroCount: "共 {count} 位英雄",
@@ -139,6 +140,7 @@ const I18N = {
     tabCodex: "Hero Ticket Codex",
     tabRecom: "Filter & Recommendations",
     langBtn: "中文",
+    repoTooltip: "GitHub Repository",
     // Codex
     codexTitle: "All Heroes Dark Carnival Ticket Codex",
     codexHeroCount: "Total {count} Heroes",
@@ -378,6 +380,8 @@ function applyLanguage() {
   setElText('tabCodexText', t('tabCodex'));
   setElText('tabRecomText', t('tabRecom'));
   setElText('langBtnText', t('langBtn'));
+  const repoBtn = document.getElementById('repoLinkBtn');
+  if (repoBtn) repoBtn.title = t('repoTooltip');
 
   // Codex page
   setElText('codexTitleText', t('codexTitle'));
