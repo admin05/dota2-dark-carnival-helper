@@ -595,8 +595,8 @@
   </main>
 
   <!-- Ticket Detail Modal -->
-  <div id="ticketModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
-    <div class="card-glass rounded-2xl max-w-lg w-full p-6 border border-amber-500/40 shadow-2xl space-y-4">
+  <div id="ticketModal" onclick="handleTicketModalBackdrop(event)" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden cursor-pointer">
+    <div class="card-glass rounded-2xl max-w-lg w-full p-6 border border-amber-500/40 shadow-2xl space-y-4 cursor-default" onclick="event.stopPropagation()">
       <div class="flex items-start justify-between">
         <div class="flex items-center space-x-3">
           <div id="modalTicketIcon" class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-amber-500/20 border border-amber-500/40">
@@ -978,7 +978,7 @@ function loadStateFromStorage() {
 }
 
 // Initialize application on DOM ready
-window.addEventListener('DOMContentLoaded', () => {
+function initApp() {
   loadStateFromStorage();
   applyTheme();
   applyLanguage();
@@ -987,6 +987,19 @@ window.addEventListener('DOMContentLoaded', () => {
   renderCodex();
   renderTicketSetupGrid();
   updateRecommendations();
+}
+
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+
+// Global keyboard shortcuts (Escape to close modals)
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeTicketModal();
+  }
 });
 
 // ==================== THEME MANAGEMENT ====================
@@ -994,10 +1007,10 @@ function applyTheme() {
   const root = document.documentElement;
   const iconEl = document.getElementById('themeBtnIcon');
   if (currentTheme === 'dark') {
-    root.classList.add('dark');
+    if (root && root.classList) root.classList.add('dark');
     if (iconEl) iconEl.textContent = '☀️'; // Shows sun to switch to light
   } else {
-    root.classList.remove('dark');
+    if (root && root.classList) root.classList.remove('dark');
     if (iconEl) iconEl.textContent = '🌙'; // Shows moon to switch to dark
   }
 }
@@ -1010,7 +1023,10 @@ function toggleTheme() {
 
 // ==================== LANGUAGE MANAGEMENT ====================
 function applyLanguage() {
-  document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
+  const root = document.documentElement;
+  if (root && root.setAttribute) {
+    root.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
+  }
   
   // Navigation & Static Header
   const setElText = (id, text) => {
@@ -1510,7 +1526,14 @@ function openTicketModal(ticketName) {
 }
 
 function closeTicketModal() {
-  document.getElementById('ticketModal').classList.add('hidden');
+  const modal = document.getElementById('ticketModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function handleTicketModalBackdrop(event) {
+  if (event && event.target === event.currentTarget) {
+    closeTicketModal();
+  }
 }
 
 // ==================== RECOMMENDATION & SETUP LOGIC (Clean & Compact) ====================
@@ -1519,6 +1542,16 @@ function closeTicketModal() {
 function renderTicketSetupGrid() {
   const grid = document.getElementById('ticketSetupGrid');
   if (!grid) return;
+
+  const isZh = currentLang === 'zh';
+  const tipMinusOwned = isZh ? '减少拥有量' : 'Decrease Owned';
+  const tipPlusOwned = isZh ? '增加拥有量' : 'Increase Owned';
+  const tipMinusNeed = isZh ? '减少需求量' : 'Decrease Need';
+  const tipPlusNeed = isZh ? '增加需求量' : 'Increase Need';
+  const tipMinusScrap = isZh ? '减少 1 张废票' : 'Decrease 1 Scrap';
+  const tipPlusScrap = isZh ? '增加 1 张废票' : 'Increase 1 Scrap';
+  const tipMinus6Scrap = isZh ? '快捷减少 6 张废票 (1次兑换)' : 'Quick -6 Scrap (1 Trade)';
+  const tipPlus6Scrap = isZh ? '快捷增加 6 张废票 (1次兑换)' : 'Quick +6 Scrap (1 Trade)';
 
   const tarotCardsHtml = TAROT_CARDS.map(card => {
     const owned = ownedTickets[card.name] || 0;
@@ -1603,7 +1636,7 @@ function renderTicketSetupGrid() {
               <button 
                 onclick="changeOwned('${card.name}', -1)" 
                 class="w-7 h-full flex items-center justify-center text-sm font-black text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 active:scale-90 transition select-none cursor-pointer"
-                title="减少拥有量"
+                title="${tipMinusOwned}"
               >-</button>
               <input 
                 type="number" 
@@ -1615,7 +1648,7 @@ function renderTicketSetupGrid() {
               <button 
                 onclick="changeOwned('${card.name}', 1)" 
                 class="w-7 h-full flex items-center justify-center text-sm font-black text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 active:scale-90 transition select-none cursor-pointer"
-                title="增加拥有量"
+                title="${tipPlusOwned}"
               >+</button>
             </div>
           </div>
@@ -1627,7 +1660,7 @@ function renderTicketSetupGrid() {
               <button 
                 onclick="changeNeeded('${card.name}', -1)" 
                 class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
-                title="减少需求量"
+                title="${tipMinusNeed}"
               >-</button>
               <input 
                 type="number" 
@@ -1639,7 +1672,7 @@ function renderTicketSetupGrid() {
               <button 
                 onclick="changeNeeded('${card.name}', 1)" 
                 class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
-                title="增加需求量"
+                title="${tipPlusNeed}"
               >+</button>
             </div>
           </div>
@@ -1696,7 +1729,7 @@ function renderTicketSetupGrid() {
             <button 
               onclick="changeScrap(-1)" 
               class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
-              title="减少 1 张废票"
+              title="${tipMinusScrap}"
             >-</button>
             <input 
               type="number" 
@@ -1708,7 +1741,7 @@ function renderTicketSetupGrid() {
             <button 
               onclick="changeScrap(1)" 
               class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
-              title="增加 1 张废票"
+              title="${tipPlusScrap}"
             >+</button>
           </div>
         </div>
@@ -1720,12 +1753,12 @@ function renderTicketSetupGrid() {
             <button 
               onclick="changeScrap(-6)" 
               class="h-full rounded-md bg-white/80 dark:bg-slate-900/80 hover:bg-rose-500/15 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-rose-600 font-bold text-[11px] flex items-center justify-center transition active:scale-90 cursor-pointer"
-              title="快捷减少 6 张废票 (1次兑换)"
+              title="${tipMinus6Scrap}"
             >-6</button>
             <button 
               onclick="changeScrap(6)" 
               class="h-full rounded-md bg-gradient-to-r from-amber-500 to-amber-600 hover:brightness-110 text-slate-950 font-black text-[11px] flex items-center justify-center transition active:scale-90 shadow-xs cursor-pointer"
-              title="快捷增加 6 张废票 (1次兑换)"
+              title="${tipPlus6Scrap}"
             >+6</button>
           </div>
         </div>
@@ -1936,7 +1969,7 @@ function fallbackCopyText(text) {
     document.execCommand('copy');
     showToast(t('planCopiedToast'), '📋');
   } catch (err) {
-    showToast('已生成文本，请长按选择复制', '📋');
+    showToast(currentLang === 'en' ? 'Plan generated, please copy manually' : '已生成文本，请长按选择复制', '📋');
   }
   document.body.removeChild(textarea);
 }

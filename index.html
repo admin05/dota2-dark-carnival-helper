@@ -595,8 +595,8 @@
   </main>
 
   <!-- Ticket Detail Modal -->
-  <div id="ticketModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
-    <div class="card-glass rounded-2xl max-w-lg w-full p-6 border border-amber-500/40 shadow-2xl space-y-4">
+  <div id="ticketModal" onclick="handleTicketModalBackdrop(event)" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden cursor-pointer">
+    <div class="card-glass rounded-2xl max-w-lg w-full p-6 border border-amber-500/40 shadow-2xl space-y-4 cursor-default" onclick="event.stopPropagation()">
       <div class="flex items-start justify-between">
         <div class="flex items-center space-x-3">
           <div id="modalTicketIcon" class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-amber-500/20 border border-amber-500/40">
