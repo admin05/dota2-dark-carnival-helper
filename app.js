@@ -1008,22 +1008,23 @@ function renderTicketSetupGrid() {
           <!-- Left Pod: 拥有 (Owned) -->
           <div class="rounded-xl p-1.5 bg-emerald-500/5 dark:bg-emerald-950/20 border border-emerald-500/20 flex flex-col items-center">
             <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mb-1 leading-none">${t('ownedLabel')}</span>
-            <div class="flex items-center justify-between w-full h-7 rounded-lg bg-white/90 dark:bg-slate-900/90 border border-emerald-500/30 overflow-hidden shadow-xs">
+            <div class="flex items-center justify-between w-full h-8 rounded-lg bg-white/90 dark:bg-slate-900/90 border border-emerald-500/30 overflow-hidden shadow-xs">
               <button 
                 onclick="changeOwned('${card.name}', -1)" 
-                class="w-7 h-full flex items-center justify-center text-sm font-black text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 active:scale-90 transition select-none cursor-pointer"
+                class="flex-1 h-full min-w-[28px] flex items-center justify-center text-sm font-black text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 active:bg-emerald-500/30 active:scale-95 transition select-none cursor-pointer"
                 title="${tipMinusOwned}"
               >-</button>
               <input 
                 type="number" 
+                inputmode="numeric"
                 min="0" 
                 value="${owned}" 
                 onchange="setOwned('${card.name}', this.value)" 
-                class="w-8 h-full text-center text-xs font-mono font-black bg-transparent text-emerald-800 dark:text-emerald-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                class="w-9 h-full text-center text-xs font-mono font-black bg-transparent text-emerald-800 dark:text-emerald-200 focus:outline-none p-0 select-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               >
               <button 
                 onclick="changeOwned('${card.name}', 1)" 
-                class="w-7 h-full flex items-center justify-center text-sm font-black text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 active:scale-90 transition select-none cursor-pointer"
+                class="flex-1 h-full min-w-[28px] flex items-center justify-center text-sm font-black text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 active:bg-emerald-500/30 active:scale-95 transition select-none cursor-pointer"
                 title="${tipPlusOwned}"
               >+</button>
             </div>
@@ -1032,22 +1033,23 @@ function renderTicketSetupGrid() {
           <!-- Right Pod: 目标 (Target Demand) -->
           <div class="rounded-xl p-1.5 bg-amber-500/5 dark:bg-amber-950/20 border border-amber-500/20 flex flex-col items-center">
             <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 mb-1 leading-none">${t('needLabel')}</span>
-            <div class="flex items-center justify-between w-full h-7 rounded-lg bg-white/90 dark:bg-slate-900/90 border border-amber-500/30 overflow-hidden shadow-xs">
+            <div class="flex items-center justify-between w-full h-8 rounded-lg bg-white/90 dark:bg-slate-900/90 border border-amber-500/30 overflow-hidden shadow-xs">
               <button 
                 onclick="changeNeeded('${card.name}', -1)" 
-                class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
+                class="flex-1 h-full min-w-[28px] flex items-center justify-center text-sm font-black text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 active:bg-amber-500/30 active:scale-95 transition select-none cursor-pointer"
                 title="${tipMinusNeed}"
               >-</button>
               <input 
                 type="number" 
+                inputmode="numeric"
                 min="0" 
                 value="${needed}" 
                 onchange="setNeeded('${card.name}', this.value)" 
-                class="w-8 h-full text-center text-xs font-mono font-black bg-transparent text-amber-800 dark:text-amber-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                class="w-9 h-full text-center text-xs font-mono font-black bg-transparent text-amber-800 dark:text-amber-200 focus:outline-none p-0 select-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               >
               <button 
                 onclick="changeNeeded('${card.name}', 1)" 
-                class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
+                class="flex-1 h-full min-w-[28px] flex items-center justify-center text-sm font-black text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 active:bg-amber-500/30 active:scale-95 transition select-none cursor-pointer"
                 title="${tipPlusNeed}"
               >+</button>
             </div>
@@ -1101,22 +1103,23 @@ function renderTicketSetupGrid() {
         <!-- Left Pod: 废票存量 -->
         <div class="rounded-xl p-1.5 bg-amber-500/10 dark:bg-amber-950/30 border border-amber-500/30 flex flex-col items-center">
           <span class="text-[10px] font-bold text-amber-700 dark:text-amber-300 mb-1 leading-none">${t('ownedLabel')}</span>
-          <div class="flex items-center justify-between w-full h-7 rounded-lg bg-white/90 dark:bg-slate-900/90 border border-amber-500/40 overflow-hidden shadow-xs">
+          <div class="flex items-center justify-between w-full h-8 rounded-lg bg-white/90 dark:bg-slate-900/90 border border-amber-500/40 overflow-hidden shadow-xs">
             <button 
               onclick="changeScrap(-1)" 
-              class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
+              class="flex-1 h-full min-w-[28px] flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 active:bg-amber-500/30 active:scale-95 transition select-none cursor-pointer"
               title="${tipMinusScrap}"
             >-</button>
             <input 
               type="number" 
+              inputmode="numeric"
               min="0" 
               value="${ownedScrap}" 
               onchange="setScrap(this.value)" 
-              class="w-8 h-full text-center text-xs font-mono font-black bg-transparent text-amber-800 dark:text-amber-200 focus:outline-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              class="w-9 h-full text-center text-xs font-mono font-black bg-transparent text-amber-800 dark:text-amber-200 focus:outline-none p-0 select-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             >
             <button 
               onclick="changeScrap(1)" 
-              class="w-7 h-full flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 active:scale-90 transition select-none cursor-pointer"
+              class="flex-1 h-full min-w-[28px] flex items-center justify-center text-sm font-black text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 active:bg-amber-500/30 active:scale-95 transition select-none cursor-pointer"
               title="${tipPlusScrap}"
             >+</button>
           </div>
@@ -1125,15 +1128,15 @@ function renderTicketSetupGrid() {
         <!-- Right Pod: 快捷增减 (Quick Trades: +6 / -6) -->
         <div class="rounded-xl p-1.5 bg-amber-500/10 dark:bg-amber-950/30 border border-amber-500/30 flex flex-col items-center">
           <span class="text-[10px] font-bold text-amber-700 dark:text-amber-300 mb-1 leading-none">${t('quickTradeStep')}</span>
-          <div class="grid grid-cols-2 gap-1 w-full h-7">
+          <div class="grid grid-cols-2 gap-1 w-full h-8">
             <button 
               onclick="changeScrap(-6)" 
-              class="h-full rounded-md bg-white/80 dark:bg-slate-900/80 hover:bg-rose-500/15 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-rose-600 font-bold text-[11px] flex items-center justify-center transition active:scale-90 cursor-pointer"
+              class="h-full rounded-md bg-white/80 dark:bg-slate-900/80 hover:bg-rose-500/15 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-rose-600 font-bold text-[11px] flex items-center justify-center transition active:scale-95 cursor-pointer"
               title="${tipMinus6Scrap}"
             >-6</button>
             <button 
               onclick="changeScrap(6)" 
-              class="h-full rounded-md bg-gradient-to-r from-amber-500 to-amber-600 hover:brightness-110 text-slate-950 font-black text-[11px] flex items-center justify-center transition active:scale-90 shadow-xs cursor-pointer"
+              class="h-full rounded-md bg-gradient-to-r from-amber-500 to-amber-600 hover:brightness-110 text-slate-950 font-black text-[11px] flex items-center justify-center transition active:scale-95 shadow-xs cursor-pointer"
               title="${tipPlus6Scrap}"
             >+6</button>
           </div>
