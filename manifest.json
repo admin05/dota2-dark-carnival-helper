@@ -1,0 +1,22 @@
+{
+  "name": "DOTA2 暗黑狂欢 · 票券图鉴与智能推荐系统",
+  "short_name": "狂欢票券助手",
+  "description": "全127位英雄暗黑狂欢专属塔罗票券图鉴，基于3抽2掉落机制实时智能推演最优通关英雄与交易路线。",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#f59e0b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ringmaster.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ringmaster.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

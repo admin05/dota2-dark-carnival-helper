@@ -58,6 +58,10 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
+  <meta name="theme-color" content="#f59e0b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎪</text></svg>">
   <!-- Tailwind CSS CDN with dark mode config -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -149,7 +153,7 @@
                 暗黑狂欢 · 票券助手
               </span>
               <span id="navBadge" class="px-2 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 rounded-full animate-pulse">
-                百戏大王专列 · v2.4.0
+                百戏大王专列 · v2.5.0
               </span>
             </div>
             <p id="navAppSubtitle" class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">每胜 1 局从 3 张票券中随机抽 2 张 | 智能图鉴 & 最优通关算法</p>
@@ -367,9 +371,17 @@
             </p>
           </div>
 
-          <!-- Action: Reset All Only -->
-          <div class="flex items-center gap-2">
-            <button onclick="resetSetup()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl border border-rose-500/30 transition shadow-sm active:scale-95">
+          <!-- Actions: Quick Presets & Reset -->
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <button onclick="setPresetDemand(1)" class="flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 rounded-xl border border-amber-500/30 transition shadow-sm active:scale-95 cursor-pointer" title="快速设置所有 11 张票券需求均为 1 张">
+              <span>🎪</span>
+              <span id="presetAll1BtnText">全套各 1 张</span>
+            </button>
+            <button onclick="setPresetDemand(2)" class="flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 rounded-xl border border-amber-500/30 transition shadow-sm active:scale-95 cursor-pointer" title="快速设置所有 11 张票券需求均为 2 张">
+              <span>🎪</span>
+              <span id="presetAll2BtnText">全套各 2 张</span>
+            </button>
+            <button onclick="resetSetup()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl border border-rose-500/30 transition shadow-sm active:scale-95 cursor-pointer" title="清空全部已配置票券与废票">
               <span>🧹</span>
               <span id="resetBtnText">清空重置</span>
             </button>
@@ -397,7 +409,7 @@
             </p>
           </div>
 
-          <!-- Quick Stats Highlights -->
+          <!-- Quick Stats Highlights & Copy Button -->
           <div class="flex items-center gap-2 flex-wrap" id="planStatsContainer">
             <span id="planStatFastest" class="px-3 py-1 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40 shadow-sm">
               ⚡ 理论最快 0 局
@@ -405,6 +417,10 @@
             <span id="planStatExpected" class="px-3 py-1 rounded-xl text-xs font-bold bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-500/40 shadow-sm">
               🛡️ 稳健推荐 0 局
             </span>
+            <button onclick="copyClearancePlanToClipboard()" class="flex items-center gap-1 px-2.5 py-1 rounded-xl text-xs font-bold bg-slate-200/80 hover:bg-amber-500 hover:text-slate-950 dark:bg-slate-800 dark:hover:bg-amber-500 dark:hover:text-slate-950 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 transition shadow-sm cursor-pointer" title="复制通关路线方案到剪贴板，方便与好友分享">
+              <span>📋</span>
+              <span id="copyPlanBtnText">复制路线</span>
+            </button>
           </div>
         </div>
 
@@ -618,7 +634,7 @@ const I18N = {
   zh: {
     appTitle: "暗黑狂欢 · 票券助手",
     appSubtitle: "每胜 1 局从 3 张票券中随机抽 2 张 | 智能图鉴 & 最优通关算法",
-    navBadge: "百戏大王专列 · v2.4.0",
+    navBadge: "百戏大王专列 · v2.5.0",
     tabCodex: "英雄票券图鉴",
     tabRecom: "筛选与智能推荐",
     langBtn: "English",
@@ -711,6 +727,12 @@ const I18N = {
     planSummaryFastest: "理论最快：",
     planSummaryExpected: "稳健推荐：",
     planStrategyTip: "💡 策略建议：优先出战第 1 档英雄，胜局 100% 出现 2 张所需票券，效率最高！对局抽到其它票券时，可随时在上方更新库存，系统将实时重新规划路线。",
+    presetAll1BtnText: "全套各 1 张",
+    presetAll2BtnText: "全套各 2 张",
+    presetAppliedToast: "已将所有票券需求预设为各 {count} 张！",
+    copyPlanBtnText: "复制路线",
+    planCopiedToast: "通关路线方案已复制到剪贴板！",
+    planStageAlts: "备选：",
     // Modal
     modalTarotNum: "塔罗序号: {num}",
     modalDescPrefix: "寓意特性：{desc}。在暗黑狂欢的马戏团专列中，消耗此票券可解锁特定对应车厢节点与奖励。",
@@ -721,7 +743,7 @@ const I18N = {
   en: {
     appTitle: "Dark Carnival · Ticket Helper",
     appSubtitle: "Pick 2 of 3 tickets per win | Smart Codex & Optimal Recommender",
-    navBadge: "Ringmaster Train · v2.4.0",
+    navBadge: "Ringmaster Train · v2.5.0",
     tabCodex: "Hero Ticket Codex",
     tabRecom: "Filter & Recommendations",
     langBtn: "中文",
@@ -814,6 +836,12 @@ const I18N = {
     planSummaryFastest: "Best-case Wins:",
     planSummaryExpected: "Expected Wins:",
     planStrategyTip: "💡 Strategy Tip: Prioritize Tier 1 heroes to guarantee 2 needed tickets per win! If you receive other tickets, update your inventory anytime for instant re-planning.",
+    presetAll1BtnText: "All 1x",
+    presetAll2BtnText: "All 2x",
+    presetAppliedToast: "All ticket requirements set to {count}x!",
+    copyPlanBtnText: "Copy Plan",
+    planCopiedToast: "Clearance roadmap copied to clipboard!",
+    planStageAlts: "Alts:",
     // Modal
     modalTarotNum: "Tarot No.: {num}",
     modalDescPrefix: "Tarot Lore: {desc}. Used in Dark Carnival circus cars to unlock special nodes and rewards.",
@@ -856,8 +884,56 @@ TAROT_CARDS.forEach(c => {
   neededTickets[c.name] = 0;
 });
 
+// State Persistence (Auto-save progress in localStorage)
+function saveStateToStorage() {
+  try {
+    const payload = {
+      ownedTickets,
+      neededTickets,
+      ownedScrap,
+      tradeConfig
+    };
+    localStorage.setItem('dota2_carnival_state', JSON.stringify(payload));
+  } catch (e) {
+    // Ignore storage quota limits
+  }
+}
+
+function loadStateFromStorage() {
+  try {
+    const raw = localStorage.getItem('dota2_carnival_state');
+    if (!raw) return;
+    const state = JSON.parse(raw);
+    if (state.ownedTickets) {
+      TAROT_CARDS.forEach(c => {
+        if (typeof state.ownedTickets[c.name] === 'number') {
+          ownedTickets[c.name] = Math.max(0, state.ownedTickets[c.name]);
+        }
+      });
+    }
+    if (state.neededTickets) {
+      TAROT_CARDS.forEach(c => {
+        if (typeof state.neededTickets[c.name] === 'number') {
+          neededTickets[c.name] = Math.max(0, state.neededTickets[c.name]);
+        }
+      });
+    }
+    if (typeof state.ownedScrap === 'number') {
+      ownedScrap = Math.max(0, state.ownedScrap);
+    }
+    if (state.tradeConfig) {
+      tradeConfig.enableScrap = state.tradeConfig.enableScrap !== false;
+      tradeConfig.enableThreeToOne = !!state.tradeConfig.enableThreeToOne;
+      tradeConfig.enableFourToOne = !!state.tradeConfig.enableFourToOne;
+    }
+  } catch (e) {
+    // Ignore parse errors
+  }
+}
+
 // Initialize application on DOM ready
 window.addEventListener('DOMContentLoaded', () => {
+  loadStateFromStorage();
   applyTheme();
   applyLanguage();
   populateTicketPills();
@@ -947,11 +1023,14 @@ function applyLanguage() {
   setElText('tradeRuleScrapText', t('tradeRuleScrapText'));
   setElText('tradeRuleThreeText', t('tradeRuleThreeText'));
   setElText('tradeRuleFourText', t('tradeRuleFourText'));
+  setElText('copyPlanBtnText', t('copyPlanBtnText'));
   updateTradeToggleUI();
 
   // Setup Section
   setElText('setupSectionTitle', t('setupTitle'));
   setElText('setupSectionSub', t('setupSubtitle'));
+  setElText('presetAll1BtnText', t('presetAll1BtnText'));
+  setElText('presetAll2BtnText', t('presetAll2BtnText'));
   setElText('resetBtnText', t('resetBtn'));
 
   // Recom Section
@@ -1535,38 +1614,55 @@ function renderTicketSetupGrid() {
 
 function changeOwned(cardName, delta) {
   ownedTickets[cardName] = Math.max(0, (ownedTickets[cardName] || 0) + delta);
+  saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
 }
 
 function setOwned(cardName, val) {
   ownedTickets[cardName] = Math.max(0, parseInt(val) || 0);
+  saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
 }
 
 function changeNeeded(cardName, delta) {
   neededTickets[cardName] = Math.max(0, (neededTickets[cardName] || 0) + delta);
+  saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
 }
 
 function setNeeded(cardName, val) {
   neededTickets[cardName] = Math.max(0, parseInt(val) || 0);
+  saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
 }
 
 function changeScrap(delta) {
   ownedScrap = Math.max(0, (ownedScrap || 0) + delta);
+  saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
 }
 
 function setScrap(val) {
   ownedScrap = Math.max(0, parseInt(val) || 0);
+  saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
+}
+
+// Preset Demand (All 1x, All 2x)
+function setPresetDemand(count) {
+  TAROT_CARDS.forEach(c => {
+    neededTickets[c.name] = count;
+  });
+  saveStateToStorage();
+  renderTicketSetupGrid();
+  updateRecommendations();
+  showToast(t('presetAppliedToast', { count }), '🎪');
 }
 
 // Reset all counts
@@ -1576,6 +1672,9 @@ function resetSetup() {
     neededTickets[c.name] = 0;
   });
   ownedScrap = 0;
+  try {
+    localStorage.removeItem('dota2_carnival_state');
+  } catch (e) {}
   renderTicketSetupGrid();
   updateRecommendations();
   showToast(t('resetToast'), '🧹');
@@ -1584,6 +1683,7 @@ function resetSetup() {
 // Trade rule toggle handler
 function toggleTradeRule(ruleKey) {
   tradeConfig[ruleKey] = !tradeConfig[ruleKey];
+  saveStateToStorage();
   updateTradeToggleUI();
   updateRecommendations();
 }
@@ -1628,9 +1728,93 @@ function applyTradesToInventory() {
     }
   });
 
+  saveStateToStorage();
   renderTicketSetupGrid();
   updateRecommendations();
   showToast(t('tradeAppliedToast'), '🎉');
+}
+
+// Copy Clearance Plan to Clipboard (Shareable summary)
+function copyClearancePlanToClipboard() {
+  if (!lastCalculatedPlan) return;
+  const isZh = currentLang === 'zh';
+  const lines = [];
+
+  lines.push(isZh ? '🎪【DOTA2 暗黑狂欢 · 最优通关路线规划】' : '🎪 [Dota 2 Dark Carnival · Clearance Plan]');
+
+  const targetEntries = Object.entries(neededTickets).filter(([_, n]) => n > 0);
+  if (targetEntries.length > 0) {
+    const targetsStr = targetEntries.map(([tName, n]) => {
+      const card = CARD_MAP[tName];
+      const name = isZh ? tName : (card ? card.en : tName);
+      return `${name} x${n}`;
+    }).join(', ');
+    lines.push((isZh ? '🎯 目标需求：' : '🎯 Target Needs: ') + targetsStr);
+  }
+
+  if (lastCalculatedPlan.trades && lastCalculatedPlan.trades.length > 0) {
+    lines.push(isZh ? '🔄 即时交易：' : '🔄 Direct Trades:');
+    lastCalculatedPlan.trades.forEach((tr, i) => {
+      const targetName = isZh ? tr.targetCard : tr.targetCardEn;
+      if (tr.type === 'scrap') {
+        lines.push(`  ${i + 1}. 6x 废票 ➔ ${targetName} x1`);
+      } else if (tr.type === 'threeToOne') {
+        const fromName = isZh ? tr.fromCard : tr.fromCardEn;
+        lines.push(`  ${i + 1}. 3x ${fromName} ➔ ${targetName} x1`);
+      } else if (tr.type === 'fourToOne') {
+        const fromList = tr.fromCards.map(c => isZh ? c.name : c.en).join('+');
+        lines.push(`  ${i + 1}. 4x [${fromList}] ➔ ${targetName} x1`);
+      }
+    });
+  }
+
+  if (lastCalculatedPlan.roadmapStages && lastCalculatedPlan.roadmapStages.length > 0) {
+    lines.push(isZh ? '⚔️ 出战规划：' : '⚔️ Match Roadmap:');
+    lastCalculatedPlan.roadmapStages.forEach((st, i) => {
+      const heroName = isZh ? st.hero.name : st.hero.en_name;
+      const targets = Object.entries(st.targetTickets).map(([tName, c]) => {
+        const card = CARD_MAP[tName];
+        const name = isZh ? tName : (card ? card.en : tName);
+        return `${name} x${c}`;
+      }).join(', ');
+      let altStr = '';
+      if (st.alternatives && st.alternatives.length > 0) {
+        altStr = (isZh ? ' (备选: ' : ' (Alts: ') + st.alternatives.map(a => isZh ? a.name : a.en_name).join(', ') + ')';
+      }
+      lines.push(`  • ${isZh ? '阶段' : 'Stage'} ${i + 1}: ${heroName}${altStr} ➔ ${targets} [${isZh ? '约' : '~'}${st.matchesFastest}${isZh ? '局' : ' wins'}]`);
+    });
+  }
+
+  lines.push(`⚡ ${isZh ? '理论最快：' : 'Best-case: '}${lastCalculatedPlan.fastestMatches} ${isZh ? '局全胜' : 'wins'} | 🛡️ ${isZh ? '稳健推荐：' : 'Expected: '}${lastCalculatedPlan.expectedMatches} ${isZh ? '局' : 'wins'}`);
+  lines.push('🌐 https://islanddddddd.github.io/dota2-dark-carnival-helper/');
+
+  const textToCopy = lines.join('
+');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      showToast(t('planCopiedToast'), '📋');
+    }).catch(() => {
+      fallbackCopyText(textToCopy);
+    });
+  } else {
+    fallbackCopyText(textToCopy);
+  }
+}
+
+function fallbackCopyText(text) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand('copy');
+    showToast(t('planCopiedToast'), '📋');
+  } catch (err) {
+    showToast('已生成文本，请长按选择复制', '📋');
+  }
+  document.body.removeChild(textarea);
 }
 
 // Core Solver: Compute optimal trades and clearance roadmap
@@ -1769,10 +1953,7 @@ function computeClearancePlan(deficits, surpluses, scrapCount, config) {
   let maxIter = 15;
 
   while (getTotalDeficit(simDeficits) > 0 && maxIter-- > 0) {
-    let bestHeroCandidate = null;
-    let highestExpected = -1;
-    let bestMatchCount = -1;
-    let bestMatchedDeficitSum = -1;
+    const scoredCandidates = [];
 
     HEROES_DATA.forEach(h => {
       const [t1, t2, t3] = h.tickets;
@@ -1794,19 +1975,35 @@ function computeClearancePlan(deficits, surpluses, scrapCount, config) {
       const matchCount = matched.length;
       const matchedSum = matched.reduce((acc, t) => acc + (simDeficits[t] || 0), 0);
 
-      if (
-        matchCount > bestMatchCount ||
-        (matchCount === bestMatchCount && expYield > highestExpected) ||
-        (matchCount === bestMatchCount && Math.abs(expYield - highestExpected) < 0.001 && matchedSum > bestMatchedDeficitSum)
-      ) {
-        bestMatchCount = matchCount;
-        highestExpected = expYield;
-        bestMatchedDeficitSum = matchedSum;
-        bestHeroCandidate = h;
+      if (matchCount > 0 && expYield > 0) {
+        scoredCandidates.push({
+          hero: h,
+          expYield,
+          matchCount,
+          matchedSum
+        });
       }
     });
 
-    if (!bestHeroCandidate || highestExpected <= 0) break;
+    if (scoredCandidates.length === 0) break;
+
+    scoredCandidates.sort((a, b) => {
+      if (b.matchCount !== a.matchCount) return b.matchCount - a.matchCount;
+      if (Math.abs(b.expYield - a.expYield) > 0.001) return b.expYield - a.expYield;
+      return b.matchedSum - a.matchedSum;
+    });
+
+    const bestEntry = scoredCandidates[0];
+    const bestHeroCandidate = bestEntry.hero;
+    const highestExpected = bestEntry.expYield;
+    const bestMatchCount = bestEntry.matchCount;
+
+    // Alternative heroes for this stage (who also match the stage well)
+    const alternativeHeroes = scoredCandidates
+      .slice(1)
+      .filter(c => c.hero.name !== bestHeroCandidate.name && c.matchCount >= bestMatchCount - 1 && c.expYield >= highestExpected * 0.6)
+      .slice(0, 2)
+      .map(c => c.hero);
 
     const [t1, t2, t3] = bestHeroCandidate.tickets;
     const combos = [[t1, t2], [t1, t3], [t2, t3]];
@@ -1842,6 +2039,7 @@ function computeClearancePlan(deficits, surpluses, scrapCount, config) {
 
     roadmapStages.push({
       hero: bestHeroCandidate,
+      alternatives: alternativeHeroes,
       targetTickets: stageTargets,
       expectedYield: highestExpected,
       matchCount: bestMatchCount,
@@ -2008,6 +2206,27 @@ function renderClearancePlan(plan, totalNeeded, totalDeficit) {
         `;
       }).join('');
 
+      let altsHtml = '';
+      if (st.alternatives && st.alternatives.length > 0) {
+        const altPills = st.alternatives.map(ah => {
+          const ahName = currentLang === 'en' ? ah.en_name : ah.name;
+          const aAttr = ATTR_META[ah.attr] || { icon: '⚪' };
+          return `
+            <button onclick="openTicketModal('${ah.tickets[0]}')" class="inline-flex items-center space-x-1 px-1.5 py-0.5 rounded text-[10px] bg-slate-200/70 dark:bg-slate-800/80 hover:bg-amber-500/20 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-300 border border-slate-300/60 dark:border-slate-700/60 transition cursor-pointer" title="${ahName} (${ah.tickets.join(', ')})">
+              <span>${aAttr.icon}</span>
+              <span class="font-medium truncate max-w-[80px]">${ahName}</span>
+            </button>
+          `;
+        }).join('');
+
+        altsHtml = `
+          <div class="flex items-center gap-1 mt-1.5 text-[10px] text-slate-500 dark:text-slate-400 flex-wrap">
+            <span class="font-bold text-slate-500 dark:text-slate-400">${t('planStageAlts')}</span>
+            <div class="flex items-center gap-1 flex-wrap">${altPills}</div>
+          </div>
+        `;
+      }
+
       return `
         <div class="card-glass rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm hover:border-amber-500/40 transition">
           <!-- Left: Stage Number + Hero Info -->
@@ -2033,6 +2252,7 @@ function renderClearancePlan(plan, totalNeeded, totalDeficit) {
               <div class="flex items-center gap-1 mt-1 flex-wrap">
                 ${heroTicketPills}
               </div>
+              ${altsHtml}
             </div>
           </div>
 

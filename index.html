@@ -58,6 +58,10 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
+  <meta name="theme-color" content="#f59e0b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎪</text></svg>">
   <!-- Tailwind CSS CDN with dark mode config -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -149,7 +153,7 @@
                 暗黑狂欢 · 票券助手
               </span>
               <span id="navBadge" class="px-2 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 rounded-full animate-pulse">
-                百戏大王专列 · v2.4.0
+                百戏大王专列 · v2.5.0
               </span>
             </div>
             <p id="navAppSubtitle" class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">每胜 1 局从 3 张票券中随机抽 2 张 | 智能图鉴 & 最优通关算法</p>
@@ -367,9 +371,17 @@
             </p>
           </div>
 
-          <!-- Action: Reset All Only -->
-          <div class="flex items-center gap-2">
-            <button onclick="resetSetup()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl border border-rose-500/30 transition shadow-sm active:scale-95">
+          <!-- Actions: Quick Presets & Reset -->
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <button onclick="setPresetDemand(1)" class="flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 rounded-xl border border-amber-500/30 transition shadow-sm active:scale-95 cursor-pointer" title="快速设置所有 11 张票券需求均为 1 张">
+              <span>🎪</span>
+              <span id="presetAll1BtnText">全套各 1 张</span>
+            </button>
+            <button onclick="setPresetDemand(2)" class="flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 rounded-xl border border-amber-500/30 transition shadow-sm active:scale-95 cursor-pointer" title="快速设置所有 11 张票券需求均为 2 张">
+              <span>🎪</span>
+              <span id="presetAll2BtnText">全套各 2 张</span>
+            </button>
+            <button onclick="resetSetup()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 rounded-xl border border-rose-500/30 transition shadow-sm active:scale-95 cursor-pointer" title="清空全部已配置票券与废票">
               <span>🧹</span>
               <span id="resetBtnText">清空重置</span>
             </button>
@@ -397,7 +409,7 @@
             </p>
           </div>
 
-          <!-- Quick Stats Highlights -->
+          <!-- Quick Stats Highlights & Copy Button -->
           <div class="flex items-center gap-2 flex-wrap" id="planStatsContainer">
             <span id="planStatFastest" class="px-3 py-1 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40 shadow-sm">
               ⚡ 理论最快 0 局
@@ -405,6 +417,10 @@
             <span id="planStatExpected" class="px-3 py-1 rounded-xl text-xs font-bold bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-500/40 shadow-sm">
               🛡️ 稳健推荐 0 局
             </span>
+            <button onclick="copyClearancePlanToClipboard()" class="flex items-center gap-1 px-2.5 py-1 rounded-xl text-xs font-bold bg-slate-200/80 hover:bg-amber-500 hover:text-slate-950 dark:bg-slate-800 dark:hover:bg-amber-500 dark:hover:text-slate-950 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 transition shadow-sm cursor-pointer" title="复制通关路线方案到剪贴板，方便与好友分享">
+              <span>📋</span>
+              <span id="copyPlanBtnText">复制路线</span>
+            </button>
           </div>
         </div>
 
@@ -592,7 +608,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=2.4.0"></script>
-  <script src="app.js?v=2.4.0"></script>
+  <script src="data.js?v=2.5.0"></script>
+  <script src="app.js?v=2.5.0"></script>
 </body>
 </html>
