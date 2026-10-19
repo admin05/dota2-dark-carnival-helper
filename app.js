@@ -126,6 +126,12 @@ const I18N = {
     copyPlanBtnText: "复制路线",
     planCopiedToast: "通关路线方案已复制到剪贴板！",
     planStageAlts: "备选：",
+    planBadgeSolver: "智能求解",
+    // Footer & Signature
+    footerTagline: "DOTA 2 暗黑狂欢 · 票券助手",
+    footerData: "数据源自 Liquipedia",
+    footerAuthor: "作者 island",
+    footerRepo: "GitHub 仓库",
     // Modal
     modalTarotNum: "塔罗序号: {num}",
     modalDescPrefix: "寓意特性：{desc}。在暗黑狂欢的马戏团专列中，消耗此票券可解锁特定对应车厢节点与奖励。",
@@ -244,6 +250,12 @@ const I18N = {
     copyPlanBtnText: "Copy Plan",
     planCopiedToast: "Clearance roadmap copied to clipboard!",
     planStageAlts: "Alts:",
+    planBadgeSolver: "Smart Solver",
+    // Footer & Signature
+    footerTagline: "Dota 2 Dark Carnival · Ticket Helper",
+    footerData: "Data via Liquipedia",
+    footerAuthor: "Crafted by island",
+    footerRepo: "GitHub Repo",
     // Modal
     modalTarotNum: "Tarot No.: {num}",
     modalDescPrefix: "Tarot Lore: {desc}. Used in Dark Carnival circus cars to unlock special nodes and rewards.",
@@ -439,6 +451,7 @@ function applyLanguage() {
   // Clearance Plan Section
   setElText('planSectionTitle', t('planSectionTitle'));
   setElText('planSectionSub', t('planSectionSub'));
+  setElText('planBadgeSolver', t('planBadgeSolver'));
   setElText('tradeConfigLabel', t('tradeConfigLabel'));
   setElText('tradeRuleScrapText', t('tradeRuleScrapText'));
   setElText('tradeRuleThreeText', t('tradeRuleThreeText'));
@@ -482,6 +495,12 @@ function applyLanguage() {
   // Modal
   setElText('modalYieldHeroesLabel', t('modalYieldHeroesLabel'));
   setElText('modalCloseBtn', t('modalClose'));
+
+  // Footer & Signature
+  setElText('footerTagline', t('footerTagline'));
+  setElText('footerData', t('footerData'));
+  setElText('footerAuthor', t('footerAuthor'));
+  setElText('footerRepo', t('footerRepo'));
 }
 
 function updateAttrTabLabels() {
@@ -861,7 +880,8 @@ function openTicketModal(ticketName) {
   document.getElementById('modalTicketName').textContent = displayName;
   document.getElementById('modalTicketNum').textContent = t('modalTarotNum', { num: card.num });
   document.getElementById('modalTicketEn').textContent = subName;
-  document.getElementById('modalTicketDesc').textContent = t('modalDescPrefix', { desc: card.desc });
+  const descText = currentLang === 'en' ? (card.desc_en || card.desc) : card.desc;
+  document.getElementById('modalTicketDesc').textContent = t('modalDescPrefix', { desc: descText });
 
   const heroes = HEROES_DATA.filter(h => h.tickets.includes(ticketName));
   document.getElementById('modalHeroCount').textContent = t('modalHeroCount', { count: heroes.length });
@@ -1299,7 +1319,7 @@ function copyClearancePlanToClipboard() {
   }
 
   lines.push(`⚡ ${isZh ? '理论最快：' : 'Best-case: '}${lastCalculatedPlan.fastestMatches} ${isZh ? '局全胜' : 'wins'} | 🛡️ ${isZh ? '稳健推荐：' : 'Expected: '}${lastCalculatedPlan.expectedMatches} ${isZh ? '局' : 'wins'}`);
-  lines.push('🌐 https://islanddddddd.github.io/dota2-dark-carnival-helper/');
+  lines.push(isZh ? '🎪 DOTA2 暗黑狂欢票券助手 · island | https://islanddddddd.github.io/dota2-dark-carnival-helper/' : '🎪 Dota 2 Dark Carnival Helper · by island | https://islanddddddd.github.io/dota2-dark-carnival-helper/');
 
   const textToCopy = lines.join('\n');
   if (navigator.clipboard && navigator.clipboard.writeText) {
