@@ -46,11 +46,11 @@ const I18N = {
     mechBadge: "单场获胜：3 抽 2 (随机获取2张)",
     mechDesc: "每个英雄固定产出 3 种票券。获胜后系统从 3 张中随机掉落 2 张（3 种二元组合概率各占 1/3）。系统根据您的【拥有量】与【需求量】实时计算净缺口，将全英雄自动划分为：",
     mechTier1Text: "🥇 第 1 档（完美契合）",
-    mechTier1Sub: "3 张票券全部为急需！无论抽到哪 2 张都 100% 契合需求，期望最高达 2.0 张/局，零浪费。",
+    mechTier1Sub: "每种抽取组合都能获得 2 张所需票券，期望 2.0 张/局，零浪费。",
     mechTier2Text: "🥈 第 2 档（高效精选）",
-    mechTier2Sub: "2 张票券为急需。保底 100% 获得至少 1 张所需，有 33.3% 概率双收，期望 1.33 张/局。",
+    mechTier2Sub: "每种抽取组合至少获得 1 张所需票券，部分组合可获得 2 张，期望按当前缺口计算。",
     mechTier3Text: "🥉 第 3 档（替补选择）",
-    mechTier3Sub: "1 张票券为急需。66.7% 概率获得 1 张所需，期望 0.67 张/局。",
+    mechTier3Sub: "部分抽取组合可能无法命中所需票券，期望按实际概率计算。",
     statNeeded: "总需求目标",
     statOwned: "当前已拥有",
     statDeficit: "净缺口（待获取）",
@@ -170,11 +170,11 @@ const I18N = {
     mechBadge: "Match Win: Pick 2 out of 3",
     mechDesc: "Each hero offers 3 fixed tickets. Winning drops 2 of them randomly (1/3 odds for each combination). The solver computes your net deficits in real-time and ranks heroes into 3 tiers:",
     mechTier1Text: "🥇 Tier 1 (Perfect Match)",
-    mechTier1Sub: "All 3 tickets needed! 100% useful regardless of drop, expected yield up to 2.0 tickets/win, 0% waste.",
+    mechTier1Sub: "Every drop combination yields 2 needed tickets, with an expected 2.0 tickets/win and 0% waste.",
     mechTier2Text: "🥈 Tier 2 (High Efficiency)",
-    mechTier2Sub: "2 out of 3 tickets needed. Guaranteed >=1 needed, 33.3% double hit, expected yield 1.33 tickets/win.",
+    mechTier2Sub: "Every drop combination yields at least 1 needed ticket; some yield 2. Expected yield depends on the remaining deficits.",
     mechTier3Text: "🥉 Tier 3 (Alternative Pick)",
-    mechTier3Sub: "1 out of 3 tickets needed. 66.7% chance to get 1 needed, expected yield 0.67 tickets/win.",
+    mechTier3Sub: "Some drop combinations may yield no needed ticket; expected yield is calculated from the actual odds.",
     statNeeded: "Total Target",
     statOwned: "Total Owned",
     statDeficit: "Net Deficit",
@@ -205,13 +205,13 @@ const I18N = {
     noDemandTitle: "No Ticket Demands Set",
     noDemandDesc: "Click the [+] button under [Need] for target tickets above. The solver will instantly calculate the best heroes!",
     tier1Title: "🥇 Tier 1 · Highly Recommended",
-    tier1Sub: "3/3 Demand Matched | 0% Waste | Up to 2.0 / win",
-    tier1Empty: "No Tier 1 heroes match all 3 tickets currently. Check Tier 2 choices!",
+    tier1Sub: "Every combination yields 2 needed tickets | 0% Waste | Expected 2.0 / win",
+    tier1Empty: "No hero currently yields 2 needed tickets for every combination. Check Tier 2 choices!",
     tier2Title: "🥈 Tier 2 · High Efficiency",
-    tier2Sub: "2/3 Demand Matched | Guaranteed >=1 needed | Expected 1.33 / win",
+    tier2Sub: "Every combination yields at least 1 needed ticket | Some yield 2 | Expected yield depends on deficits",
     tier2Empty: "No Tier 2 heroes for current deficits.",
     tier3Title: "🥉 Tier 3 · Alternative Picks",
-    tier3Sub: "1/3 Demand Matched | 66.7% chance for 1 needed | Expected 0.67 / win",
+    tier3Sub: "Some combinations may yield no needed ticket | Expected yield follows the actual odds",
     tier3Empty: "No Tier 3 heroes for current deficits.",
     expectedYield: "Exp: <span class=\"font-bold text-amber-600 dark:text-amber-300\">{val}</span> / win",
     resetToast: "All ticket counts have been reset!",
@@ -1385,6 +1385,10 @@ function fallbackCopyText(text) {
 }
 
 // Core Solver: Compute optimal trades and clearance roadmap
+function getDistinctMatchedTickets(ticketNames, deficits) {
+  return [...new Set(ticketNames)].filter(ticketName => (deficits[ticketName] || 0) > 0);
+}
+
 function computeClearancePlan(deficits, surpluses, scrapCount, config) {
   const curDeficits = { ...deficits };
   const curSurpluses = { ...surpluses };
@@ -1538,7 +1542,7 @@ function computeClearancePlan(deficits, surpluses, scrapCount, config) {
       });
 
       const expYield = usefulCounts.reduce((acc, v) => acc + v, 0) / 3.0;
-      const matched = h.tickets.filter(t => (simDeficits[t] || 0) > 0);
+      const matched = getDistinctMatchedTickets(h.tickets, simDeficits);
       const matchCount = matched.length;
       const matchedSum = matched.reduce((acc, t) => acc + (simDeficits[t] || 0), 0);
 
@@ -1988,8 +1992,8 @@ function updateRecommendations() {
     const p1 = usefulCounts.filter(u => u === 1).length / 3.0;
     const p0 = usefulCounts.filter(u => u === 0).length / 3.0;
 
-    // Count distinct tickets that match active deficits
-    const matchedTickets = h.tickets.filter(t => (deficits[t] || 0) > 0);
+    // Count distinct ticket types that match active deficits
+    const matchedTickets = getDistinctMatchedTickets(h.tickets, deficits);
     const matchCount = matchedTickets.length;
 
     // Sum of deficits for sorting priority
@@ -2006,15 +2010,15 @@ function updateRecommendations() {
       matchedDeficitSum: matchedDeficitSum
     };
 
-    // Tier classification:
-    // Tier 1: 3/3 tickets needed in deficit (0% waste, highest efficiency)
-    // Tier 2: 2/3 tickets needed in deficit (guaranteed >=1 needed)
-    // Tier 3: 1/3 tickets needed in deficit (66.7% chance to get needed)
-    if (matchCount === 3) {
+    // Tier classification is based on actual drop outcomes. This handles
+    // duplicate ticket slots without treating one remaining ticket as three.
+    const alwaysYieldsTwo = usefulCounts.every(count => count === 2);
+    const alwaysYieldsAtLeastOne = usefulCounts.every(count => count >= 1);
+    if (alwaysYieldsTwo) {
       tier1.push(recItem);
-    } else if (matchCount === 2) {
+    } else if (alwaysYieldsAtLeastOne) {
       tier2.push(recItem);
-    } else if (matchCount === 1) {
+    } else {
       tier3.push(recItem);
     }
   });
