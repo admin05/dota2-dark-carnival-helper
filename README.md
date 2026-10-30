@@ -2,12 +2,14 @@
 
 **[English](README.md) | [中文说明](README.zh-CN.md)**
 
-[![Online Demo](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-success?logo=github&style=for-the-badge)](https://islanddddddd.github.io/dota2-dark-carnival-helper/)
+[![Online Demo](https://img.shields.io/badge/GitHub%20Pages-Live%20Demo-success?logo=github&style=for-the-badge)](https://admin05.github.io/dota2-dark-carnival-helper/)
 [![License](https://img.shields.io/badge/License-MIT-amber?style=for-the-badge)](https://github.com/islanddddddd/dota2-dark-carnival-helper)
 
-> 🌐 **Live Web App**: **[https://islanddddddd.github.io/dota2-dark-carnival-helper/](https://islanddddddd.github.io/dota2-dark-carnival-helper/)**
+> 🌐 **Live Web App**: **[https://admin05.github.io/dota2-dark-carnival-helper/](https://admin05.github.io/dota2-dark-carnival-helper/)**
 
 A lightweight helper for the Dota 2 Dark Carnival event, calculating optimal heroes based on official ticket mappings and the **pick-2-of-3** drop odds.
+
+This fork is maintained and hosted by [admin05](https://github.com/admin05). The original project was created by [islanddddddd](https://github.com/islanddddddd/dota2-dark-carnival-helper).
 
 ---
 
@@ -21,13 +23,25 @@ A lightweight helper for the Dota 2 Dark Carnival event, calculating optimal her
 
 ## 🚀 Quick Start
 
-- **Online**: Open [GitHub Pages](https://islanddddddd.github.io/dota2-dark-carnival-helper/) directly in any browser.
+- **Online**: Open [GitHub Pages](https://admin05.github.io/dota2-dark-carnival-helper/) directly in any browser.
 - **Offline**: Double-click [`dark_carnival_helper.html`](./dark_carnival_helper.html) (standalone single-file bundle).
 - **Local Server**:
   ```bash
   python3 -m http.server 8080
   # open http://localhost:8080/index.html
   ```
+
+---
+
+## 🌐 GitHub Pages Deployment
+
+This is a static website; no backend, database, or build step is required.
+
+1. In the repository's **Settings → Pages**, set **Source** to **GitHub Actions**.
+2. The [Deploy to GitHub Pages](https://github.com/admin05/dota2-dark-carnival-helper/actions/workflows/deploy-pages.yml) workflow publishes the site whenever changes are pushed to `main`. It can also be started manually with **Run workflow**.
+3. After the workflow succeeds, open **https://admin05.github.io/dota2-dark-carnival-helper/**.
+
+Progress and preferences are saved in each browser's local storage and do not sync between devices. Styling and hero images load from external CDNs.
 
 ---
 
