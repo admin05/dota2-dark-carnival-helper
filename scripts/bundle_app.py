@@ -13,15 +13,17 @@ with open(os.path.join(ROOT_DIR, 'data.js'), 'r', encoding='utf-8') as f:
 with open(os.path.join(ROOT_DIR, 'app.js'), 'r', encoding='utf-8') as f:
     app_js = f.read()
 
-# Inline the scripts into a standalone distribution bundle
+# Inline the scripts into a standalone distribution bundle.
+# Use callable replacements so backslashes in JavaScript strings (for example
+# `\\n`) are copied literally instead of being interpreted by re.sub.
 bundle = re.sub(
     r'<script src="data\.js[^"]*"></script>',
-    f'<script>\n{data_js}\n</script>',
+    lambda _: f'<script>\n{data_js}\n</script>',
     html
 )
 bundle = re.sub(
     r'<script src="app\.js[^"]*"></script>',
-    f'<script>\n{app_js}\n</script>',
+    lambda _: f'<script>\n{app_js}\n</script>',
     bundle
 )
 

@@ -46,7 +46,7 @@
 ## 🚀 快速启动
 
 - **在线使用**：浏览器直接打开 [GitHub Pages](https://admin05.github.io/dota2-dark-carnival-helper/)。
-- **离线使用**：双击直接运行 [`dark_carnival_helper.html`](./dark_carnival_helper.html)（单文件免安装版）。
+- **离线使用**：双击直接运行 [`dark_carnival_helper.html`](./dark_carnival_helper.html)（已内嵌当前 `app.js` 与 `data.js`，无需安装）。源码更新后，可运行 `python3 scripts/bundle_app.py` 重新生成；页面样式和英雄头像仍会从外部 CDN 加载。
 - **本地服务**：
   ```bash
   python3 -m http.server 8080
